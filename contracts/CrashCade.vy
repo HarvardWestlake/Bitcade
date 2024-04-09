@@ -29,6 +29,11 @@ def __init__():
    self.gameActive = False
    self.rng_seed = block.number  # Seed the RNG with the current block number
 
+@external
+@view
+def getPlayerBalance (_myAddress: address) -> uint256:
+   return self.playerBalances [_myAddress]
+
 # Start a new game round
 @external
 def startGame():
