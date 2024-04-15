@@ -65,6 +65,15 @@ def transferFrom(_from: address, _to: address, _amount: uint256) -> bool:
     log Transfer(_from, _to, _amount)
     return True
 
+@external 
+def playArcade(_amount: uint256) -> bool:
+    assert self.balanceOf[msg.sender] >= _amount, "Insufficient balance"
+    self.balanceOf[msg.sender] -= _amount
+    return True
+
+
+
+
 # Try creating a new method called playArcade which will be used to play games in the arcade
 # The method should take in the amount of tokens to be used to play the game
 # This method should reduce the balance of the user by the amount of tokens used to play the game
