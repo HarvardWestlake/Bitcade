@@ -14,7 +14,11 @@ def test_mint_tokens(accounts):
     for i in range(1, 8):
         assert token_contract.balanceOf(accounts[i]) == 1000
 
+    # Test the method you wrote to play the game
+    # Commit after you get this test working!
+
+    token_contract.playArcade(20, sender=accounts[1])
+    assert token_contract.balanceOf(accounts[1]) == 980
+
     print("Test passed, each of the first 10 users received 1000 tokens.")
 
-# Test the method you wrote to play the game
-# Commit after you get this test working!

@@ -66,12 +66,11 @@ def transferFrom(_from: address, _to: address, _amount: uint256) -> bool:
     return True
 
 @external 
+@payable
 def playArcade(_amount: uint256) -> bool:
     assert self.balanceOf[msg.sender] >= _amount, "Insufficient balance"
     self.balanceOf[msg.sender] -= _amount
     return True
-
-
 
 
 # Try creating a new method called playArcade which will be used to play games in the arcade
