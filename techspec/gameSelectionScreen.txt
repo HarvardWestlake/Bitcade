@@ -13,7 +13,7 @@ Variables:
 	gameContract: public(map(bytes32, address))
     - find the address/webpage of the corresponding game on blockchain
 
-	gamesDescription: HashMap[uint256, String, String, Image]
+	gameDescriptions: HashMap[uint256, String, String, Image]
     - complete map of all available games
     - linking them to their address on Blockchain
         with their:
@@ -25,12 +25,8 @@ Variables:
 
 Methods: 
     selectGame(uint256)
-        - Select game by ID → takes you to the game description page
+        - Select game by ID → calls startGame(uint256 gameID, address player)
         - Calls getGameDesription afterwards
-    
-    getGameDescription (name: bytes32, address: address)
-        - Navigate to the page that has more description about this game
-        - Button “Play Game” calls startGame(uint256 gameID, address player)
 
 	orderAllGame (String order)
         - Rearrange the games based on the order that the user want 
