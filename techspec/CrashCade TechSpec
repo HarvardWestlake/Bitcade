@@ -1,0 +1,32 @@
+CrashCade - (Chris)
+
+Variables:
+
+uint256 public tokensInputted; - Stores the player’s token amount for the round, decided pregame
+
+uint256 public crashPoint; - Randomized multiplier centered around 0.99x determining crash point
+
+bool public gameActive; - Indicates whether a game round is currently active
+
+Methods:
+
+startGame() external;
+Initiates a new game round. Resets game parameters and prompts for incoming bets.
+
+inputTokens(uint256 amount, uint256 multiplier) external;
+Allows players to input tokens with a specified amount and a prize receipt multiplier. 
+Stores the token input amount and multiplier for the player address. Validates that the game round is active and the bet does not exceed player's token balance.
+
+crash() external;
+Ends the game upon reaching crashPoint.
+
+Calls startGame().
+receivePrize(address player) external;
+
+Allows players to receive their prize if the multiplier hasn't reached the crash point. Settles the round as a win.
+Checks the current multiplier against the player's prize receipt multiplier. If successful, credits win amount to player's balance.
+
+setCrashPoint() external;
+Sets a randomized crash point centered around 0.99x.
+
+**actual crashPoint mechanics and equation to be spec’d later

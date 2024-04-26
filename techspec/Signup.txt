@@ -1,0 +1,11 @@
+User: Sign-up (Sarah)
+Methods:
+    infoSaver: Saves wallet information (public key) and creates an account for the wallet.
+    Returns true if the new wallet is saved.
+    Returns false if the wallet already exists.
+    agreeToTerms:
+    Returns true if the user agrees to the terms and conditions.
+    Returns false otherwise.
+Variables:
+    publicKey: Saves a user's public key.
+    balance: Records the starting balance.

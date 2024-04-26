@@ -1,0 +1,18 @@
+Random Number (option 3) tech spec:
+	Variables:
+	lockedTimestamp : public HashMap[address, uint256 (block.number)]
+A uint256 < 0 means that this address has already unlocked a hash and therefore cannot call unlock(num).
+	
+	Functions:
+	lock() external → bool;
+Asserts that lockedTimestamp.get(msg.sender) < 0 (meaning that the user doesn’t have another number previously locked), “Number is already locked”
+Puts [msg.sender, block.number] in lockedTimestamp variable
+Returns True
+	unlock(int128 numberRange) external → int128;
+Asserts that lockedTimestamp.get(msg.sender) > 0 (meaning that the user has a valid hash already locked), “No number locked”
+Asserts that the current block.number == lockedTimestamp.get(msg.sender) + 2 (this confirms that the locked number is unlocked after 2 blocks have been produced and verified), “Unlocking number too early”
+Using Vpers’ built in [def blockhash(a) -> hash] and [def convert(a, b) -> c] saves random number to a variable “randomNumber : int128”:
+convert(blockhash(block.number), int128) % numberRange
+Update lockedTimestamp.put(msg.sender, -1) to affirm that the locked number has been unlocked.
+Asserts that lockedTimestamp.get(msg.sender) == -1;
+Returns randomNumber

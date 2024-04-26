@@ -1,0 +1,17 @@
+CrashCade - (Chris)
+	
+CrashCade is an exhilarating game where players can wager a certain amount of tokens on the outcome of a rapidly increasing multiplier. The game features a simple interface displaying a multiplier that continuously rises and can crash at any moment. If players cash out before the crash, they win their stake multiplied by the current multiplier. However, if the multiplier crashes before they cash out, they lose their tokens. This straightforward yet thrilling gameplay is engineered to deliver both excitement and suspense, as players watch the multiplier escalate and wait eagerly to see if they should cash out or risk waiting longer.
+
+Core Gameplay: There will be an option for players to place bets on a continuously increasing multiplier that may crash randomly. Players aim to cash out before the crash to multiply their initial stake by the current multiplier value. The rising icon can be a rocket but can be swappable by the player for cars or other icons to increase engagement.
+
+Random Number Generator: An RNG will be employed to determine the crash point -> game fairness and unpredictability. Still, the house wins. This will employ Sam S and William’s RNG programming.
+
+Betting Interface: An intuitive interface will be provided for setting bet amounts, complete with increment and decrement buttons, and a "Max Bet" option for quick betting. The player’s balance will always be displayed in the top right or wherever it’s displayed on the rest of the app.
+
+Question: Are there any demonstrated skills that the user could use while playing this game? Is there anything the user is learning or demonstrating or is this game purely luck-based?
+
+No, the game is luck-based, but it’s fine because adults don’t know what Crash is (and we’re calling it “CrashCade” -Theiss
+
+FIGMA:
+https://www.figma.com/file/xhXMFPnUwUtDA036cyVg6t/Untitled?type=design&node-id=1%3A49&mode=design&t=OXK2xHkHvCXbMlvv-1
+3 pages; use button in top left to switch between start, midgame, and end pages

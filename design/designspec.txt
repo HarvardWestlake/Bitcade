@@ -1,0 +1,13 @@
+Contracts with UI Distributors
+
+Lovely human beings willing to create a user interface for our arcade should be entitled to a portion of the proceeds. We need to make an equitable system to ensure that distributors are given a fair portion of their work. Given that the logic for the arcade games is public for everyone to see and the only way for the majority of people to enjoy playing at the arcade is a good front end, we should operate with a 60/40 split in favor of the block distributor.
+
+We will have several safeguards in place to ensure collaboration and trust:
+
+Transparency is very important in an arcade, so we will allow users to view the block ID associated with their game, ensuring fair game logic. All games should have a “confirm fairness” button that shows users the block ID so they can see the logic is fair and transparent.
+Users should be able to confirm that their gameplay is being operated through the correct block. They will be able to see the transaction hash of their game after playing each one.
+
+
+
+
+

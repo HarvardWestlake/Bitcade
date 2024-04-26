@@ -1,0 +1,15 @@
+Variables:
+	games: HashMap[uint256, String]
+Complete map of all available games, linking them to their IDs
+	curBalance: uint256
+Current balance of the current player
+	curPlayer: address
+Methods:
+	allowGame(address player) -> bool
+gets the current gas fee of the network the smart contract is deployed on -> curGasFee
+gets the current player’s token balance -> curBalance
+returns True if the cost of the game <= curBalance - curGasFee
+	startGame(uint256 gameId, address player) -> bool
+gets the game by the gameId supplied, storing its token cost in tokenCost
+calls allowGame, and if that returns True, prompts the user to sign a transaction at the cost
+returns True

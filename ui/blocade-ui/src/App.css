@@ -1,0 +1,74 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #282c34; /* Lightning theme black background */
+  color: #FFD700; /* Lightning theme yellow text */
+  height: 40px; /* Ensure header doesn't change in height */
+}
+
+.header-left,
+.header-middle,
+.header-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1; /* Give each section the ability to grow */
+}
+
+.header-middle {
+  flex-grow: 2; /* Allow the middle section to take up more space if needed */
+}
+
+/* Example fixed widths for left and right sections to bring them closer to the center */
+.header-left,
+.header-right {
+  flex-basis: 300px; /* Adjust this value as needed */
+  flex-grow: 0; /* Prevent these sections from growing */
+}
+
+/* CSS for the connected address to reduce its width */
+.wallet-address {
+  font-size: 0.85em; /* Small enough to fit without enlarging the header */
+  white-space: nowrap; /* Keep the address in one line */
+  overflow: hidden; /* Hide overflow */
+  text-overflow: ellipsis; /* Add an ellipsis to any overflow */
+}
+
+/* You can use media queries to adjust for different screen sizes */
+@media (max-width: 768px) {
+  .header-left,
+  .header-right {
+    flex-basis: 100px; /* Smaller fixed width on smaller screens */
+  }
+  
+  .wallet-address {
+    font-size: 0.75em; /* Smaller font size on smaller screens */
+  }
+}
+
+.App {
+  display: flex;
+  justify-content: space-between;
+  background: #121212; /* Dark background for the lightning theme */
+  color: #FFD700; /* Yellow text for the lightning theme */
+  padding: 20px;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.content {
+  display: flex;
+  flex: 1; /* Takes up all space below the header */
+}
+
+.side-panel {
+  background-color: #181818; /* A lighter shade of black for the side panels */
+  /* Add any additional styling you want for these side panels */
+}
+
+.main-panel {
+  background-color: #121212; /* A darker shade of black for the main panel */
+  /* Add any additional styling you want for the main content area */
+}

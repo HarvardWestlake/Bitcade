@@ -1,0 +1,6 @@
+Functions:
+
+CallEngine(nUIID) -> Calls the engine telling us which UI you are using
+RegisterEngine() -> Returns nUIID and registers your UI under our contract giving it an ID
+
+Using the ether.js call function we will call to the blockchain through html onclicks and ether
