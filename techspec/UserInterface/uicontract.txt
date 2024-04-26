@@ -1,0 +1,8 @@
+RegisterUI(walletId)
+    Creates an accunt to have the UI host in the database, ensures we know who is hosting and that w can track how much they have emade throgh theeir UI
+
+Ctut(ID)
+    Gives a fair cut of the money passed back to the house to the UI distributer
+
+
+Hold some funds in escrow to deincetivise bad actors.
