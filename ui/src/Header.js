@@ -6,7 +6,7 @@ const Header = () => {
 
   return (
     <header className="header">
-      <div className="header-left">ANITA</div>
+      <div className="header-left">Blocade</div>
       <div className="header-middle">Balance: {balance} ETH</div>
       <div className="header-right">
         <WalletConnect setBalance={setBalance} />
