@@ -32,3 +32,36 @@ ape test
 - Push to the branch: git push origin feature/YourFeatureName
 - Submit a pull request: We welcome all contributions and will review your pull request.
 - Contributors whose games or apps significantly drive ticket distribution will earn a percentage of those tickets. Join us in building the future of decentralized arcade gaming!
+
+## UI Testing
+Playwright Test project inside the folder ui
+
+https://playwright.dev/docs/intro#running-the-example-test-in-ui-mode
+
+Inside that directory, you can run several commands:
+
+  npx playwright test
+    Runs the end-to-end tests.
+
+  npx playwright test --ui
+    Starts the interactive UI mode.
+
+  npx playwright test --project=chromium
+    Runs the tests only on Desktop Chrome.
+
+  npx playwright test example
+    Runs the tests in a specific file.
+
+  npx playwright test --debug
+    Runs the tests in debug mode.
+
+  npx playwright codegen
+    Auto generate tests with Codegen.
+
+We suggest that you begin by typing:
+
+    npx playwright test
+
+And check out the following files:
+  - .\ui\tests\example.spec.js - Example end-to-end test
+  - .\ui\tests-examples\demo-todo-app.spec.js - Demo Todo App end-to-end tests
