@@ -1,4 +1,4 @@
-# @version ^0.3.10
+# @version ^0.3.7
 
 # Event to log game results
 event Play:
