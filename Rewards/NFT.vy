@@ -57,6 +57,14 @@ event ApprovalForAll:
     operator: indexed(address)
     approved: bool
 
+# @dev Emits when a rank is assigned to a minted NFT.
+# @param _owner The owner of the minted NFT.
+# @param _tokenId The ID of the minted NFT.
+# @param _rank The rank assigned to the NFT.
+event RankAssigned:
+    owner: indexed(address)
+    tokenId: indexed(uint256)
+    rank: uint256
 
 # @dev Mapping from NFT ID to the address that owns it.
 idToOwner: HashMap[uint256, address]
@@ -77,6 +85,11 @@ minter: address
 bronzeNFTs: HashMap[uint256, bool]
 silverNFTs: HashMap[uint256, bool]
 goldNFTs: HashMap[uint256, bool]
+
+# @def ranks are assigned based on prices
+bronzePrice: uint256
+silverPrice: uint256
+goldPrice: uint256
 
 # @dev Hacky helper convert int to string
 IDENTITY_PRECOMPILE: constant(address) = 0x0000000000000000000000000000000000000004
@@ -125,7 +138,7 @@ SUPPORTED_INTERFACES: constant(bytes4[5]) = [
 # Remove password after ActuveUsers works
 # Set password to something basic for start '12345'
 @external
-def __init__(activeUserAddress: address, _password: uint256):  # activeUserContractAddress: address):
+def __init__(activeUserAddress: address, _password: uint256, _bronzePrice: uint256, _silverPrice: uint256, _goldPrice: uint256):
     """
     @dev Contract constructor.
     """
@@ -136,6 +149,10 @@ def __init__(activeUserAddress: address, _password: uint256):  # activeUserContr
     self.tokenCount = 0
     self.password = _password
     self.activeUserContract = ActiveUser(activeUserAddress)
+
+    self.bronzePrice = _bronzePrice
+    self.silverPrice = _silverPrice
+    self.goldPrice = _goldPrice
 
 
 @pure
@@ -423,12 +440,14 @@ def setApprovalForAll(_operator: address, _approved: bool):
 ### MINT & BURN FUNCTIONS ###
 
 @external
+@payable
 def mint(_to: address, _tokenURI: String[64]) -> bool:
     """
     @dev Function to mint tokens
          Throws if `msg.sender` is not the minter.
          Throws if `_to` is zero address.
          Throws if `_tokenId` is owned by someone.
+         Throws if the provided value does not match the price for any rank.
     @param _to The address that will receive the minted tokens.
     @param _tokenURI The token uri of next token to mint.
     @return A boolean that indicates if the operation was successful.
@@ -442,10 +461,29 @@ def mint(_to: address, _tokenURI: String[64]) -> bool:
     uniqueHash: bytes32 = keccak256(_abi_encode(_tokenURI))
     assert self.uniqueHashesForToken[uniqueHash] == 0, "token is non-unique"
 
+    price: uint256 = msg.value
+    rank: uint256 = 0
+
+    # Assign rank based on the provided price
+    if price == self.bronzePrice:
+        rank = 0
+        self.bronzeNFTs[self.tokenCount] = True
+    elif price == self.silverPrice:
+        rank = 1
+        self.silverNFTs[self.tokenCount] = True
+    elif price == self.goldPrice:
+        rank = 2
+        self.goldNFTs[self.tokenCount] = True
+    else:
+        raise Exception("Invalid price provided")
+
     self._addTokenTo(_to, self.tokenCount)
     # Writes the tokenURI for the tokenId
     self._addTokenURI(self.tokenCount, _tokenURI)
+
     log Transfer(empty(address), _to, self.tokenCount)
+    log RankAssigned(_to, self.tokenCount, rank)
+
     # Increase token count
     self.tokenCount += 1
     return True
