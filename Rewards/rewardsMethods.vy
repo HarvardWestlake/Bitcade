@@ -51,3 +51,4 @@ def addNFTContract(nft_address: address):
     @param nft_address The address of the NFT contract
     """
     self.nft_contracts[nft_address] = NFTContract(nft_address)
+    
