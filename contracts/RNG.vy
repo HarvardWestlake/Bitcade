@@ -11,7 +11,7 @@ def lock() -> bool:
     return True
 
 #returns the block number that occured after 2 blocks 
-#were mined from the orriginal locked block number
+#were mined from the original locked block number
 @external
 def unlock(numberRange: uint256) -> uint256:
     assert self.lockedTimestamp[msg.sender] > 0, "No number locked"
