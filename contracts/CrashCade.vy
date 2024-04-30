@@ -15,13 +15,13 @@ gameActive: public(bool)
 rng_seed: public(uint256)
 
 # Initialize the contract with default values
-@public
+@external
 def __init__():
     self.gameActive = False
     self.rng_seed = block.number  # Seed the RNG with the current block number
 
 # Start a new game round
-@public
+@external
 def startGame():
     assert not self.gameActive, "Game is already active"
     self.gameActive = True
@@ -29,7 +29,7 @@ def startGame():
     self.setCrashPoint()  # Set a new crash point
     
 # Player inputs tokens with a specified amount and multiplier
-@public
+@external
 def inputTokens(amount: uint256):
     assert self.gameActive, "Game is not active"
     assert amount > 0, "Bet amount must be greater than zero"
@@ -38,7 +38,7 @@ def inputTokens(amount: uint256):
     self.playerBalances[msg.sender] += amount
 
 # Set the crash point with a basic random number generator
-@public
+@external
 def setCrashPoint():
     assert self.gameActive, "Game is not active"
     
@@ -58,7 +58,7 @@ def crash():
     self.tokensInputted = 0  # Reset token input counter
 
 # Allow players to receive their prize if the crash hasn't occurred yet
-@public
+@external
 def receivePrize():
     assert self.gameActive, "Game is not active"
     assert self.crashPoint > 1, "Invalid crash point"
@@ -75,6 +75,6 @@ def receivePrize():
     self.crash()
 
 # Safety check to avoid prize claim abuse
-@public
+@external
 def checkGameStatus() -> bool:
     return self.gameActive
