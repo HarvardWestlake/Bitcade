@@ -1,0 +1,31 @@
+Racing - (Grady+Micah) (this will work for wyrms or horses)
+
+Variables
+	Array - Racers: Stores the array of each racer in the race
+    Array - RacerStats: [address: NFT Address, address: Wallet Address, unit256: Racer Speed, uint256: Racer Level, bool: IsBoosted, uint256: Position]
+    Boolean: raceStarted
+    Uint256: raceDistance
+	
+Methods: all of these methods will be on a smart contract, will run every block
+void startRace()
+    Checks if there are enough racers
+    If so, starts the race by making race is started true
+    Causes calculateMovment to be called each block
+void boostSpeed()
+    Increase the distance the racers moves each block
+    Changes the if boosted array in the racers stats
+void calculateMovement(Racers, Stats)
+    Calculate how much distance the racers moves each block
+    Multiplies a random number by the racers level, speed.
+    Distance multiplied by 1.1 if they are boosted
+    Updates the position value in the stats array for each racer
+    Calls displayMovement()
+void displayMovement(Racer Address, Distance Moved)
+    Sends the distance moved by the racer to the website to show the racer racing to all users
+void checkFinish()
+    Each block, checks the position of every racer to see if a racer reached the end of the race
+    If finished, calls token payout for the winners
+
+Prerequisites
+Joining the game (depends on game lobby/menu)
+Storing bets/eth and giving rewards after the race

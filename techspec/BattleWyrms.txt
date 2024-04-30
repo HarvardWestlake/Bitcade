@@ -1,0 +1,20 @@
+Wyrm Class
+- instance variables are owner address, health, strength, defense, and crit%
+- setters for updating variables
+- upgrade function that allows the user to burn tokens to upgrade their wyrms stats
+- heal function that requires the user to burn tokens to heal back health
+
+Battle Class
+- instance variables are the two wyms and the number of rounds
+- computes the result of each round using a random number and multiplying by its stats
+    - each wyrm attacks the other using its strength
+    - if first random number < crit% double the damage
+    - if second random number < defense, block the attack and damage
+- updates the wyrms health according to the results of the rounds
+
+Game Mechanics / UI
+- anyone can create a wyrm and its stats will depend on how many tokens they burn to mint its
+- the free wyrm will have the equivalent stats as a wyrm created with 1 token and can only battle other free wyrms
+- to battle any wyrm user will input the wyrm they want to battle and the number of rounds they want to fight for
+    - the computer will then calculate the results of the match and show some animation
+    - the appropriate health updates will be applied

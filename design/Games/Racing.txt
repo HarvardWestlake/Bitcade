@@ -1,0 +1,20 @@
+Racing - (Grady+Micah) (this will work for wyrms or horses)
+
+Game Concept:
+    Up to 10 people pay tokens to put their racers(Wyrms or horses or other) into a race.
+    The fastest wyrm wins all of the tokens except at 10% cut for us.
+
+Game Setup:
+    The player starts by sending tokens into the racing game with the address of their racer.
+    There will be different brackets of races based off amount paid. They then wait to match up with other racers.
+
+Gameplay:
+    Every racer has a speed level based on its overall level and speed level (both of which can be leveled up with tokens).
+    Once racers have matched up, they will race with their levels being multiplied by random numbers. 
+    The player watches an animation of the racers racing. Every block, the racers will move forward by a distance based off their stats and a random generator.
+    The numbers will be random enough that the wyrms will alternate in 1st place.
+    The winner fastest racer gets the tokens. Racers will have the opportunity to boost the speed of their wyrm by spending tokens until they reach 50 yards.
+    Upon reaching 50 yards the racers that spent tokens will receive a boost in speed.
+
+Random Number Generator:
+    Random number generators (which are being created by other coders) are being used to multiply each racer's levels so that the highest level racer doesn’t always win.
