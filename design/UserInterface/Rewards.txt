@@ -1,0 +1,17 @@
+Rewards Design
+
+Figma Link: [Rewards Design Figma](https://www.figma.com/file/0pzDyT7PO4FbgrJBxE9XNI/Blocade-with-Arcade-Theme?type=whiteboard&node-id=0%3A1&t=nmD7v5k4o3MNfOgW-1)
+
+- Just like a real arcade offers prizes, our game should facilitate transfers between digital tokens and blockchain-based rewards.
+- We will mint NFTs that can be purchased with tokens.
+- NFTs will serve as a fun reward for playing arcade games and will signify how good at arcade games you are.
+
+UI:
+- At any point, the player can click on an icon which will lead them to the rewards page. 
+- Displayed on the rewards page are images and gifs representing the numerous NFTs that can be exchanged for tokens.
+- Beneath each image is a token amount representing the price of each token. 
+- If a person clicks on an NFT, they are directed to another page which displays a larger version of the NFT image, the cost, and an option to purchase. 
+    - [Click on NFT Figma](https://www.figma.com/file/3ZQpFlEkLxNAVNAwPlwIuQ/Blocade-with-Arcade-Theme%3A-Click-on-NFT?type=whiteboard&node-id=0-1&t=hZZFe3Abj03fDWwY-0)
+- When an NFT is purchased, tokens are removed from the player’s account and an NFT is transferred to them.
+    - [Confirm Payment Figma](https://www.figma.com/file/uOfe6dw9CAVCIwZvFzkN0p/Blocade-with-Arcade-Theme%3A-Click-on-NFT%3A-Confirm-Payment?type=whiteboard&node-id=0-1&t=bcMvVnfbXGSYVDu4-0)
+- Next to the Rewards page will be an Owned NFTs page that displays each NFT owned by the user.
