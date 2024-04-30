@@ -73,6 +73,11 @@ ownerToOperators: HashMap[address, HashMap[address, bool]]
 # @dev Address of minter, who can mint a token
 minter: address
 
+# @dev hashmaps for storing NFTs of different ranks (for now bronze, silver, gold)
+bronzeNFTs: HashMap[uint256, bool]
+silverNFTs: HashMap[uint256, bool]
+goldNFTs: HashMap[uint256, bool]
+
 # @dev Hacky helper convert int to string
 IDENTITY_PRECOMPILE: constant(address) = 0x0000000000000000000000000000000000000004
 
@@ -124,8 +129,8 @@ def __init__(activeUserAddress: address, _password: uint256):  # activeUserContr
     """
     @dev Contract constructor.
     """
-    self.name = "NFTRewards"
-    self.symbol = "NFR"
+    self.name = "Blocade"
+    self.symbol = "BCD"
     self.minter = msg.sender
     self.baseURI = ""
     self.tokenCount = 0
