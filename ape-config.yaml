@@ -3,8 +3,4 @@ plugins:
   - name: vyper
   - name: etherscan
 
-contracts:
- -  name: Wolvercoin
-    path: contracts/Wolvercoin.vy
-
-  
+contracts_folder: contracts
