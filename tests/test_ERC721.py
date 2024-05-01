@@ -46,4 +46,4 @@ def test_transfering_tokens(accounts):
         assert token_contract.balanceOf.call(accounts[i+4], sender=owner) == 1
         
 
-    print("Test passed, successfully linked urls to tokens.")
+    print("Test passed, successfully transferred tokens from one account to another.")
