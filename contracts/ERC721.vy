@@ -286,5 +286,5 @@ def burn(_tokenId: uint256):
 
 
 @external
-def tokenURI(tokenId: uint256) -> String[256]:
-    return concat(self.baseURL, uint2str(tokenId), ".json")
+def tokenURI(tokenId: uint256) -> String[296]:
+    return concat(self.baseURL, uint2str(tokenId), ".json/?pinataGatewayToken=Qpx843Sb13V6XEgDTppTxtZocDUYPdbjP0Q2MgeBHmn_GYac0ZD-OA98HT_z1CRK")
