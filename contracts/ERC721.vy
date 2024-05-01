@@ -1,29 +1,3 @@
-#pragma version >0.3.10
-
-###########################################################################
-## THIS IS EXAMPLE CODE, NOT MEANT TO BE USED IN PRODUCTION! CAVEAT EMPTOR!
-###########################################################################
-
-# @dev example implementation of ERC-721 non-fungible token standard.
-# @author Ryuya Nakamura (@nrryuya)
-# Modified from: https://github.com/vyperlang/vyper/blob/de74722bf2d8718cca46902be165f9fe0e3641dd/examples/tokens/ERC721.vy
-
-from ethereum.ercs import IERC165
-from ethereum.ercs import IERC721
-
-implements: IERC721
-implements: IERC165
-
-# Interface for the contract called by safeTransferFrom()
-interface ERC721Receiver:
-    def onERC721Received(
-            _operator: address,
-            _from: address,
-            _tokenId: uint256,
-            _data: Bytes[1024]
-        ) -> bytes4: nonpayable
-
-
 # @dev Mapping from NFT ID to the address that owns it.
 idToOwner: HashMap[uint256, address]
 
@@ -39,17 +13,14 @@ ownerToOperators: HashMap[address, HashMap[address, bool]]
 # @dev Address of minter, who can mint a token
 minter: address
 
-baseURL: String[53]
+baseURL: String[128]
 
-# @dev Static list of supported ERC165 interface ids
-SUPPORTED_INTERFACES: constant(bytes4[2]) = [
-    # ERC165 interface ID of ERC165
-    0x01ffc9a7,
-    # ERC165 interface ID of ERC721
-    0x80ac58cd,
-]
+event Minting:
+    receiving: indexed(address)
+    tokenID: uint256
 
-@deploy
+
+@external
 def __init__():
     """
     @dev Contract constructor.
@@ -58,19 +29,6 @@ def __init__():
     self.baseURL = "https://rose-important-pony-8.mypinata.cloud/ipfs/QmexVFiUTpkuRJVLmcgKFd5SHVR7doCLipuVRy2kyNWzq2/"
 
 
-@view
-@external
-def supportsInterface(interface_id: bytes4) -> bool:
-    """
-    @dev Interface identification is specified in ERC-165.
-    @param interface_id Id of the interface
-    """
-    return interface_id in SUPPORTED_INTERFACES
-
-
-### VIEW FUNCTIONS ###
-
-@view
 @external
 def balanceOf(_owner: address) -> uint256:
     """
@@ -82,7 +40,6 @@ def balanceOf(_owner: address) -> uint256:
     return self.ownerToNFTokenCount[_owner]
 
 
-@view
 @external
 def ownerOf(_tokenId: uint256) -> address:
     """
@@ -96,7 +53,6 @@ def ownerOf(_tokenId: uint256) -> address:
     return owner
 
 
-@view
 @external
 def getApproved(_tokenId: uint256) -> address:
     """
@@ -109,7 +65,6 @@ def getApproved(_tokenId: uint256) -> address:
     return self.idToApprovals[_tokenId]
 
 
-@view
 @external
 def isApprovedForAll(_owner: address, _operator: address) -> bool:
     """
@@ -200,8 +155,6 @@ def _transferFrom(_from: address, _to: address, _tokenId: uint256, _sender: addr
     self._removeTokenFrom(_from, _tokenId)
     # Add NFT
     self._addTokenTo(_to, _tokenId)
-    # Log the transfer
-    log IERC721.Transfer(_from, _to, _tokenId)
 
 
 ### TRANSFER FUNCTIONS ###
@@ -247,10 +200,10 @@ def safeTransferFrom(
     @param _data Additional data with no specified format, sent in call to `_to`.
     """
     self._transferFrom(_from, _to, _tokenId, msg.sender)
-    if _to.is_contract: # check if `_to` is a contract address
-        returnValue: bytes4 = extcall ERC721Receiver(_to).onERC721Received(msg.sender, _from, _tokenId, _data)
-        # Throws if transfer destination is a contract which does not implement 'onERC721Received'
-        assert returnValue == method_id("onERC721Received(address,address,uint256,bytes)", output_type=bytes4)
+    # if _to.is_contract: # check if `_to` is a contract address
+    #     returnValue: bytes4 = extcall ERC721Receiver(_to).onERC721Received(msg.sender, _from, _tokenId, _data)
+    #     # Throws if transfer destination is a contract which does not implement 'onERC721Received'
+    #     assert returnValue == method_id("onERC721Received(address,address,uint256,bytes)", output_type=bytes4)
 
 
 @external
@@ -275,7 +228,6 @@ def approve(_approved: address, _tokenId: uint256):
     assert (senderIsOwner or senderIsApprovedForAll)
     # Set the approval
     self.idToApprovals[_tokenId] = _approved
-    log IERC721.Approval(owner, _approved, _tokenId)
 
 
 @external
@@ -291,7 +243,6 @@ def setApprovalForAll(_operator: address, _approved: bool):
     # Throws if `_operator` is the `msg.sender`
     assert _operator != msg.sender
     self.ownerToOperators[msg.sender][_operator] = _approved
-    log IERC721.ApprovalForAll(msg.sender, _operator, _approved)
 
 
 ### MINT & BURN FUNCTIONS ###
@@ -311,9 +262,9 @@ def mint(_to: address, _tokenId: uint256) -> bool:
     assert msg.sender == self.minter
     # Throws if `_to` is zero address
     assert _to != empty(address)
+    log Minting(msg.sender, _tokenId)
     # Add NFT. Throws if `_tokenId` is owned by someone
     self._addTokenTo(_to, _tokenId)
-    log IERC721.Transfer(empty(address), _to, _tokenId)
     return True
 
 
@@ -332,11 +283,8 @@ def burn(_tokenId: uint256):
     # Throws if `_tokenId` is not a valid NFT
     assert owner != empty(address)
     self._clearApproval(owner, _tokenId)
-    self._removeTokenFrom(owner, _tokenId)
-    log IERC721.Transfer(owner, empty(address), _tokenId)
 
 
-@view
 @external
-def tokenURI(tokenId: uint256) -> String[132]:
-    return concat(self.baseURL, uint2str(tokenId))
+def tokenURI(tokenId: uint256) -> String[256]:
+    return concat(self.baseURL, uint2str(tokenId), ".json")
