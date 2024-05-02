@@ -475,8 +475,8 @@ def mint(_to: address, _tokenURI: String[64]) -> bool:
         rank = 2
         self.goldNFTs[self.tokenCount] = True
     else:
-        raise Exception("Invalid price provided")
-
+        raise "Invalid price provided"
+        
     self._addTokenTo(_to, self.tokenCount)
     # Writes the tokenURI for the tokenId
     self._addTokenURI(self.tokenCount, _tokenURI)

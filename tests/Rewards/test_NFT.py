@@ -1,17 +1,26 @@
 import pytest
-import brownie
 from web3.exceptions import ValidationError
+from brownie import Contract
 
 DEFAULT_GAS = 100000
 
 
 @pytest.fixture
-def NFT(NFT, accounts):
-    return NFT.deploy(
-        accounts[0],
-        12345, # password
-        {'from': accounts[3]}
-    )
+def NFT(accounts):
+
+    #The following code returns a recursive dependency error and has been commented out
+    # return NFT.deploy(
+    #     accounts[0],
+    #     12345, # password
+    #     {'from': accounts[3]} )
+
+    # Load the contract from the build artifact
+    nft_contract = Contract.from_abi("NFT", "contracts/Rewards/NFT.vy", owner=accounts[0])
+    # Deploy the contract
+    # _bronzePrice: 1000, _silverPrice: 2000, _goldPrice: 3000 (placeholder prices)
+    tx = nft_contract.deploy(accounts[0], 12345, 1000, 2000, 3000, {'from': accounts[3]})
+    return nft_contract
+    
 
 def testApprove_OwnerOf(NFT, accounts):
     #coverage for approve, balanceOf, getApproved, ownerOf
