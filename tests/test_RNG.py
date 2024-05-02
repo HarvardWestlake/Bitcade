@@ -30,7 +30,7 @@ def test_random(accounts):
     print(total/100)
     
     #print statmeents will only show if test fails, hence:
-    #assert 1 > 2
+    assert 1 > 2
 
     print("Test passed: random numbers generated successfully.")
 
