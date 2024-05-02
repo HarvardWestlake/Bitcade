@@ -21,6 +21,7 @@ totalSupply: public(uint256)
 balanceOf: public(HashMap[address, uint256])
 allowance: public(HashMap[address, HashMap[address, uint256]])
 
+swapper: public(address)
 
 # Initialize the Token
 @external
@@ -29,6 +30,7 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256):
     self.symbol = _symbol
     self.decimals = _decimals
     self.totalSupply = 0  # Initialize total supply
+    self.swapper = msg.sender
 
 # Mint new tokens
 @external
@@ -36,7 +38,7 @@ def mint(_to: address, _amount: uint256):
     assert self.balanceOf[_to] + _amount >= self.balanceOf[_to], "Overflow"
     self.balanceOf[_to] += _amount
     self.totalSupply += _amount
-    log Transfer(ZERO_ADDRESS, _to, _amount)
+    log Transfer(empty(address), _to, _amount)
 
 # Transfer tokens to another address
 @external
@@ -64,6 +66,18 @@ def transferFrom(_from: address, _to: address, _amount: uint256) -> bool:
     self.allowance[_from][msg.sender] -= _amount
     log Transfer(_from, _to, _amount)
     return True
+
+@external
+def swapperMint(_to: address, _amount: uint256):
+    assert msg.sender == self.swapper, "Only swapper can mint"
+    self.totalSupply += _amount
+    self.balanceOf[_to] += _amount
+    log Transfer(empty(address), _to, _amount)
+
+@external
+def setSwapper(_swapper: address):
+    assert msg.sender == self.swapper, "Only swapper can change swapper"
+    self.swapper = _swapper
 
 # Try creating a new method called playArcade which will be used to play games in the arcade
 # The method should take in the amount of tokens to be used to play the game
