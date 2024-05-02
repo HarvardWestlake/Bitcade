@@ -20,14 +20,14 @@ def test_random(accounts):
     #After running test, scroll up past all the INFO statements
     #It will be the last number printed
     #Takes a while to run... Ctrl + c to end
-    total = 0
-    for i in range(100):
-        lockedNumberReceipt = token_contract.lock(sender=owner)
-        chain.mine(2)
-        randomNumberReceipt = token_contract.unlock(100, sender=owner)
-        for log in token_contract.returnRandomNumber.from_receipt(randomNumberReceipt):
-            total += log.number
-    print(total/100)
+    #total = 0
+    #for i in range(100):
+       # lockedNumberReceipt = token_contract.lock(sender=owner)
+       # chain.mine(2)
+       # randomNumberReceipt = token_contract.unlock(100, sender=owner)
+       # for log in token_contract.returnRandomNumber.from_receipt(randomNumberReceipt):
+       #     total += log.number
+    #print(total/100)
     
     #print statmeents will only show if test fails, hence:
     assert 1 > 2
