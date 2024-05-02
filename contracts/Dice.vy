@@ -1,15 +1,51 @@
 from vyper.interfaces import ERC20
 
-# Interface for the Vyper RNG algorithm - placeholder for actual contract
-interface VyperRNG:
-    def get_random_number(seed: uint256) -> int128: view
+# Define constants and types
+MIN_SLIDER: constant(int128) = 1
+MAX_SLIDER: constant(int128) = 100
 
-# Dice Gambling Game Contract
+interface RandomNumberInterface:
+    def get_random_number() -> int128: view
+
+# Contract storage
+random_number_generator: public(address)
+
+# Events
+event PayoutCalculated:
+    slider: int128
+    roll_above: bool
+    payout_multiplier: decimal
+
 @external
-def __init__():
-    pass
+def set_random_number_generator(_addr: address):
+    """
+    Set the address of the random number generator contract.
+    """
+    self.random_number_generator = _addr
 
 @internal
-def _calculate_multiplier(sliderInt: int256) -> decimal:
-    # Calculates multiplier based on the sliderInt (probability of winning)
-    return 98.0 / (100.0 - abs(50 - sliderInt) * 2.0)
+def calculate_percent_chance(sliderInt: int128, rollAbove: bool) -> int128:
+    """
+    Calculate the percent chance of winning based on sliderInt and rollAbove.
+    """
+    assert MIN_SLIDER <= sliderInt and sliderInt <= MAX_SLIDER, "Slider out of range"
+    if rollAbove:
+        return MAX_SLIDER - sliderInt
+    else:
+        return sliderInt - MIN_SLIDER
+
+@external
+def calculate_payout(sliderInt: int128, rollAbove: bool) -> decimal:
+    """
+    Calculate the payout multiplier based on the sliderInt and rollAbove.
+    Uses the formula 98 / percent chance of winning.
+    """
+    percent_chance: int128 = self.calculate_percent_chance(sliderInt, rollAbove)
+    assert percent_chance > 0, "Percent chance must be positive"
+    
+    # Convert percent_chance to decimal before division
+    payout_multiplier: decimal = 98.0 / convert(percent_chance, decimal)
+    log PayoutCalculated(sliderInt, rollAbove, payout_multiplier)
+    
+    return payout_multiplier
+

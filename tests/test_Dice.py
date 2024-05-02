@@ -1,38 +1,47 @@
 import pytest
-from vyper import compile_code
+from ape import project, accounts, chain
+from decimal import Decimal
 
-# Define the Vyper contract code
-vyper_code = """
-@internal
-def _calculate_multiplier(sliderInt: int128) -> decimal:
-    return 98.0 / (100.0 - abs(50 - sliderInt) * 2.0)
-"""
+@pytest.fixture
+def owner(accounts):
+    return accounts[0]
 
-# Compile the Vyper contract to get the bytecode and ABI
-contract = compile_code(vyper_code, ['bytecode', 'abi'])
+@pytest.fixture
+def dice_contract(project, owner):
+    return owner.deploy(project.Dice)
 
-# Contract class simulator for testing
-class TestDiceContract:
-    def __init__(self, contract):
-        self.contract = contract
+def test_calculate_payout_above(dice_contract):
+    # Testing with rollAbove = True
+    sliderInt = 70
+    expected_chance = 30  # 100 - 70
+    expected_multiplier = Decimal('98') / Decimal(expected_chance)
+    calculated_multiplier = dice_contract.calculate_payout(sliderInt, True)
+    
+    assert calculated_multiplier == pytest.approx(expected_multiplier, abs=1e-2), "Multiplier mismatch for roll above"
 
-    def calculate_multiplier(self, sliderInt):
-        # Simulate calling the internal Vyper method _calculate_multiplier
-        # In real test, you would interact with a deployed contract instance
-        return self.contract._calculate_multiplier(sliderInt)
+def test_calculate_payout_below(dice_contract):
+    # Testing with rollAbove = False
+    sliderInt = 30
+    expected_chance = 29  # 30 - 1
+    expected_multiplier = Decimal('98') / Decimal(expected_chance)
+    calculated_multiplier = dice_contract.calculate_payout(sliderInt, False)
+    
+    assert calculated_multiplier == pytest.approx(expected_multiplier, abs=1e-2), "Multiplier mismatch for roll below"
 
-# Initialize the test contract class with compiled contract
-test_contract = TestDiceContract(contract)
+def test_calculate_payout_edge_cases(dice_contract):
+    # Test edge cases where payout calculation might be at risk of division by zero or boundary issues
+    with pytest.raises(AssertionError):
+        dice_contract.calculate_payout(100, True)  # Should fail as chance = 0
+    with pytest.raises(AssertionError):
+        dice_contract.calculate_payout(1, False)   # Should fail as chance = 0
 
-# Test cases for the _calculate_multiplier method
-def test_calculate_multiplier():
-    # Test with different sliderInt values to cover various edge cases
-    assert test_contract.calculate_multiplier(50) == pytest.approx(1.96, 0.01), "Expected multiplier for 50%"
-    assert test_contract.calculate_multiplier(60) == pytest.approx(2.45, 0.01), "Expected multiplier for 60%"
-    assert test_contract.calculate_multiplier(40) == pytest.approx(2.45, 0.01), "Expected multiplier for 40%"
-    assert test_contract.calculate_multiplier(30) == pytest.approx(3.27, 0.01), "Expected multiplier for 30%"
-    assert test_contract.calculate_multiplier(70) == pytest.approx(3.27, 0.01), "Expected multiplier for 70%"
-
-# Run the test
-if __name__ == "__main__":
-    test_calculate_multiplier()
+    # Valid edge cases
+    sliderInt = 1
+    if sliderInt != 100:  # Check for non-error scenario with rollAbove=True
+        calculated_multiplier = dice_contract.calculate_payout(sliderInt, True)
+        assert calculated_multiplier == Decimal('98'), "Multiplier mismatch at lower edge"
+    
+    sliderInt = 100
+    if sliderInt != 1:    # Check for non-error scenario with rollAbove=False
+        calculated_multiplier = dice_contract.calculate_payout(sliderInt, False)
+        assert calculated_multiplier == Decimal('98'), "Multiplier mismatch at upper edge"
