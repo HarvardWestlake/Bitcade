@@ -34,4 +34,31 @@ def test_random(accounts):
 
     print("Test passed: random numbers generated successfully.")
 
+def test_random_between(accounts):
+    owner = accounts[0]
+    rng_contract = project.RNG.deploy(sender=owner)
 
+    test_ranges = [(1, 10), (20, 30), (100, 110)]
+
+    for min_range, max_range in test_ranges:
+        rng_contract.lock(sender=owner)
+        chain.mine(2)
+        random_number_receipt = rng_contract.random_between(min_range, max_range, sender=owner)
+        for log in rng_contract.returnRandomNumber.from_receipt(random_number_receipt):
+            assert log.number >= min_range and log.number <= max_range
+            print(f"Generated random number: {log.number} in range ({min_range}, {max_range})")
+
+        rng_contract.reset_lock(sender=owner)
+
+    for _ in range(10):
+        min_val, max_val = 50, 60
+        rng_contract.lock(sender=owner)
+        chain.mine(2)
+        random_number_receipt = rng_contract.random_between(min_val, max_val, sender=owner)
+        for log in rng_contract.returnRandomNumber.from_receipt(random_number_receipt):
+            assert log.number >= min_val and log.number <= max_val
+            print(f"Repeated test - random number: {log.number}")
+
+        rng_contract.reset_lock(sender=owner)
+
+    print("All tests passed successfully.")
