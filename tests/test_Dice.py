@@ -1,6 +1,6 @@
 import pytest
 from ape import project, accounts
-from decimal import Decimal  # Import Decimal class from decimal module
+from decimal import Decimal  # Ensure Decimal is imported
 
 @pytest.fixture
 def owner(accounts):
@@ -8,8 +8,31 @@ def owner(accounts):
 
 @pytest.fixture
 def dice_contract(project, owner):
-    # Ensure contract is deployed using the owner account
+    # Assuming deployment is done here, if not adjust accordingly
     return owner.deploy(project.Dice)
+
+def test_calculate_payout_above(dice_contract, owner):
+    sliderInt = 70
+    expected_chance = 30  # 100 - 70
+    expected_multiplier = Decimal('98') / Decimal(expected_chance)
+
+    # Execute the payout calculation and check the stored result
+    dice_contract.calculate_payout(sliderInt, True, sender=owner)
+    calculated_multiplier = dice_contract.last_calculated_multiplier()
+
+    assert calculated_multiplier == pytest.approx(expected_multiplier, abs=1e-2), "Multiplier mismatch for roll above"
+
+def test_calculate_payout_below(dice_contract, owner):
+    sliderInt = 30
+    expected_chance = 29  # 30 - 1
+    expected_multiplier = Decimal('98') / Decimal(expected_chance)
+
+    # Execute the payout calculation and check the stored result
+    dice_contract.calculate_payout(sliderInt, False, sender=owner)
+    calculated_multiplier = dice_contract.last_calculated_multiplier()
+
+    assert calculated_multiplier == pytest.approx(expected_multiplier, abs=1e-2), "Multiplier mismatch for roll below"
+
 
 from ape.exceptions import ContractLogicError
 
