@@ -1,14 +1,11 @@
 from ape import accounts, project
 
-def test_mint_tokens(accounts):
+def test_calculate_Movement(accounts):
     # Deploy the contract
     owner = accounts[0]  # Assuming the first account is the owner
-    token_contract = project.Wolvercoin.deploy("Wolvercoin", "WVC", 18, sender=owner)
+    token_contract = project.Racing.deploy(sender=owner)
 
-    # Mint tokens to the first 10 users
-    for i in range(1, 8):
-        user = accounts[i]
-        token_contract.mint(user, 1000, sender=owner)
+    token_contract.calculateMovement(sender=owner)
 
     # Check balances and assert correct token amounts
     for i in range(1, 8):
