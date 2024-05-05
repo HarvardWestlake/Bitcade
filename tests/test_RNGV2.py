@@ -14,10 +14,14 @@ def test_random(accounts):
 
         chain.mine(3)
 
-        print("test")
+        balanceBefore = owner.balance
+
         randomNumber = token_contract.unlock(blockNumber, (i + 1) * 10, sender=owner)
-        assert randomNumber > 0
+        assert randomNumber >= 0
         assert randomNumber <= (i + 1) * 10
+
+        balanceAfter = owner.balance
+        assert balanceAfter == balanceBefore
         print(randomNumber)
 
 
