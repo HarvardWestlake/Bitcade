@@ -38,8 +38,8 @@ def _createStats():
     for i in range(1, 1000):
         rand1: uint256 = self._rand()
         rand2: uint256 = convert(keccak256(uint2str(rand1)), uint256)
-        rand3: uint256 = convert(keccak256(convert(rand2, bytes32)), uint256)
-        rand4: uint256 = convert(keccak256(convert(rand3, bytes32)), uint256)
+        rand3: uint256 = convert(keccak256(uint2str(rand2)), uint256)
+        rand4: uint256 = convert(keccak256(uint2str(rand3)), uint256)
 
         hp : uint64 = convert(rand1 % 1000, uint64)
         attack : uint64 = convert(rand2 % 500, uint64)
