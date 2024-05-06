@@ -25,7 +25,7 @@ def test_token_urls(accounts):
         assert token_contract.mint(user, i, sender=owner).status == 1
 
     for i in range (1, 8):
-        assert token_contract.tokenURI.call(i, sender=owner) == "https://rose-important-pony-8.mypinata.cloud/ipfs/QmexVFiUTpkuRJVLmcgKFd5SHVR7doCLipuVRy2kyNWzq2/" + str(i) + ".json/?pinataGatewayToken=Qpx843Sb13V6XEgDTppTxtZocDUYPdbjP0Q2MgeBHmn_GYac0ZD-OA98HT_z1CRK"
+        assert token_contract.tokenURI.call(i, sender=owner) == "ipfs://QmexVFiUTpkuRJVLmcgKFd5SHVR7doCLipuVRy2kyNWzq2/" + str(i) + ".json"
 
     print("Test passed, successfully linked urls to tokens.")
 

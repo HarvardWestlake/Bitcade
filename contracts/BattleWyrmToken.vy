@@ -13,11 +13,12 @@ ownerToOperators: HashMap[address, HashMap[address, bool]]
 # @dev Address of minter, who can mint a token
 minter: address
 
-baseURL: String[54]
+idToStats: HashMap[uint256, uint64]
 
 event Minting:
     receiving: indexed(address)
     tokenID: uint256
+
 
 @external
 def __init__():
@@ -25,8 +26,27 @@ def __init__():
     @dev Contract constructor.
     """
     self.minter = msg.sender
-    self.baseURL = "ipfs://QmexVFiUTpkuRJVLmcgKFd5SHVR7doCLipuVRy2kyNWzq2/"
+    self._createStats()
 
+@internal
+def _rand() -> uint256:
+    return 42
+
+@internal
+def _createStats():
+    _id : uint256 = 1
+    for i in range(1, 1000):
+        rand1: uint256 = self._rand()
+        rand2: uint256 = convert(keccak256(uint2str(rand1)), uint256)
+        rand3: uint256 = convert(keccak256(convert(rand2, bytes32)), uint256)
+        rand4: uint256 = convert(keccak256(convert(rand3, bytes32)), uint256)
+
+        hp : uint64 = convert(rand1 % 1000, uint64)
+        attack : uint64 = convert(rand2 % 500, uint64)
+        defense : uint64 = convert(rand3 % 100, uint64)
+        crit : uint64 = convert(rand4 % 100, uint64)
+        self.idToStats[_id] = crit + defense * 100 + attack * 100 * 1000 + hp * 100 * 1000 * 1000
+        _id += 1
 
 @external
 def balanceOf(_owner: address) -> uint256:
@@ -285,5 +305,5 @@ def burn(_tokenId: uint256):
 
 
 @external
-def tokenURI(tokenId: uint256) -> String[137]:
-    return concat(self.baseURL, uint2str(tokenId), ".json")
+def tokenURI(tokenId: uint256) -> uint64:
+    return self.idToStats[tokenId]
