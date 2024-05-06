@@ -51,9 +51,9 @@ def token_commit(_bet_amount: uint256, _user_address: address, _color: String[10
 @external
 def win_tokens():
     assert self.wheel_is_spinning, "Spin the wheel first!"
-    # RNG logic using block properties
+    self.random_outcome()  # Assume this decides the win
     if self.random_outcome():
-        win_amount: uint256 = self.token_amount * win_multiplier
+        win_amount: uint256 = self.token_amount * 2
         self.token.transfer(self.user_address, win_amount)
         log WinPaid(self.user_address, win_amount)
     self.reset_game()
