@@ -1,24 +1,16 @@
+from ape import accounts, project
 # Signup.vy
-@external
-def __init__():
-    """
-    Constructor function that initializes the mapping.
-    """
-    self.address_to_string_map: HashMap[address, String[64]] = {}
-
+contract Signup:
+# Mapping to store whether a wallet ID is registered
+registered_ids: public(map(address, bool))
 
 @external
-def store_string(user_string: String[64]):
-    """
-    Stores a string associated with the message sender's address.
-    """
-    self.address_to_string_map[msg.sender] = user_string
-
-
-@view
-@external
-def get_string(user_address: address) -> String[64]:
-    """
-    Retrieves a string associated with a given address.
-    """
-    return self.address_to_string_map[user_address]
+def register_wallet_id(self, wallet_id: address):
+    # Check if the wallet ID is already registered
+    if self.registered_ids[wallet_id]:
+        # Wallet ID is already registered, raise an error
+        raise "Wallet ID already registered"
+    
+    # Register the wallet ID
+    self.registered_ids[wallet_id] = True
+    return "Wallet ID registered successfully"
