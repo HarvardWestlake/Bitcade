@@ -4,7 +4,7 @@ plugins:
   - name: etherscan
 
 contracts:
- -  name: Wolvercoin
+  - name: Wolvercoin
     path: contracts/Wolvercoin.vy
-
-  
+  - name: Wheeler
+    path: contracts/Wheeler.vy

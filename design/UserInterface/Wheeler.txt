@@ -1,0 +1,61 @@
+FIGMA: 
+https://www.figma.com/file/A8RMqcd808MzGbO9SnEHjT/Wheeler?type=design&mode=design&t=seIHotKXNptYXWkU-0 
+
+DESIGN:
+Wheeler - (Wyatt)
+Course Module: Development of Interactive Arcade Games
+Section 1: Overview of Wheeler - A Family-Friendly Arcade Game
+Game Concept:
+-Title: Wheeler
+-Target Audience: Families and arcade enthusiasts
+-Core Mechanic: Predicting the outcome of a spinning wheel
+Gameplay Description:
+-Players use tokens to make predictions on a color (green or blue) on a spinning wheel.
+-The wheel features vibrant, alternating green and blue slots.
+-A ball, referred to as the Funball, is released onto the spinning wheel.
+-If the Funball lands on the color selected by the player, they earn points.
+Objective:
+-To collect the highest number of points through accurate predictions.
+Section 2: Game Design Elements
+Mechanics:
+-Prediction: Players use their tokens on a turn, and then they select the place where they want the ball to land (blue or green slot). The wheel spins *extremely* fast which makes it so players cannot accurately predict where the ball will stop, and it turns into the shell of a skill-based game
+-Results: The outcome is determined by where the Funball lands on the wheel after you choose for the wheel to stop.
+-Aesthetics:
+-The wheel is designed to be bright and appealing, with clear, contrasting colors to capture players’ attention.
+-Engaging animations for the spinning wheel and the motion of the Funball add to the game's excitement.
+Technology:
+-Utilizes physics-based animations to simulate the natural movement of the spinning wheel and Funball.
+-Designed for both standalone arcade machines and digital platforms, ensuring wide
+accessibility.
+Section 3: Educational Objectives
+Understanding Probability:
+- Introduces players to the concept of probability through gameplay, helping them understand the likelihood of various outcomes.
+Cognitive Skills Development:
+
+- Enhances players’ prediction and reasoning abilities as they decide which color to select based on observed patterns.
+	- Isn’t this just a 50/50 chance, there’s not really much skill involved, so I’m wondering if this game will eventually get boring to users, or what will motivate them to play
+	It’s like not a 50/50 chance really. You choose where you want the wheel to slow down so there is another factor involved through user control on top of the 50/50 chance
+	- Will there be zeros like there are on roulette so that we have a cut
+	Yeah we can do this
+Engagement and Interaction:
+-Promotes interaction and competition among players in a fun and safe environment.
+Section 4: Implementation and Testing
+Development Tools:
+-Game development software for creating responsive and engaging arcade experiences.
+-Use of real-time data tracking to refine gameplay balance and ensure fairness.
+Testing Phases:
+-Alpha testing: In-house testing to refine game dynamics and interface usability.
+-Beta testing: Public testing in select arcade locations to gather wide-ranging player feedback.
+-Release: Final tweaks and widespread deployment across arcade centers.
+Iterative Feedback Incorporation:
+-Continuous updates to game mechanics and features based on user engagement metrics and direct feedback.
+Section 5: Conclusion and Future Directions
+Game Impact:
+-Aimed at providing an engaging and dynamic arcade experience that challenges both mind and reflexes.
+- how does this challenge both mind and reflexes if the wheel spins too fast to see the 
+	There is an aspect of skill because you choose where to slow the wheel to a stop. 
+-Focuses on bringing people together in a competitive yet playful setting.
+Expansion Potential:
+-Possibility of introducing more colors and interactive elements to increase the game’s complexity and replay value.
+Community Building:
+-Development of a community platform for players to share scores, tips, and engage in events, enhancing the arcade gaming experience.
