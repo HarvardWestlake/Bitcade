@@ -50,13 +50,15 @@ def token_commit(_bet_amount: uint256, _user_address: address, _color: String[10
 
 @external
 def win_tokens():
-    assert self.wheel_is_spinning, "Spin the wheel first!"
-    self.random_outcome()  # Assume this decides the win
-    if self.random_outcome():
-        win_amount: uint256 = self.token_amount * 2
+    assert self.wheel_is_spinning, "Spin the wheel before checking for winnings."
+    # Call the random_outcome method and assign its return value to the variable 'outcome'
+    outcome: bool = self.random_outcome()
+    if outcome:
+        win_amount: uint256 = self.token_amount * win_multiplier
         self.token.transfer(self.user_address, win_amount)
         log WinPaid(self.user_address, win_amount)
     self.reset_game()
+
 
 @internal
 def reset_game():
@@ -66,9 +68,7 @@ def reset_game():
 
 @internal
 def random_outcome() -> bool:
-    # Convert block properties to bytes and concatenate them for hashing
     timestamp_bytes: bytes32 = convert(block.timestamp, bytes32)
     difficulty_bytes: bytes32 = convert(block.difficulty, bytes32)
     self.random_slowing_number = convert(keccak256(concat(timestamp_bytes, difficulty_bytes)), uint256)
-    # Assuming a simple outcome where 50% chance is considered a win
     return (self.random_slowing_number % 2) == 0
