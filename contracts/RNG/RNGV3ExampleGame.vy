@@ -1,7 +1,7 @@
 interface RandomNumberGenerator:
-    def lock() -> uint256: nonpayable
-    def unlock(numberRange: uint256) -> uint256: nonpayable
-    def lockAndUnlock(numberRange: uint256) -> uint256: nonpayable
+    def lockCurrent() -> uint256: nonpayable
+    def unlockLatest(numberRange: uint256) -> uint256: nonpayable
+    def updateLock(numberRange: uint256) -> uint256: nonpayable
 
 event Play:
     result : bool
@@ -21,12 +21,12 @@ def __init__(randomContract : address):
 
 @external
 @payable
-def play(diceValue : uint8) -> uint8:
+def playGame(diceValue : uint8) -> uint8:
     assert diceValue > 0, "too small"
     assert diceValue < 100, "too big"
 
     multiplier : decimal = 110.0 / (convert(diceValue, decimal) + 5.0)
-    randomNumber : uint8 = convert(self.rng.lockAndUnlock(100), uint8)
+    randomNumber : uint8 = convert(self.rng.updateLock(100), uint8)
     result : bool = False
     winnings : uint256 = 0
 
@@ -45,7 +45,7 @@ def play(diceValue : uint8) -> uint8:
 @external
 def cashOut(diceValue : uint8) -> uint8:
     multiplier : decimal = 110.0 / (convert(diceValue, decimal) + 5.0)
-    randomNumber : uint8 = convert(self.rng.unlock(100), uint8)
+    randomNumber : uint8 = convert(self.rng.unlockLatest(100), uint8)
     result : bool = False
     winnings : uint256 = 0
 
@@ -61,5 +61,5 @@ def cashOut(diceValue : uint8) -> uint8:
 @external
 @payable
 def startGame():
-    self.rng.lock()
+    self.rng.lockCurrent()
     self.bets[msg.sender] = msg.value

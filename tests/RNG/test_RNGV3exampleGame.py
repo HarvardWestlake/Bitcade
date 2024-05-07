@@ -3,24 +3,49 @@ from ape import chain
 
 def test_play(accounts):
     owner = accounts[0]
-    RNGcontract = project.RNGV2.deploy(sender=owner)
-    diceContract = project.RNGV2ExampleGame.deploy(RNGcontract, sender=owner, value=100000000000000000000000)
+    RNGcontract = project.RNGV3.deploy(sender=owner)
+    diceContract = project.RNGV3ExampleGame.deploy(RNGcontract, sender=owner, value=100000000000000000000000)
 
     player = accounts[1]
 
-    betReceipt = diceContract.bet(sender=player, value=1000000000000000000)
+    startGameReceipt = diceContract.startGame(sender=player, value=1000000000000000000)
 
-    for log in diceContract.Betted.from_receipt(betReceipt):
-        print(log.blockNumber)
-        print(log.msgValue)
+    print("\n\n\n\nSTART GAME")
+    print("contract after bet:")
+    print(diceContract.balance)
 
-    print("balls")
+    print("player after bet:")
+    print(player.balance)
 
     chain.mine(3)
 
-    playResult = diceContract.play.call(betReceipt.block_number, 99, sender=player)
+    betReceipt = diceContract.playGame(75, sender=player, value=1000000000000000000)
 
-    print(playResult)
+    print("\n\n\nPLAY GAME")
+    for log in diceContract.Play.from_receipt(betReceipt):
+        print(log.result) 
+        print(log.winnings) 
+        print(log.randomNumber)
+        print(log.multiplier)
+        print(log.player)
+    
+    print("contract after bet:")
+    print(diceContract.balance)
+
+    print("player after bet:")
+    print(player.balance)
+
+    chain.mine(3)
+
+    betReceipt = diceContract.cashOut(75, sender=player)
+
+    print("\n\n\nEND GAME")
+    for log in diceContract.Play.from_receipt(betReceipt):
+        print(log.result) 
+        print(log.winnings) 
+        print(log.randomNumber)
+        print(log.multiplier)
+        print(log.player)
 
     print("contract after bet:")
     print(diceContract.balance)
