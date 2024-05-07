@@ -15,18 +15,18 @@ def lockCurrent() -> bool:
 
 @external
 @payable
-def updateLock(numberRange : uint256) -> (uint256, uint256, uint256):
+def updateLock(numberRange : uint256) -> uint256:
     #unlock previous lock
     assert self.lockedTimestamp[msg.sender] > 0, "No number locked"
     assert self.lockedTimestamp[msg.sender] + 2 < block.number, "Unlocking number too early"
     prevBlock : uint256 = self.lockedTimestamp[msg.sender]
-    randomNumber: uint256 = convert(blockhash(prevBlock + 2), uint256)
+    randomNumber: uint256 = convert(blockhash(prevBlock + 2), uint256) % numberRange
 
     #update new lock
     self.lockedTimestamp[msg.sender] = block.number
 
     log returnRandomNumber(randomNumber)
-    return prevBlock, block.number, randomNumber
+    return randomNumber
 
 #returns the block number that occured after 2 blocks 
 #were mined from the original locked block number
@@ -39,3 +39,6 @@ def unlockLatest(numberRange: uint256) -> uint256:
     log returnRandomNumber(randomNumber)
     return randomNumber
 
+@external
+def getLockedBlock() -> uint256:
+    return self.lockedTimestamp[msg.sender]

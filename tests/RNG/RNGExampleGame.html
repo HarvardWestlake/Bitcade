@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dice Betting Game</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.5.3/web3.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Dice Betting Game</h1>
+        <button onclick="connectWallet()">Connect Wallet</button>
+        <div id="balance"></div>
+        <input type="range" class="slider" id="betAmount" min="1" max="99" step="1" value="50" oninput="updateSelectedNumber(this.value)">
+        <div class="selected-number" id="selectedNumber">Selected number: 50</div>
+        <br>
+        <button onclick="play()">Bet</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        let web3;
+        let contract;
+
+        async function connectWallet() {
+            // Check if Web3 has been injected by the browser (MetaMask)
+            if (typeof window.ethereum !== 'undefined') {
+                web3 = new Web3(window.ethereum);
+                // Request account access if needed
+                await window.ethereum.enable();
+                const accounts = await web3.eth.getAccounts();
+                const networkId = await web3.eth.net.getId();
+                //const deployedNetwork = YOUR_CONTRACT_ABI.networks[networkId];
+                //contract = new web3.eth.Contract(YOUR_CONTRACT_ABI.abi, deployedNetwork.address);
+                updateBalance(accounts[0]);
+            } else {
+                alert('Please install MetaMask to use this application.');
+            }
+        }
+
+        async function updateBalance(account) {
+            const balance = await contract.methods.balanceOf(account).call();
+            document.getElementById("balance").textContent = `SEPOLIA Eth Balance: ${web3.utils.fromWei(balance, 'ether')} SEPOLIA Eth`;
+        }
+
+        function updateSelectedNumber(value) {
+            document.getElementById("selectedNumber").textContent = `Selected number: ${value}`;
+        }
+
+        async function play() {
+            try {
+                const accounts = await web3.eth.getAccounts();
+                const result = await contract.methods.Play().send({ from: accounts[0] });
+                // Handle the result from the smart contract
+                console.log(result);
+            } catch (error) {
+                // Handle errors
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>
