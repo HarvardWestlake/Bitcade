@@ -49,15 +49,33 @@ def token_commit(_bet_amount: uint256, _user_address: address, _color: String[10
     log TokenCommitted(_user_address, _bet_amount, _color)
 
 @external
-def win_tokens():
+def win_tokens(source_address: address, destination_address: address):
     assert self.wheel_is_spinning, "Spin the wheel before checking for winnings."
-    # Call the random_outcome method and assign its return value to the variable 'outcome'
-    outcome: bool = self.random_outcome()
-    if outcome:
+    self.wheel_is_spinning = False  # Assume wheel stops as part of this function call
+    outcome: uint256 = self.random_outcome()
+
+    # Declare winning_color at a scope accessible throughout the function
+    winning_color: String[10] =""
+
+    if outcome == 1:
+        winning_color = "green"
+    else:
+        winning_color = "blue"
+
+    # Check if the selected color matches the winning color
+    if self.color_selected == winning_color:
         win_amount: uint256 = self.token_amount * win_multiplier
-        self.token.transfer(self.user_address, win_amount)
-        log WinPaid(self.user_address, win_amount)
+        # Ensure the source has enough tokens to pay out
+        assert self.token.balanceOf(source_address) >= win_amount, "Source does not have enough tokens to pay out winnings"
+        success: bool = self.token.transferFrom(source_address, destination_address, win_amount)
+        assert success, "Failed to transfer winnings to destination"
+        log WinPaid(destination_address, win_amount)
+
     self.reset_game()
+
+
+
+
 
 
 @internal
@@ -67,8 +85,8 @@ def reset_game():
     self.is_slowing_down = False
 
 @internal
-def random_outcome() -> bool:
+def random_outcome() -> uint256:
     timestamp_bytes: bytes32 = convert(block.timestamp, bytes32)
     difficulty_bytes: bytes32 = convert(block.difficulty, bytes32)
     self.random_slowing_number = convert(keccak256(concat(timestamp_bytes, difficulty_bytes)), uint256)
-    return (self.random_slowing_number % 2) == 0
+    return (self.random_slowing_number % 2) + 1  # This will yield either 1 or 2

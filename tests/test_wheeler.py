@@ -63,7 +63,7 @@ def test_token_commit_and_win(accounts):
     # Spin the wheel and try to win tokens
     wheeler_contract.spin_wheel(sender=user)
     initial_balance = wolvercoin_contract.balanceOf(user)
-    wheeler_contract.win_tokens(sender=user)
+    wheeler_contract.win_tokens(test_account,user,sender=user)
     expected_winning = bet_amount * 2  # Assuming win_multiplier is 2
-    assert wolvercoin_contract.balanceOf(user) <= initial_balance + expected_winning, "User balance should increase by the expected winning amount"
+    assert wolvercoin_contract.balanceOf(user) == initial_balance + expected_winning, "User balance should increase by the expected winning amount"
     print("Test passed, user won tokens after spinning the wheel.")
