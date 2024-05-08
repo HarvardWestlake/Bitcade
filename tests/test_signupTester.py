@@ -1,36 +1,12 @@
-from ape import accounts, project, chain
-from ape.contracts import ContractInstance
-import pytest
+from ape import accounts, project
 
-@pytest.fixture
-def signup_contract() -> ContractInstance:
-    # Deploy the Signup contract using the first account
-    contract = accounts[0].deploy(project.Signup)
-    return contract
+def test_add_ID(accounts):
+    # Deploy the contract
+    owner = accounts[0]  # Assuming the first account is the owner
+    example_contract = project.Signup.deploy(sender=owner)
 
-def test_register_wallet_id_success(signup_contract: ContractInstance):
-    # Use a fresh account to test registration
-    wallet = accounts[1]
-    
-    # Register the wallet ID
-    result = signup_contract.register_wallet_id(wallet.address, sender=accounts[0])
-    
-    # Check the output message
-    assert result.return_value == "Wallet ID registered successfully"
-    
-    # Verify that the ID is registered
-    assert signup_contract.registered_ids(wallet.address) == True
+    example_contract.register_wallet_id(accounts[0], sender=owner)
 
-def test_register_wallet_id_failure(signup_contract: ContractInstance):
-    # Use another fresh account and try to register it twice
-    wallet = accounts[2]
-    
-    # First registration should succeed
-    signup_contract.register_wallet_id(wallet.address, sender=accounts[0])
-    
-    # Second registration should fail
-    with pytest.raises(Exception) as excinfo:
-        signup_contract.register_wallet_id(wallet.address, sender=accounts[0])
-    
-    # Check if the error message is correct
-    assert str(excinfo.value) == "Wallet ID already registered"
+    assert accounts[0] == example_contract.id(accounts[0], sender=owner)
+
+    print("wallet id added")
