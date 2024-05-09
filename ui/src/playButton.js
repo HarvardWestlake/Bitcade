@@ -1,7 +1,6 @@
 const ethers = require('ethers');
-const { ExampleGameContract } = require('./contracts/exampleGame');
 
-async function main() {
+document.addEventListener("DOMContentLoaded", async function() {
     // Check if MetaMask is installed
     if (typeof window.ethereum !== 'undefined') {
         // Request account access if needed
@@ -11,28 +10,37 @@ async function main() {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
 
-        // Load the contract
-        const contractAddress = prompt("Enter the contract address:");
-        const exampleGameContract = new ethers.Contract(contractAddress, ExampleGameContract.interface, signer);
+        // Placeholder for the ExampleGame contract
+        const exampleGameContract = {
+            example_game_address: async function() {
+                // Placeholder for fetching example game address
+                return 'http://examplegame.com';
+            }
+        };
 
-        // Get the example game address
-        const exampleGameAddress = await exampleGameContract.example_game_address();
-
-        // Add event listener to the button
+        // Add event listener to the playGame button
         const playButton = document.querySelector(".play-game-button");
-        playButton.addEventListener("click", function() {
-            // Redirect to the example game URL
-            window.location.href = "examplegame.html?gameAddress=" + exampleGameAddress;
+        playButton.addEventListener("click", async function() {
+            try {
+                // Placeholder for getting the contract address (you can customize this)
+                const contractAddress = prompt("Enter the contract address:");
+                
+                // Get the example game address
+                const exampleGameAddress = await exampleGameContract.example_game_address();
+                
+                // Redirect to the example game URL
+                window.location.href = `examplegame.html?gameAddress=${exampleGameAddress}&contractAddress=${contractAddress}`;
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            }
         });
 
-        // Log user address and example game address
+        // Log user address
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         const userAddress = accounts[0];
         console.log("User Address:", userAddress);
-        console.log("Example Game Address:", exampleGameAddress);
     } else {
         console.error('MetaMask is not installed');
     }
-}
-
-main().catch(console.error);
+});
