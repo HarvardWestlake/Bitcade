@@ -1,30 +1,56 @@
 from ape import accounts, project
 
 def test_play_game():
-    # Deploy the contract
-    owner = accounts[0]  # Assuming the first account is the owner
-    distributor = accounts[1]  # Assuming the second account is a distributor
-    player = accounts[2]  # Assuming the third account is a player
+    """
+    A function to test the game playing mechanism including deployment, playing,
+    and revenue distribution of a smart contract.
+    """
+    # Step 1: Setup
+    print("Starting test of the gaming contract...")
     
+    # Assign accounts for different roles
+    owner = accounts[0]  # Account 0 is designated as the owner of the contract
+    distributor = accounts[1]  # Account 1 is designated as the distributor
+    player = accounts[2]  # Account 2 is designated as the player
+    
+    print(f"Owner account: {owner.address}")
+    print(f"Distributor account: {distributor.address}")
+    print(f"Player account: {player.address}")
+    
+    # Step 2: Deploy the contract
+    print("Deploying the game contract...")
     game_contract = project.UIDistributors.deploy(sender=owner)
+    print("Contract deployed successfully.")
     
-    # Register a game with id 1
+    # Step 3: Register a game within the contract
     game_id = 1
+    print(f"Registering game with ID: {game_id}")
     game_contract.register_game(game_id, owner.address, distributor.address, sender=owner)
+    print("Game registered successfully.")
     
-    # Simulate a player playing the game
-    payment_amount = 1000  # Assume the cost to play the game is 1000 wei
+    # Step 4: Simulate playing the game
+    payment_amount = 1000  # The cost in wei for playing the game
+    print(f"Simulating a game play with payment of {payment_amount} wei...")
     game_contract.play_game(game_id, sender=player, value=payment_amount)
+    print("Game play simulated successfully.")
     
-    # Calculate expected payments
-    expected_distributor_payment = payment_amount * 60 // 100  # 60%
-    expected_owner_payment = payment_amount - expected_distributor_payment  # 40%
+    # Step 5: Handle payments
+    print("Calculating expected payments...")
+    # Calculate expected payment to distributor
+    expected_distributor_payment = payment_amount * 60 // 100  # Distributor gets 60%
+    # Calculate expected payment to owner
+    expected_owner_payment = payment_amount - expected_distributor_payment  # Owner gets the rest 40%
     
-    # Assert the balances are updated correctly
+    print(f"Expected distributor payment: {expected_distributor_payment}")
+    print(f"Expected owner payment: {expected_owner_payment}")
+    
+    # Step 6: Validate the payments
+    # Check distributor's balance
     assert distributor.balance == expected_distributor_payment, "Distributor payment incorrect."
+    # Check owner's balance
     assert owner.balance == expected_owner_payment, "Owner payment incorrect."
     
     print("Test passed: Revenue split correctly between owner and distributor.")
 
-# Run the test
+# Run the test function to check the contract
 test_play_game()
