@@ -8,4 +8,4 @@ contracts_folder: contracts
 tasks:
   test:
     description: "Run tests"
-    command: "pytest"
+    command: "ape test"
