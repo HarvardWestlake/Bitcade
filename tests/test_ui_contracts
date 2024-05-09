@@ -1,0 +1,30 @@
+from ape import accounts, project
+
+def test_play_game():
+    # Deploy the contract
+    owner = accounts[0]  # Assuming the first account is the owner
+    distributor = accounts[1]  # Assuming the second account is a distributor
+    player = accounts[2]  # Assuming the third account is a player
+    
+    game_contract = project.UIDistributors.deploy(sender=owner)
+    
+    # Register a game with id 1
+    game_id = 1
+    game_contract.register_game(game_id, owner.address, distributor.address, sender=owner)
+    
+    # Simulate a player playing the game
+    payment_amount = 1000  # Assume the cost to play the game is 1000 wei
+    game_contract.play_game(game_id, sender=player, value=payment_amount)
+    
+    # Calculate expected payments
+    expected_distributor_payment = payment_amount * 60 // 100  # 60%
+    expected_owner_payment = payment_amount - expected_distributor_payment  # 40%
+    
+    # Assert the balances are updated correctly
+    assert distributor.balance == expected_distributor_payment, "Distributor payment incorrect."
+    assert owner.balance == expected_owner_payment, "Owner payment incorrect."
+    
+    print("Test passed: Revenue split correctly between owner and distributor.")
+
+# Run the test
+test_play_game()
