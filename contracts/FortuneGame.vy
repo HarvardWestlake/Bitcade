@@ -33,6 +33,7 @@ event GameStarted:
 
 current_val: public (uint256)
 token_values: public (HashMap[uint256, uint256])
+briefcaseNumbers: uint256[3]
 @payable
 @external
 def start_game ():
@@ -86,7 +87,6 @@ def get_random_number(seed: uint256) -> uint256:
 def choose_briefcases():
     index: uint256 = 0
     values: uint256[3] = [0, 0, 0]
-    briefcaseNumbers: uint256[3] = [0, 0, 0]
     for i in range(14):
         self.token_values[i] = self.random_number(TOKEN_VALUES_RANGE)
     
@@ -95,6 +95,7 @@ def choose_briefcases():
         values[i] = self.token_values[briefCase_num]
         self.chosen_briefcases[msg.sender][briefCase_num] = values[i]
         self.token_values[briefCase_num] = 0
+        self.briefcaseNumbers[i] = briefCase_num
 
 @external
 def open_briefcase(_briefcase_number: uint256):
@@ -103,6 +104,22 @@ def open_briefcase(_briefcase_number: uint256):
     log BriefCaseOpened (msg.sender, _briefcase_number, briefcase_value)
     average_tokens: uint256 = self.calculateAverageTokens()
     log OfferMade (msg.sender, average_tokens)
+    remaining_briefcase: uint256 = self._find_remaining_briefcase(msg.sender)
+    winnings: uint256 = self.chosen_briefcases[msg.sender][remaining_briefcase]
+    log GameFinished (msg.sender, winnings)
+
+    self.token_balance[msg.sender] += winnings
+    self.chosen_briefcases[msg.sender][remaining_briefcase] = 0
+    self.has_chosen[msg.sender] = True
+
+    
+
+@internal
+def _find_remaining_briefcase(player:address) -> uint256:
+    for i in range (3):
+        if (self.chosen_briefcases[msg.sender][self.briefcaseNumbers[i]] != 0):
+            return self.briefcaseNumbers[i]
+    return 0
 
 
             
