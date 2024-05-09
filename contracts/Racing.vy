@@ -10,7 +10,6 @@ void calculateMovement(Racers)
     Updates the position value in the stats array for each racer if they change
     Calls displayMovement()
 
-# Assuming you have defined your structs and HashMap as follows:
 # Struct for stats
 struct Stats:
     nft_address: address
@@ -19,10 +18,14 @@ struct Stats:
     distance_traveled: uint256
     position: uint256
 
+# HashMap with address as key and Stats struct as value
+racers: public(HashMap[address, Stats])
+
+# Random number variable
+random_number: public(uint256)
+
 # Define the contract
 contract calculateMovement:
-    # HashMap with address as key and Stats struct as value
-    racers: HashMap[address, Stats]
 
     # Method to calculate racer's speed
     def calculateRacerSpeed(self, racer_address: address) -> uint256:
@@ -30,10 +33,10 @@ contract calculateMovement:
         racer_stats: Stats = self.racers[racer_address]
 
         # Get a random number
-        
+        random_number = 2
 
         # Calculate racer's speed based on random number, distance traveled, and position
-        racer_speed: uint256 = (racer_stats.distance_traveled + racer_stats.position) * random_number
+        racer_speed: uint256 = racer_stats.racer_speed * random_number
 
         # Update racer's speed in the stats struct
         self.racers[racer_address].racer_speed = racer_speed

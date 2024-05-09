@@ -3,15 +3,17 @@ from ape import accounts, project
 def test_calculate_Movement(accounts):
     # Deploy the contract
     owner = accounts[0]  # Assuming the first account is the owner
-    token_contract = project.Racing.deploy(sender=owner)
+    race_contract = project.Racing.deploy(sender=owner)
 
-    token_contract.calculateMovement(sender=owner)
+    race_contract.calculateMovement(sender=owner)
 
-    # Check balances and assert correct token amounts
+    # Check stats and assert speed changed
     for i in range(1, 8):
-        assert token_contract.balanceOf(accounts[i]) == 1000
+        Speed: speed = racers[accounts[i]].racer_speed
 
-    print("Test passed, each of the first 10 users received 1000 tokens.")
+        assert race_contract.racers[accounts[i]].racer_speed == racer_speed * 2
+
+    print("Test passed, racer speed changed.")
 
 # Test the method you wrote to play the game
 # Commit after you get this test working!
