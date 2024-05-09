@@ -9,7 +9,7 @@
             },
             {
                 "name": "result",
-                "type": "bytes32",
+                "type": "string",
                 "indexed": false
             }
         ],
@@ -17,7 +17,7 @@
         "type": "event"
     },
     {
-        "stateMutability": "nonpayable",
+        "stateMutability": "view",
         "type": "function",
         "name": "getAccountBalance",
         "inputs": [],
@@ -41,7 +41,7 @@
         ]
     },
     {
-        "stateMutability": "nonpayable",
+        "stateMutability": "view",
         "type": "function",
         "name": "rand",
         "inputs": [],
