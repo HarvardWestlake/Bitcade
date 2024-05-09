@@ -4,7 +4,6 @@ games: public(HashMap[uint256, HashMap[address, bytes32]])
 player_hands: public(HashMap[uint256, HashMap[address, uint256[2]]])
 computer_hands: public(HashMap[uint256, uint256[2]])
 
-
 @internal
 @view
 def getAccountBalance(player: address) -> uint256:
@@ -18,10 +17,6 @@ def startGame(player: address, bet: uint256):
     # Check if player has sufficient balance
     bal : uint256 = self.getAccountBalance(player) 
     assert bal >= bet, "Insufficient balance"
-
-    # Deduct bet from player's balance
-    # self.balances[player] -= bet
-    # This will be handled by another contract
 
     # Create a new game with a unique game ID
     self.game_id += 1
@@ -39,9 +34,18 @@ def startGame(player: address, bet: uint256):
     self.player_hands[game_id][player] = player_hand
     self.computer_hands[game_id] = computer_hand
 
+@external
+@view
+def get_player_hand(game_id: uint256, player: address) -> uint256[2]:
+    return self.player_hands[game_id][player]
+
+@external
+@view
+def get_computer_hand(game_id: uint256) -> uint256[2]:
+    return self.computer_hands[game_id]
 
 # Placeholder for random number generation
 @internal
 def generate_random_number() -> uint256:
     # This function will be handled by another contract
-    return 1  # Replace with actual random number generation logic"
+    return 1  # Placeholder logic
