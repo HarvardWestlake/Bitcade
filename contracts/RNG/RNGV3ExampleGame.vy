@@ -44,6 +44,8 @@ def playGame(diceValue : uint8) -> uint8:
     
 @external
 def cashOut(diceValue : uint8) -> uint8:
+    assert diceValue > 0, "too small"
+    assert diceValue < 100, "too big"
     multiplier : decimal = 110.0 / (convert(diceValue, decimal) + 5.0)
     randomNumber : uint8 = convert(self.rng.unlockLatest(100), uint8)
     result : bool = False
