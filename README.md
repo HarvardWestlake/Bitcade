@@ -8,7 +8,12 @@ Welcome to **Bitcade**, the fully decentralized arcade platform where game logic
 - **Developer Incentives**: Developers can build front-facing applications and receive a percentage of arcade tickets distributed, promoting a collaborative and rewarding ecosystem.
 - **Dynamic Game Library**: Launching with popular titles such as **Crash** and **Blinko**, with plans to expand the library continually.
 
-## Getting Started
+## Documentation Links
+
+- [Introduction to Frontend Development with React and Ethers.js](./documentation/howto/IntroDevelopUI.md)
+- [Vyper Contract Development Guide](./documentation/howto/IntroDevelopVyper.md)
+
+These guides will help you understand the processes for developing the frontend and smart contracts for our application.
 
 ### Prerequisites
 
@@ -32,3 +37,4 @@ ape test
 - Push to the branch: git push origin feature/YourFeatureName
 - Submit a pull request: We welcome all contributions and will review your pull request.
 - Contributors whose games or apps significantly drive ticket distribution will earn a percentage of those tickets. Join us in building the future of decentralized arcade gaming!
+
