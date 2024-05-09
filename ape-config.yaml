@@ -1,6 +1,12 @@
-name: bitcade
+name: blocade
 plugins:
   - name: vyper
   - name: etherscan
 
 contracts_folder: contracts
+
+tasks:
+  test:
+    description: Run tests
+    commands:
+      - pytest tests/
