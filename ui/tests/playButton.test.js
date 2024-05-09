@@ -2,7 +2,7 @@ const { test, expect } = require('@playwright/test');
 
 test('Test Play Game Button', async ({ page, browser }) => {
   // Navigate to the page
-  await page.goto('http://localhost:8000');
+  await page.goto('http://localhost:3000');
 
   // Stub window.ethereum
   await page.evaluate(() => {
@@ -32,7 +32,7 @@ test('Test Play Game Button', async ({ page, browser }) => {
   // Click the "Play Game" button
   await page.click('.play-game-button');
 
-  // Wait for navigation to the game URL
+  // Wait for navigation to the example game URL
   await page.waitForURL('http://examplegame.com');
 
   // Verify that the user is redirected to the correct game URL
