@@ -22,7 +22,9 @@ const HorseRacingGameComponent = ({ contractAddress }) => {
       : null;
 
   const joinGame = async () => {
-    if (!gameContract) return;
+    if (!gameContract) {
+      console.log('Join game button is pressed');
+    }
     setLoading(true);
     try {
       // Call the joinGame method in the smart contract
