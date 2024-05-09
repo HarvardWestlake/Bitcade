@@ -1,8 +1,9 @@
 const { test, expect } = require('@playwright/test');
+const { ExampleGameComponent } = require('../../src/games/ExampleGameComponent');
 
 test('Test Play Game Button', async ({ page, browser }) => {
-  // Navigate to the page
-  await page.goto('http://localhost:3000');
+  // Navigate to the local hosting URL
+  await page.goto('http://localhost:3000/');
 
   // Stub window.ethereum
   await page.evaluate(() => {
@@ -13,13 +14,6 @@ test('Test Play Game Button', async ({ page, browser }) => {
     };
   });
 
-  // Stub prompt to provide contract address
-  await page.evaluate(() => {
-    window.prompt = function () {
-      return '0xContractAddress';
-    };
-  });
-
   // Stub contract interaction
   await page.evaluate(() => {
     window.exampleGameContract = {
@@ -27,6 +21,11 @@ test('Test Play Game Button', async ({ page, browser }) => {
         return 'http://examplegame.com';
       }
     };
+  });
+
+  // Stub prompt to provide contract address
+  page.on('dialog', async dialog => {
+    await dialog.accept('0xContractAddress');
   });
 
   // Click the "Play Game" button
