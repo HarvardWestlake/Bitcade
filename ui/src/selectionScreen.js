@@ -50,6 +50,9 @@ function selectionScreen() {
       <div className="selectionScreen">
         <Header />
         <div className="content">
+        <head>
+          <title>WYRM</title>
+        </head>
           <div className="side-panel" style={{ flex: '15%' }}></div>
           <div className="main-panel" style={{ flex: '70%' }}>
             {
