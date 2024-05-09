@@ -10,6 +10,7 @@ has_chosen: HashMap [address, bool]
 random_seed: bytes32
 token_balance: HashMap [address, uint256]
 
+
 event BriefCaseOpened:
     playerAddress: address
     briefCaseNumber: uint256
@@ -31,7 +32,6 @@ event GameStarted:
     entry_fee: uint256
 
 current_val: public (uint256)
-_chosen_briefcases: public (HashMap[uint256, uint256])
 token_values: public (HashMap[uint256, uint256])
 @payable
 @external
@@ -51,7 +51,7 @@ def random_number(maximum_value: uint256) -> uint256:
 @internal
 def calculateAverageTokens() -> uint256: 
     total: uint256 = 0
-    array: uint256[3] = [self._chosen_briefcases[0], self._chosen_briefcases[1], self._chosen_briefcases[2]]
+    array: uint256[3] = [self.chosen_briefcases[msg.sender][0], self.chosen_briefcases[msg.sender][1], self.chosen_briefcases[msg.sender][2]]
     for i in array:
         total += i
 
@@ -84,6 +84,27 @@ def get_random_number(seed: uint256) -> uint256:
     return (seed % 15) + 1
 @external
 def choose_briefcases():
+    index: uint256 = 0
+    values: uint256[3] = [0, 0, 0]
+    briefcaseNumbers: uint256[3] = [0, 0, 0]
     for i in range(14):
-        briefCase_value: uint256 = self.random_number(TOKEN_VALUES_RANGE)
+        self.token_values[i] = self.random_number(TOKEN_VALUES_RANGE)
     
+    for i in range (3):
+        briefCase_num: uint256 = self.random_number(NUM_BRIEFCASES)
+        values[i] = self.token_values[briefCase_num]
+        self.chosen_briefcases[msg.sender][briefCase_num] = values[i]
+        self.token_values[briefCase_num] = 0
+
+@external
+def open_briefcase(_briefcase_number: uint256):
+    briefcase_value: uint256 = self.chosen_briefcases[msg.sender][_briefcase_number]
+    self.chosen_briefcases[msg.sender][_briefcase_number] = 0
+    log BriefCaseOpened (msg.sender, _briefcase_number, briefcase_value)
+    average_tokens: uint256 = self.calculateAverageTokens()
+    log OfferMade (msg.sender, average_tokens)
+
+
+            
+        
+
