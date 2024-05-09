@@ -1,0 +1,39 @@
+Rewards Techspec
+
+Variables:
+- uint256 public price; // price of NFT
+- address[] bronzeNFT; // array of hashes of NFTs in bronze category
+- address[] silverNFT; // same as prev
+- address[] goldNFT; // same as prev – allows user to filter the NFTs by category
+- mapping(address => uint256) NFTPrices; // contains the price of each NFT
+
+Methods:
+
+//Note: much of this should be accomplishable with ethers.js which links a button click to a webpage
+
+purchaseNFT(address _address, uint256 _price) external:
+    // Activated when the purchaseNFT button is clicked
+    // Prompt user to confirm the payment (link to confirm purchase figma/image)
+    // Takes in address and subtracts the price from the account it is linked to
+    // Adds the NFT to the user’s account
+
+filterNFTs(uint256 _rank) external:
+    //Clicking on the filterNFT button opens a drop down menu
+    //Checking boxes by the type of NFT (gold, silver, bronze) triggers method and translates it to a number
+    // 0 is highest rank (gold), 1 is middle (silver), etc
+
+mintNFTs() external:
+    // NFTs are minted to a central wallet
+
+goToRewardsPage() external:
+    // When clicked, directs user from main page of arcade to the rewards page
+
+displayNFT(bytes32 _hashOfNFT) external:
+    // When the specific NFT is clicked, redirects user to a page with the NFT, description, and option to purchase (on the figma called …Click on NFT)
+
+displayOwnedNFTs(address _user) external:   
+    // Takes in user’s address and directs them to the Owned NFT’s page, which lists out all the NFTs in their account
+
+displayPurchasableNFTs(address _user) external returns (bytes32[] memory):
+    // Determines the tokens owned by the user and outputs a list of NFT hashes that can be purchased by the user
+    // An NFT can be purchased if its price is less than or equal to the user’s balance

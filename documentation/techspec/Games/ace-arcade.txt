@@ -1,0 +1,42 @@
+Ace Arcade - (Luke)
+
+
+Variables:
+
+mapping(address => uint256) public playerBalance : stores the token balance for each player
+mapping(uint256 => address) public currentGamePlayer : Links a game ID to a player address
+Mapping (uint256 => uint256[]) public playerHands : stores the hands of each player
+Mapping (uint256 => uint256[]) public computerHands : stores the hands of the computer
+
+
+Methods:
+
+Def startGame (player: address, bet: uint256):
+Checks if the player has sufficient balance for the bet
+Deducts the bet from the players balance
+Creates a new game with a unique game ID
+Sets a random seed using block timestamp
+Distributes initial dice/cards
+Stores the player’s and computer’s hands in corresponding mappings
+
+Def genereateRandom (gameID: uint256) -> uint256:
+Uses the random seed to generate a random number.
+Random logic should be this: 1/13 chance for numbers 1-9, (1 represents ace), 4/13 chance for 10
+(I think someone else implemented a random number generator)
+
+Def hit (gameID: uint256)
+Generates a random token using generateRandom.
+Adds the dice to the player's hand.
+Checks if the player busts (total > 21).
+Emits an event indicating the dice added and if the player busts.
+
+Def stand (gameID: uint256):
+Reveals the computer’s hidden dice
+The computer continues to draw until its total is at least 17
+Checks if the compute busts
+
+Def resolveGame (gameID: uint256):
+Compares the player’s and computer’s totals
+If the player wins, doubles their bet and adds to their balance
+If the computer wins, transfer the bet to the house balance
+If both bust, computer wins by default

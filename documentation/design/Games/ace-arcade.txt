@@ -1,0 +1,44 @@
+Ace Arcade - (Luke)
+
+Game Concept:
+A player competes against the computer to reach a sum of 21 points or as close as possible without exceeding it.
+The game uses numbers from 1 to 10, and special aces worth 1 or 11 points.
+Blackjack?
+No it’s called Ace Arcade lol (can’t use blackjack bc we’re not gambling)
+
+Game Setup:
+The player initiates a round by sending a transaction with their bet to a smart contract.
+The smart contract generates a random seed for the round using the block timestamp and a secret stored value.
+
+Gameplay:
+Both the player and computer receive two tokens initially.
+The player's tokens are revealed; only one of the computer’s tokens is shown.
+The player can "hit" (request another number to be added) or "stand" (keep their current total).
+How will this stuff work relative to the smart contract at the beginning? Is it added on or new contract created
+What do u mean by the smart contract at the beginning
+The smart contract generates random numbers using the seed and a counter incremented with each hit.
+The player can hit until they stand or bust (exceed 21).
+If the player busts, the house wins. If the player stands, the house reveals its second token and draws until its total is at least 17.
+The closest total to 21 without busting wins the round.
+If both computer and player bust, computer wins the round
+
+Random Number Generation:
+The smart contract uses a PRNG with the random seed and counter to generate each token.
+Maybe this can use William’s random number generator, range 1-11
+Regular tokens range from 1 to 10; aces (1 or 11 points) have a 1 in 13 chance of appearing.
+System should have a method that automatically decides whether the ace should be 1 or 11 based on the other numbers on the table. Or it could display the 
+Numbers 1-9 have a 1/13 chance of occurring, with a 1 signifying an “ace” that can either represent a 1 or an 11 in your total sum. 10 has a 3/13 chance. 
+Arbitrary 3/13 chance tips the scales against the house—if we want to keep user “winrate” below 50% like in traditional Blackjack (~42%), we should keep 10 rate lower. Seems also this should be transparent in general to allow for independent user verifiability.
+In traditional blackjack, 4 out of the 13 cards for each suit represent a 10 (10, jack, queen, king), so I think it should be 4/13 actually. I’m not really sure how this number generation would be different from traditional blackjack
+
+Game Resolution:
+The smart contract determines the winner based on final totals.
+Player win: bet amount doubled and returned. House win: bet amount transferred to house.
+
+User Experience / Interface:
+The design should be simple, and not try to draw the user in in any way with bright colors or fancy graphics like a casino
+The numbers will be visualized as numbered dice. The user’s hand will be on the bottom of the screen, while the house’s hand will be on the top of the screen. There will be an unrevealed dice at the end of the chain of dice, that if you click on it will quantify a “hit.” There will also be a button to stand
+There should be a textbox at the top to input the amount of tokens you want to bet for the round. 
+
+Future Functionality:
+We can implement more of the rules of blackjack, such as splitting if you get a pair of numbers

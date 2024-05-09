@@ -1,0 +1,50 @@
+Ethers.js (a Plugins/Library we will be using)
+-- how to connect to Blockchain
+
+Interface: 
+	def startGame (uint256 gameId, address player)
+    - a generic method that will start (link/direct to) the corresponding game 
+    - this method will need the functions from Ethers.js
+        - Connect to MetaMask
+        - Get the user/signer/player on MetaMask
+        - ask the user/signer/player to sign the transaction
+
+Variables:
+	gameContract: public(map(bytes32, address))
+    - find the address/webpage of the corresponding game on blockchain
+
+	gamesDescription: HashMap[uint256, String, String, Image]
+    - complete map of all available games
+    - linking them to their address on Blockchain
+        with their:
+        - descriptions
+        - corresponding image
+    
+	backgroundColor: ______
+	textColor: ______
+
+Methods: 
+    selectGame(uint256)
+        - Select game by ID → takes you to the game description page
+        - Calls getGameDesription afterwards
+    
+    getGameDescription (name: bytes32, address: address)
+        - Navigate to the page that has more description about this game
+        - Button “Play Game” calls startGame(uint256 gameID, address player)
+
+	orderAllGame (String order)
+        - Rearrange the games based on the order that the user want 
+            - Popularity 
+                - getter to get the number of times that people sign the transaction to get to the game
+            - Released time 
+                - date that the block showsup on the blockchain
+            - Recommended 
+                - we pick the order
+
+UIs:
+	button “Play Game” 
+        - Links to game page by calling startGame (uint256 gameId, address player)
+	button toDescription
+        - Linked to the game images on selection screen and links to Game Description screen
+	Animation of each games’ image 
+        - Add animation for each games’ icon to make the game more attractive 
