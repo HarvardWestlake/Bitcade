@@ -1,5 +1,7 @@
 import brownie
 import pytest
+from contracts.Rewards.NFT import NFT
+
 
 @pytest.fixture
 def nft_rewards(project):
