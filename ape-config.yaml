@@ -7,6 +7,5 @@ contracts_folder: contracts
 
 tasks:
   test:
-    description: Run tests
-    commands:
-      - pytest tests/
+    description: "Run tests"
+    command: "pytest"
