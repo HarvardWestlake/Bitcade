@@ -1,0 +1,124 @@
+/* Overall Theme and Style */
+body {
+  background-color: #1a1a1a; /* dark background */
+  color: #ffffff;
+  font-family: "Arial", sans-serif;
+}
+
+a {
+  color: #21d4fd; /* electric blue for links */
+  text-decoration: none;
+}
+
+a:hover {
+  color: #49fcae; /* neon green on hover */
+}
+
+/* Typography */
+h1,
+h2,
+h3 {
+  font-weight: bold;
+}
+
+/* Neon Sign Animation for Arcade */
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.arcade-sign {
+  font-size: 2em;
+  color: #ff073a; /* vibrant red */
+  animation: blink 1s linear infinite;
+}
+
+/* Layout and Structure */
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
+.logo {
+  cursor: pointer;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 20px;
+}
+
+.search-bar {
+  display: none; /* hidden by default */
+}
+
+.search-bar.active {
+  display: block; /* show on click */
+}
+
+/* Main Banner */
+.banner {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background-image: url("banner.jpg"); /* example path */
+  background-size: cover;
+  background-position: center;
+}
+
+.carousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
+
+/* Body */
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  padding: 20px;
+}
+
+.game-thumbnail {
+  width: 100%;
+  height: auto;
+}
+
+/* Footer */
+footer {
+  background-color: #262626; /* slightly lighter than body for contrast */
+  color: #ccc;
+  padding: 20px;
+  text-align: center;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.newsletter {
+  margin-top: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nav-menu {
+    flex-direction: column;
+  }
+
+  .games-grid {
+    grid-template-columns: 1fr;
+  }
+}
