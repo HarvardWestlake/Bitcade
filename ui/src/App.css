@@ -1,11 +1,12 @@
+/* Arcade-themed header */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #282c34; /* Lightning theme black background */
-  color: #FFD700; /* Lightning theme yellow text */
-  height: 40px; /* Ensure header doesn't change in height */
+  background-color: #010102; /* Deep blue background */
+  color: #f31919; /* Red text */
+  height: 40px;
 }
 
 .header-left,
@@ -14,45 +15,45 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-grow: 1; /* Give each section the ability to grow */
+  flex-grow: 1;
 }
 
 .header-middle {
-  flex-grow: 2; /* Allow the middle section to take up more space if needed */
+  flex-grow: 2;
 }
 
-/* Example fixed widths for left and right sections to bring them closer to the center */
 .header-left,
 .header-right {
-  flex-basis: 300px; /* Adjust this value as needed */
-  flex-grow: 0; /* Prevent these sections from growing */
+  flex-basis: 200px; /* Adjusted width */
+  flex-grow: 0;
 }
 
-/* CSS for the connected address to reduce its width */
+/* Adjusted font size for wallet address */
 .wallet-address {
-  font-size: 0.85em; /* Small enough to fit without enlarging the header */
-  white-space: nowrap; /* Keep the address in one line */
-  overflow: hidden; /* Hide overflow */
-  text-overflow: ellipsis; /* Add an ellipsis to any overflow */
+  font-size: 0.8em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* You can use media queries to adjust for different screen sizes */
+/* Media query for smaller screens */
 @media (max-width: 768px) {
   .header-left,
   .header-right {
-    flex-basis: 100px; /* Smaller fixed width on smaller screens */
+    flex-basis: 80px; /* Smaller width */
   }
   
   .wallet-address {
-    font-size: 0.75em; /* Smaller font size on smaller screens */
+    font-size: 0.7em; /* Smaller font size */
   }
 }
 
+/* Arcade-themed main container */
 .App {
   display: flex;
   justify-content: space-between;
-  background: #121212; /* Dark background for the lightning theme */
-  color: #FFD700; /* Yellow text for the lightning theme */
+  background: #0c062e; /* Dark blue background */
+  color: #67b3b5; /* Light blue text */
   padding: 20px;
   height: 100vh;
   flex-direction: column;
@@ -60,15 +61,15 @@
 
 .content {
   display: flex;
-  flex: 1; /* Takes up all space below the header */
+  flex: 1;
 }
 
 .side-panel {
-  background-color: #181818; /* A lighter shade of black for the side panels */
-  /* Add any additional styling you want for these side panels */
+  background-color: #23143c; /* Dark purple for side panels */
+  /* Additional styling */
 }
 
 .main-panel {
-  background-color: #121212; /* A darker shade of black for the main panel */
-  /* Add any additional styling you want for the main content area */
+  background-color: #0c062e; /* Dark blue for main content area */
+  /* Additional styling */
 }
