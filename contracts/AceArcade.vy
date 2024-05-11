@@ -1,4 +1,5 @@
-# Data structures
+# @version ^0.3.10
+# Data structuress
 game_id: public(uint256)
 games: public(HashMap[uint256, HashMap[address, bytes32]])
 player_hands: public(HashMap[uint256, HashMap[address, uint256[2]]])

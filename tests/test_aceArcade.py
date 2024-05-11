@@ -1,5 +1,8 @@
 from ape import accounts, project
 
+#vyper ./contracts/AceArcade.vy
+# pytest .tests/test_aceArcade/py
+
 def test_start_game(accounts):
     # Deploy the contract
     owner = accounts[0]  # Assuming the first account is the owner
