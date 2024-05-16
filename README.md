@@ -1,6 +1,6 @@
-# Bitcade: The Decentralized Arcade Platform
+# blocade: The Decentralized Arcade Platform
 
-Welcome to **Bitcade**, the fully decentralized arcade platform where game logic is powered by blockchain technology. Bitcade uses the [Ape Framework](https://docs.apeworx.io/ape/stable/) and is developed in Vyper, providing a secure and developer-friendly environment for building and deploying games.
+Welcome to **blocade**, the fully decentralized arcade platform where game logic is powered by blockchain technology. blocade uses the [Ape Framework](https://docs.apeworx.io/ape/stable/) and is developed in Vyper, providing a secure and developer-friendly environment for building and deploying games.
 
 ## Features
 
@@ -18,6 +18,7 @@ These guides will help you understand the processes for developing the frontend 
 ### Prerequisites
 
 Before starting, ensure you have installed:
+
 - [Python 3.7+](https://www.python.org/downloads/)
 - [Ape Framework](https://docs.apeworx.io/ape/stable/userguides/quickstart.html)
 
@@ -26,15 +27,15 @@ Before starting, ensure you have installed:
 Clone the repository to get started:
 
 ```bash
-git clone git@github.com:HarvardWestlake/Bitcade.git
-cd Bitcade
+git clone git@github.com:HarvardWestlake/blocade.git
+cd blocade
 ape test
 ```
 
 ### Development
+
 - Create your feature branch: git checkout -b feature/YourFeatureName
 - Commit your changes: git commit -m 'Add some feature'
 - Push to the branch: git push origin feature/YourFeatureName
 - Submit a pull request: We welcome all contributions and will review your pull request.
 - Contributors whose games or apps significantly drive ticket distribution will earn a percentage of those tickets. Join us in building the future of decentralized arcade gaming!
-
