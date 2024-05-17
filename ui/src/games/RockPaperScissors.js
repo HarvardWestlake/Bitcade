@@ -48,8 +48,9 @@ const RockPaperScissors = ({ contractAddress }) => {
     getBalance();
   }, [gameContract]);
 
-  const handleClick = (choice) => {
-    setUserChoice(choice);
+  const getCookieValue = (type, id) => {
+    const cookieName = `${type}${id}`;
+    return cookies[cookieName];
   };
 
 
@@ -73,7 +74,9 @@ const RockPaperScissors = ({ contractAddress }) => {
       } else {
         await playGame(3);
       }
-    } 
+    } else if (option === 'Reveal') {
+      await revealGame();
+    }
   };
 
   const addBalance = async (amount) => {
@@ -121,23 +124,21 @@ const RockPaperScissors = ({ contractAddress }) => {
       const player2 = game[1];
       setP1({
         id: player1[0] == walletAddress ? "You" : player1[0],
-        choice: player1[2] ? player1[1] : (player1[3] == "0x0000000000000000000000000000000000000000000000000000000000000000"
+        choice: player1[2] ? ( player1[1].toString() == "1" ? "Rock" : (player1[1].toString() == "2" ? "Paper" : "Scissors")  ) : (player1[3] == "0x0000000000000000000000000000000000000000000000000000000000000000"
          ? 'uncommitted' : "Committed"),
       });
       setP2({
         id: player2[0] == walletAddress ? "You" : player2[0],
-        choice: player2[2] ? player2[1] : (player2[3] == "0x0000000000000000000000000000000000000000000000000000000000000000"
+        choice: player2[2] ? player2[1].toString() : (player2[3] == "0x0000000000000000000000000000000000000000000000000000000000000000"
         ? 'uncommitted' : "Committed"),
       });
-      console.log(p1.choice == 'Committed' && p2.choice == 'Committed')
-      if(p1.choice == 'Committed' && p2.choice == 'Committed') {
-        console.log("yes")
-        if(p1.id == 'You' && !player1[2]) {
-          setRevealReady(true);
-        } else if(p2.id == 'You' && !player2[2]) {
-          setRevealReady(true);
-        }
+
+      if(player1[0] == walletAddress && !player1[2] && player1[3] != "0x0000000000000000000000000000000000000000000000000000000000000000") {
+        setRevealReady(true);
+      } else if(player2[0] == walletAddress && !player2[2] && player2[3] != "0x0000000000000000000000000000000000000000000000000000000000000000") {
+        setRevealReady(true);
       }
+      
 
       if (winner !== '0x0000000000000000000000000000000000000000') {
         setGameStatus('Winner: ' + winner);
@@ -177,6 +178,7 @@ const RockPaperScissors = ({ contractAddress }) => {
     try {
       const rand = Math.floor(Math.random() * 10000000000000);
       setCookie(`rand${id}`, rand, { path: '/' });
+      setCookie(`choice${id}`, choice, { path: '/' });
       const playTx = await gameContract.joinGame(parseInt(id), parseInt(choice), parseInt(rand));
       const receipt = await playTx.wait();
       console.log(receipt);
@@ -185,6 +187,24 @@ const RockPaperScissors = ({ contractAddress }) => {
     } catch (error) {
       console.error('Error playing game:', error);
       alert('Failed to play game');
+    }
+    setLoading(false);
+  }
+
+  const revealGame = async () => {
+    if (!gameContract) return;
+    setLoading(true);
+    try {
+      const rand = getCookieValue(`rand`, id);
+      const choice = getCookieValue(`choice`, id);
+      console.log('Rand:', rand);
+      console.log('Choice:', choice);
+      const revealTx = await gameContract.revealChoice(parseInt(id), parseInt(choice), parseInt(rand));
+      const receipt = await revealTx.wait();
+      console.log(receipt);
+    } catch (error) {
+      console.error('Error revealing game:', error);
+      alert('Failed to reveal game');
     }
     setLoading(false);
   }
