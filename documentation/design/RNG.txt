@@ -1,0 +1,15 @@
+Random Number Generation (Sam S, William)
+- When a user signs a contract which initiates a game that utilizes randomness, a call to the Chainlink VRF API is made
+- The arcade will pay for the fee through the MINT token, since it should be a small percentage of the pure profit that are the tokens being minted → use the direct funding model
+- Any time a user buys token, maybe about 5% of the cost is automatically bought in MINT tokens
+- Reject all transactions where the fee costs more than the cost of the game, as this would be losing for the arcade
+- Contract inherits VRFV2WrapperConsumerBase and the callback VRF function, fulfillRandomWords
+- Makes a call to the requestRandomness function
+
+Option 2:
+- Using Chainlink’s any API (https://docs.chain.link/any-api/introduction) we can create our own API that produces randomness offchain
+- We can call random.org’s API or create our own API to supply randomness
+
+Option 3: (SELECTED)
+- User signs a transaction. 
+- The random number is then calculated by the hash of the block after the one that includes the signed transaction.

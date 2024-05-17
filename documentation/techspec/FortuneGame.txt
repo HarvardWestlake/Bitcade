@@ -1,0 +1,92 @@
+Tech Specs
+
+Instance Variables -
+
+- sendingAddress: address
+    Address for funds to be sent to upon win
+- mapping (uint256 => uint256) openedCases
+    Case stores both tokenAmount and Briefcase Number for each remaining case
+- tokenSupply: uint256
+    Sets the token supply for the game
+
+Events
+
+- Event chooseBriefcase
+    uint256 tokenAmount: Token amount for the briefcase
+    uint256 briefcaseNumber: Briefcase Number between 1-15
+    bool isBriefcaseEmpty
+
+- Event chooseTokenOptions
+    tokenDecision: bool
+    briefcaseAmount: uint256
+    dealAmount: uint256
+
+- Event confirmTransactionAmount
+    takeDeal: bool
+    tokenAmount: uint256
+    dealAmount: uint256
+    sendingAddress: address
+
+Methods
+
+- calculateAvgTokens() -> external
+    Calculates the average token value of remaining briefcases
+
+- isBriefcaseOpened() -> internal -> bool
+    Checks to see if a briefcase is opened by the user
+
+- storeOpenedCases() -> internal
+    Adds the token value and briefcase number of the opened cases into a hashmap
+
+- transfer() -> internal -> address
+    Transfers token amount to sendingAddress
+
+- hasChosen() -> internal -> bool
+    Check to see if user accepts offer and chooses a token amount
+
+- generateTokenValue() -> internal
+    Generates a random token value for each of the briefcases at the beginning of the game
+    (This method relies on RNG script that needs to be written)
+
+- processTransaction() -> internal -> sendingAddress
+    Process the transaction and sends tokens to wallet address
+
+- checkTokenSupply() -> internal -> bool
+    Checks to see if generatedBriefcaseTokens is less than tokenSupply
+    (Might be better implemented in RNG contract)
+
+General Description and Core Gameplay:
+
+At the beginning of a game, players will be able to choose 3 of 15 briefcases that they want to use for that round, each case holding a different ticket value. 
+Once that happens, the first case will be opened, and after that, the user is presented with an offer to take a certain amount of tokens that is somewhere between the token value of the two remaining briefcases. 
+The user has the choice to take those tokens or risk it to see what’s in the following two briefcases. Then, two briefcases remain, and another one of them will be opened. 
+Once again, the player will have the choice to either keep that briefcase and take the tickets they’re offered, or take however many tickets are in the final briefcase. 
+This game is very similar to Deal or No Deal. 
+The way this game is designed, players will have a tough time reaching the top prize, yet they have a really good chance of getting enough tickets from one of their briefcases to be satisfied playing.
+
+User Interaction:
+
+The user enters the game and is presented with 15 different briefcases.
+The user is prompted with text to select 3 briefcases.
+Once the user selects the briefcase, the briefcases move to the side of the screen until all 3 briefcases are chosen.
+Once the user chooses all 3 briefcases, they will be prompted to press ‘continue’, and move to a separate screen with the three briefcases.
+On the separate screen, the user will press a reveal button, and the first briefcase the user chose will disappear, and be replaced by the token amount that was inside that briefcase.
+The user will then be prompted to ‘keep’ which means that they will settle for the proposed token amount, or ‘move’, which means they move on from that reward and move on to see what’s in the next two briefcases.
+
+Random Number Generation:
+
+We can have a smart contract that determines the value of each briefcase with a random number generator, with a chance that you could generate a number that produces no tickets in a briefcase.
+
+Smart Contract Interaction in Gameplay:
+
+Within the smart contract, we need to have a method that averages out the number of tokens in the remaining briefcases so that the user can be presented with an offer to potentially take.
+
+Game Resolution:
+
+The smart contract determines how many tokens to award to the player based on the decision they made.
+
+How this isn’t completely luck:
+
+This game teaches users about risk assessment. Contestants need to weigh the potential value of the remaining briefcases against the offers made by the banker. This involves calculating probabilities and assessing their own tolerance for risk.
+
+Also, this game tests users’ decision making under pressure. Contestants need to weigh the potential value of the remaining briefcases against the offers made by the banker. This involves calculating probabilities and assessing their own tolerance for risk.

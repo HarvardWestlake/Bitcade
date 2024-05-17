@@ -1,10 +1,6 @@
-name: bitcade
+name: blocade
 plugins:
   - name: vyper
   - name: etherscan
 
-contracts:
-  - name: Wolvercoin
-    path: contracts/Wolvercoin.vy
-  - name: Wheeler
-    path: contracts/Wheeler.vy
+contracts_folder: contracts
