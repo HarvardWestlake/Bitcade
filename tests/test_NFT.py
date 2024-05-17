@@ -1,7 +1,21 @@
-import brownie
 import pytest
-from contracts.Rewards.NFT import NFT
 
+##
+
+import os
+import sys
+
+# Get the path of the parent directory
+parent_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(parent_dir)  # Go up one more level to the project root
+
+# Add the parent directory to the system path
+sys.path.append(parent_dir)
+
+from contracts.Rewards import NFT
+from brownie import accounts, project
+
+##
 
 @pytest.fixture
 def nft_rewards(project):
@@ -15,8 +29,8 @@ def nft_rewards(project):
     )
 
 @pytest.fixture
-def accounts(nft_rewards):
-    return brownie.accounts
+def accounts():
+    return accounts
 
 def test_mint_with_ranks(nft_rewards, accounts):
     """

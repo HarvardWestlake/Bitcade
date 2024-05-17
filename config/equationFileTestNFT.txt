@@ -1,3 +1,2 @@
-contracts.Rewards
 brownie
 pytest
