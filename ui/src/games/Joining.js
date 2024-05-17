@@ -14,10 +14,10 @@ const Joining = ({ contractAddress }) => {
         if (!gameContract) return;
         setLoading(true);
         try {
-            // const joinTx = await gameContract.play();
-            // const receipt = await joinTx.wait();
-            // const joinResult = receipt.events?.filter((x) => x.event === 'Join')[0].args.result;
-            setGameResult(69);
+            const joinTx = await gameContract.play();
+            const receipt = await joinTx.wait();
+            const playResult = receipt.events?.filter((x) => x.event === 'Play')[0].args.result;
+            setGameResult(playResult);
         } catch (error) {
             console.error('Error joining game:', error);
             alert('Failed to join game');
@@ -26,7 +26,7 @@ const Joining = ({ contractAddress }) => {
     };
     return (
         <div className="example-game-component" style={{ width: "300px", border: "1px solid white", padding: "10px" }}>
-            <h3>Example Game</h3>
+            <h3>AAAAAA</h3>
             {loading ? (
                 <p>Loading...</p>
             ) : (
