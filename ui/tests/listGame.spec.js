@@ -1,25 +1,42 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
 
-test('renders List Games box with description button and dropdown', async ({ page }) => {
-    // Navigate to the page where the ListGames component is rendered
-    await page.goto('http://localhost:3000'); // Update the URL to match your application
+test('Verify Get Description button exists', async ({ page }) => {
+    await page.goto('http://localhost:3000'); // Replace with your application URL
 
-    // Check if there is a List Games box
-    const listGameBox = await page.$('.list-games');
-    expect(listGameBox).not.toBeNull();
+    // Check if the Get Description button exists
+    const getDescriptionButton = await page.$('button:has-text("Get Description")');
+    expect(getDescriptionButton).not.toBeNull();
+});
 
-    // Check if the box has a description button
-    // @ts-ignore
-    const descriptionButton = await listGameBox.$('.description-button');
-    expect(descriptionButton).not.toBeNull();
+test('User can click on the Get Description button', async ({ page }) => {
+    await page.goto('http://localhost:3000'); // Replace with your application URL
 
-    // Click on the description button
-    // @ts-ignore
-    await descriptionButton.click();
+    // Click on the Get Description button
+    await page.click('button:has-text("Get Description")');
+
+    // Wait for a brief moment to ensure the click event is processed
+    await page.waitForTimeout(100);
 
     // Check if the description dropdown is visible
-    // @ts-ignore
-    const descriptionDropdown = await listGameBox.$('.description-dropdown');
+    const descriptionDropdown = await page.$('.more-description');
     expect(descriptionDropdown).not.toBeNull();
+});
+
+test('Description shows up when the user clicks on the button', async ({ page }) => {
+    await page.goto('http://localhost:3000'); // Replace with your application URL
+
+    // Ensure the description dropdown is initially hidden
+    const descriptionDropdownBefore = await page.$('.more-description');
+    expect(descriptionDropdownBefore).toBeNull();
+
+    // Click on the Get Description button
+    await page.click('button:has-text("Get Description")');
+
+    // Wait for a brief moment to ensure the click event is processed
+    await page.waitForTimeout(100);
+
+    // Check if the description dropdown is visible after clicking the button
+    const descriptionDropdownAfter = await page.$('.more-description');
+    expect(descriptionDropdownAfter).not.toBeNull();
 });
