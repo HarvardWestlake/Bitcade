@@ -1,21 +1,6 @@
 import pytest
+from brownie import project, accounts
 
-##
-
-import os
-import sys
-
-# Get the path of the parent directory
-parent_dir = os.path.dirname(os.path.abspath(__file__))
-parent_dir = os.path.dirname(parent_dir)  # Go up one more level to the project root
-
-# Add the parent directory to the system path
-sys.path.append(parent_dir)
-
-from contracts.Rewards import NFT
-from brownie import accounts, project
-
-##
 
 @pytest.fixture
 def nft_rewards(project):
@@ -29,21 +14,21 @@ def nft_rewards(project):
     )
 
 @pytest.fixture
-def accounts():
+def test_accounts():
     return accounts
 
-def test_mint_with_ranks(nft_rewards, accounts):
+def test_mint_with_ranks(nft_rewards, test_accounts):
     """
     Tests the minting function with different ranks.
     """
     token_uri = "default_token_uri"
-    to_address = accounts[0].address  # Use the first test account for minting
+    to_address = test_accounts[0].address  # Use the first test account for minting
     expected_ranks = [0, 1, 2]  # Test all ranks
 
     for expected_rank in expected_ranks:
-        test_mint_with_ranks_helper(nft_rewards, accounts, token_uri, to_address, expected_rank)
+        test_mint_with_ranks_helper(nft_rewards, test_accounts, token_uri, to_address, expected_rank)
 
-def test_mint_with_ranks_helper(nft_rewards, accounts, token_uri, to_address, expected_rank):
+def test_mint_with_ranks_helper(nft_rewards, test_accounts, token_uri, to_address, expected_rank):
     # Check if the token URI is unique
     uniqueHash = nft_rewards.keccak256(token_uri)
     assert nft_rewards.uniqueHashesForToken(uniqueHash) == 0, "Token URI is not unique"
@@ -60,7 +45,7 @@ def test_mint_with_ranks_helper(nft_rewards, accounts, token_uri, to_address, ex
         raise ValueError("Invalid expected rank")
 
     # Call the mint function with the set value
-    nft_rewards.mint(to_address, token_uri, {'from': accounts[0], 'value': value})
+    nft_rewards.mint(to_address, token_uri, {'from': test_accounts[0], 'value': value})
 
     # Check if the token was minted with the correct rank
     tokenId = nft_rewards.tokenCount() - 1
@@ -71,18 +56,18 @@ def test_mint_with_ranks_helper(nft_rewards, accounts, token_uri, to_address, ex
     elif expected_rank == 2:
         assert nft_rewards.goldNFTs(tokenId)
 
-def test_rank_assigned_event(nft_rewards, accounts):
+def test_rank_assigned_event(nft_rewards, test_accounts):
     """
     Tests if the RankAssigned event is emitted correctly when minting an NFT.
     """
     token_uri = "default_token_uri"
-    to_address = accounts[0].address  # Use the first test account for minting
+    to_address = test_accounts[0].address  # Use the first test account for minting
     expected_ranks = [0, 1, 2]  # Test all ranks
 
     for expected_rank in expected_ranks:
-        test_rank_assigned_event_helper(nft_rewards, accounts, token_uri, to_address, expected_rank)
+        test_rank_assigned_event_helper(nft_rewards, test_accounts, token_uri, to_address, expected_rank)
 
-def test_rank_assigned_event_helper(nft_rewards, accounts, token_uri, to_address, expected_rank):
+def test_rank_assigned_event_helper(nft_rewards, test_accounts, token_uri, to_address, expected_rank):
     # Check if the token URI is unique
     uniqueHash = nft_rewards.keccak256(token_uri)
     assert nft_rewards.uniqueHashesForToken(uniqueHash) == 0, "Token URI is not unique"
@@ -99,7 +84,7 @@ def test_rank_assigned_event_helper(nft_rewards, accounts, token_uri, to_address
         raise ValueError("Invalid expected rank")
 
     # Call the mint function and capture the emitted events
-    tx = nft_rewards.mint(to_address, token_uri, {'from': accounts[0], 'value': value})
+    tx = nft_rewards.mint(to_address, token_uri, {'from': test_accounts[0], 'value': value})
     tokenId = nft_rewards.tokenCount() - 1
 
     # Check if the RankAssigned event was emitted with the correct parameters
