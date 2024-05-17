@@ -22,14 +22,17 @@ balanceOf: public(HashMap[address, uint256])
 allowance: public(HashMap[address, HashMap[address, uint256]])
 
 swapper: public(address)
+initialDistriber: public(address)
 
 # Initialize the Token
 @external
-def __init__(_name: String[64], _symbol: String[32], _decimals: uint256):
+def __init__(_name: String[64], _symbol: String[32], _decimals: uint256, _initialDistribution: uint256, _initialDistriber: address):
     self.name = _name
     self.symbol = _symbol
     self.decimals = _decimals
-    self.totalSupply = 0  # Initialize total supply
+    self.totalSupply = _initialDistribution  # Initialize total supply
+    self.initialDistriber = _initialDistriber
+    self.balanceOf[_initialDistriber] = _initialDistribution
     self.swapper = msg.sender
 
 # Mint new tokens
