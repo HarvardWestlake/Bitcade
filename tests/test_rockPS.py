@@ -20,7 +20,7 @@ def test_play(accounts):
     contract.initBalance(1000, sender=p1)
     contract.initBalance(1000, sender=p2)
 
-    contract.createGame(10, sender=p1)
+    contract.createGame(10, p2, sender=p1)
     
     #dummy random
     contract.joinGame(0, 2, 480291384093284, sender=p1)
