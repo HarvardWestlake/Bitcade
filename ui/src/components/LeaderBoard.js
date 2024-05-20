@@ -52,4 +52,4 @@ const LeaderBoard = () => {
 
 export default LeaderBoard;
 
-// Coded by Chris Weng and Ronan Valle
+// Coded by Chris Weng, Aidan Michaelson, and Ronan Valle
