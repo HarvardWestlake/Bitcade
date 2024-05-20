@@ -1,0 +1,69 @@
+body {
+  background-color: black;
+  color: white;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  text-align: center;
+}
+
+.game-button {
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 1.5em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.game-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px white;
+}
+
+.dice {
+  border: 2px solid #f39c12;
+}
+
+.fortune-game {
+  border: 2px solid #e74c3c;
+}
+
+.cup-shuffle {
+  border: 2px solid #3498db;
+}
+
+.racing {
+  border: 2px solid #2ecc71;
+}
+
+.crashcade {
+  border: 2px solid #9b59b6;
+}
+
+.wheeler {
+  border: 2px solid #f1c40f;
+}
+
+.ace-arcade {
+  border: 2px solid #e67e22;
+}
+
+.logo {
+  margin-bottom: 50px;
+}
+
+.logo img {
+  max-width: 200px;
+  border-radius: 10px;
+}
