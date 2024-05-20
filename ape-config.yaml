@@ -1,4 +1,4 @@
-name: bitcade
+name: blocade
 plugins:
   - name: vyper
   - name: etherscan
