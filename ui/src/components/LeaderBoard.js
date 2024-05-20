@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import './LeaderBoard.css';
+import React, { useState, useEffect } from "react";
+import "./LeaderBoard.css";
 
 const LeaderBoard = () => {
   const [users, setUsers] = useState([
@@ -26,7 +26,11 @@ const LeaderBoard = () => {
         <ul id="top-three-list">
           {topThree.map((user, index) => (
             <li key={index}>
-              <img src={user.photo} alt={`${user.username}'s avatar`} className="avatar" />
+              <img
+                src={user.photo}
+                alt={`${user.username}'s avatar`}
+                className="avatar"
+              />
               {user.username}: {user.score}
             </li>
           ))}
@@ -36,7 +40,9 @@ const LeaderBoard = () => {
         <h3>All Users</h3>
         <ul id="all-users-list">
           {allUsers.map((user, index) => (
-            <li key={index}>{user.username}: {user.score}</li>
+            <li key={index}>
+              {user.username}: {user.score}
+            </li>
           ))}
         </ul>
       </div>
@@ -45,3 +51,5 @@ const LeaderBoard = () => {
 };
 
 export default LeaderBoard;
+
+// Coded by Chris Weng and Ronan Valle
