@@ -1,0 +1,76 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.leaderboard {
+  width: 300px;
+  text-align: left; /* Changed to left-align text */
+  background-color: #333;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  border: 2px solid #fff;
+  background-image: url("/src/components/162112563-6649c61e-ea50-418a-9244-08576532d931.png"); /* Set to the first uploaded image */
+  background-size: cover;
+  position: relative;
+  z-index: 1;
+}
+
+.leaderboard::before,
+.leaderboard::after {
+  content: "";
+  position: absolute;
+  width: 100px; /* Adjust the width as necessary */
+  height: 100px; /* Adjust the height as necessary */
+  background-image: url("/src/components/simplified_sandworm_image-removebg-preview.png"); /* Set to the second uploaded image */
+  background-size: contain;
+  background-repeat: no-repeat;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.leaderboard::before {
+  left: -110px; /* Adjust the position as necessary */
+}
+
+.leaderboard::after {
+  right: -110px; /* Adjust the position as necessary */
+}
+
+.top-three {
+  font-size: 1.5em;
+}
+
+.extended-list {
+  margin-top: 20px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+/* Code written by Chris Weng, Ronan Valle, and Aidan Michaelson */
