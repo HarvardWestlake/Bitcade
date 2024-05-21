@@ -8,6 +8,7 @@ const ExampleGameComponent = ({ contractAddress }) => {
     const [randomNumber, setRandomNumber] = useState(null);
     const [accountBalance, setAccountBalance] = useState(0);
     const [loading, setLoading] = useState(false);
+    const [showDescription, setShowDescription] = useState(false);
 
     // Instance of the contract
     const gameContract = contracts && contracts.ExampleGame
@@ -61,6 +62,10 @@ const ExampleGameComponent = ({ contractAddress }) => {
         }
     }, [walletAddress, gameContract]);
 
+    const toggleDescription = () => {
+        setShowDescription(!showDescription);
+    };
+
     return (
         <div className="example-game-component" style={{ width: "300px", border: "1px solid white", padding: "10px" }}>
             <h3>Example Game</h3>
@@ -72,6 +77,14 @@ const ExampleGameComponent = ({ contractAddress }) => {
                     <p>Game Result: {gameResult}</p>
                     <p>Random Number: {randomNumber}</p>
                     <p>Account Balance: {accountBalance} ETH</p>
+                    <button onClick={() => setShowDescription(!showDescription)}>
+                        {showDescription ? 'Hide Description' : 'Get Description'}
+                    </button>
+                    {showDescription && (
+                        <div className="game-description" style={{ marginTop: "10px", border: "1px solid #ddd", padding: "10px" }}>
+                            <p>This is a description</p>
+                        </div>
+                    )}
                 </>
             )}
         </div>
