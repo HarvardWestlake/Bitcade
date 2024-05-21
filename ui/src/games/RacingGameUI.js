@@ -9,13 +9,26 @@ const HorseRacingGameComponent = ({ contractAddress }) => {
   const [raceDistance, setRaceDistance] = useState(1000); // Example race distance for mock data
   const [positions, setPositions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [winner, setWinner] = useState(null); // State to track the winner
 
   const mockRace = true; // Set this to true for mock race, false to use smart contract
 
   const mockRacers = [
-    { address: '0xRacer1', speed: 10, level: 5, isBoosted: false, position: 0 },
-    { address: '0xRacer2', speed: 12, level: 4, isBoosted: false, position: 0 },
-    { address: '0xRacer3', speed: 8, level: 6, isBoosted: false, position: 0 },
+    {
+      address: 'Buttercup',
+      speed: 10,
+      level: 5,
+      isBoosted: false,
+      position: 0,
+    },
+    {
+      address: 'Seabiscuit',
+      speed: 12,
+      level: 4,
+      isBoosted: false,
+      position: 0,
+    },
+    { address: 'Jack', speed: 8, level: 6, isBoosted: false, position: 0 },
   ];
 
   const raceContract =
@@ -25,6 +38,7 @@ const HorseRacingGameComponent = ({ contractAddress }) => {
 
   const startRace = async () => {
     setLoading(true);
+    setWinner(null); // Reset winner state
     if (mockRace) {
       setRaceStarted(true);
       setRacers(mockRacers);
@@ -108,6 +122,10 @@ const HorseRacingGameComponent = ({ contractAddress }) => {
             randomFactor;
           const newPosition = racer.position + movement;
 
+          if (newPosition >= raceDistance && !winner) {
+            setWinner(racer.address); // Set winner if race is finished
+          }
+
           return {
             ...racer,
             position: newPosition >= raceDistance ? raceDistance : newPosition,
@@ -133,10 +151,15 @@ const HorseRacingGameComponent = ({ contractAddress }) => {
     }
   }, [raceStarted]);
 
+  const getHorseStyle = (position) => {
+    const percentage = (position / raceDistance) * 100;
+    return { left: `${percentage}%` };
+  };
+
   return (
     <div
       className='horse-racing-game-component'
-      style={{ width: '300px', border: '1px solid white', padding: '10px' }}
+      style={{ width: '600px', border: '1px solid white', padding: '10px' }}
     >
       <h3>Horse Racing Game</h3>
       {loading ? (
@@ -163,16 +186,47 @@ const HorseRacingGameComponent = ({ contractAddress }) => {
           <div>
             <h4>Race Status</h4>
             <p>Race Distance: {raceDistance}</p>
-            <ul>
-              {positions.map((racer) => (
-                <li key={racer.address}>
-                  Racer {racer.address}: {racer.position.toFixed(2)}
-                </li>
+            {winner && <h4>Winner: {winner}</h4>} {/* Display the winner */}
+            <div className='race-track'>
+              {positions.map((racer, index) => (
+                <div
+                  key={racer.address}
+                  className='horse'
+                  style={{
+                    ...getHorseStyle(racer.position),
+                    top: `${index * 40}px`,
+                  }}
+                >
+                  🐎 <span className='horse-name'>{racer.address}</span>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         </>
       )}
+      <style jsx>{`
+        .race-track {
+          position: relative;
+          width: 100%;
+          height: ${racers.length *
+          40}px; /* Adjust height based on number of racers */
+          border: 1px solid black;
+          background: #4caf50; /* Green background for the track */
+          margin-top: 20px;
+          overflow: visible; /* Ensure horses are visible after finishing */
+        }
+        .horse {
+          position: absolute;
+          transition: left 1s;
+          display: flex;
+          align-items: center;
+        }
+        .horse-name {
+          margin-left: 10px;
+          font-weight: bold;
+          color: white;
+        }
+      `}</style>
     </div>
   );
 };
