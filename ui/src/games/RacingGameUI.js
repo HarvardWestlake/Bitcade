@@ -1,108 +1,92 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
-import { useWallet } from '../components/WalletContext';
+import { useWallet } from '../components/WalletContext'; // Import the useWallet hook from your context if needed
 
-const HorseRacingGameComponent = ({ contractAddress }) => {
+const ExampleGameComponent = ({ contractAddress }) => {
   const { walletAddress, contracts } = useWallet();
-  const [racers, setRacers] = useState([]);
-  const [raceStarted, setRaceStarted] = useState(false);
-  const [raceDistance, setRaceDistance] = useState(0);
+  const [gameResult, setGameResult] = useState('');
+  const [randomNumber, setRandomNumber] = useState(null);
+  const [accountBalance, setAccountBalance] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [joinedGame, setJoinedGame] = useState(false);
 
-  const MIN_RACERS_REQUIRED = 2; // Define the minimum number of racers required to start the race
-
+  // Instance of the contract
   const gameContract =
-    contracts && contracts.HorseRacing
+    contracts && contracts.ExampleGame
       ? new ethers.Contract(
           contractAddress,
-          contracts.HorseRacing,
+          contracts.ExampleGame,
           walletAddress
         )
       : null;
 
-  const joinGame = async () => {
-    if (!gameContract) {
-      console.log('Join game button is pressed');
-    }
-    setLoading(true);
-    try {
-      // Call the joinGame method in the smart contract
-      await gameContract.joinGame();
-      // Update racers state
-      const updatedRacers = await gameContract.getRacers();
-      setRacers(updatedRacers);
-      // Check if enough racers have joined to start the race
-      const enoughRacers = updatedRacers.length >= MIN_RACERS_REQUIRED;
-      if (enoughRacers && !raceStarted) {
-        startRace();
-      }
-      // Set joinedGame to true
-      setJoinedGame(true);
-    } catch (error) {
-      console.error('Error joining game:', error);
-      alert('Failed to join game');
-    }
-    setLoading(false);
-  };
-
-  const startRace = async () => {
+  const playGame = async () => {
     if (!gameContract) return;
     setLoading(true);
     try {
-      // Call the startRace method in the smart contract
-      await gameContract.startRace();
-      // Set raceStarted to true
-      setRaceStarted(true);
+      const playTx = await gameContract.play();
+      const receipt = await playTx.wait();
+      const playResult = receipt.events?.filter((x) => x.event === 'Play')[0]
+        .args.result;
+      setGameResult(playResult);
     } catch (error) {
-      console.error('Error starting race:', error);
-      alert('Failed to start race');
+      console.error('Error playing game:', error);
+      alert('Failed to play game');
     }
     setLoading(false);
   };
 
+  const fetchRandomNumber = async () => {
+    if (!gameContract) return;
+    setLoading(true);
+    try {
+      const randNumber = await gameContract.rand();
+      setRandomNumber(randNumber.toString());
+    } catch (error) {
+      console.error('Error fetching random number:', error);
+    }
+    setLoading(false);
+  };
+
+  const fetchAccountBalance = async () => {
+    if (!gameContract || !walletAddress) return;
+    setLoading(true);
+    try {
+      const balance = await gameContract.accountBalance(walletAddress);
+      //setAccountBalance(ethers.utils.formatEther(balance));
+    } catch (error) {
+      console.error('Error fetching account balance:', error);
+    }
+    setLoading(false);
+  };
+
+  // UseEffect to fetch balance on load
   useEffect(() => {
     if (walletAddress && gameContract) {
-      // Fetch initial game state on component mount
-      // Example: fetchRaceDetails();
+      fetchAccountBalance();
+      fetchRandomNumber();
     }
   }, [walletAddress, gameContract]);
 
   return (
     <div
-      className='horse-racing-game-component'
-      style={{ width: '100%', padding: '10px' }}
+      className='example-game-component'
+      style={{ width: '300px', border: '1px solid white', padding: '10px' }}
     >
-      {!joinedGame ? (
-        <div>
-          <h3>Welcome to Horse Racing Game!</h3>
-          <button onClick={joinGame} disabled={!gameContract}>
-            Join Game
-          </button>
-        </div>
+      <h3>Example Game</h3>
+      {loading ? (
+        <p>Loading...</p>
       ) : (
-        <div className='race-track'>
-          <h3>Race Track</h3>
-          <div className='racers'>
-            {racers.map((racer, index) => (
-              <div
-                key={index}
-                className='racer'
-                style={{
-                  position: 'absolute',
-                  top: `${index * 20}px`,
-                  left: `${racer.position}px`,
-                  width: '20px',
-                  height: '20px',
-                  backgroundColor: 'blue',
-                }}
-              />
-            ))}
-          </div>
-        </div>
+        <>
+          <button onClick={playGame} disabled={!gameContract}>
+            Play Game
+          </button>
+          <p>Game Result: {gameResult}</p>
+          <p>Random Number: {randomNumber}</p>
+          <p>Account Balance: {accountBalance} ETH</p>
+        </>
       )}
     </div>
   );
 };
 
-export default HorseRacingGameComponent;
+export default ExampleGameComponent;
