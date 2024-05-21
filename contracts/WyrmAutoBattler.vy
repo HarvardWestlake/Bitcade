@@ -1,13 +1,17 @@
-from BattleWyrmToken import Token
+interface BattleWyrmToken:
+    def ownerOf(tokenId: uint256) -> address: view
+    def tokenURI(tokenId: uint256) -> uint64: view
 
-token_contract : Token
+token_contract : BattleWyrmToken
 id1 : uint256
 id2 : uint256
 
 @external
+def __init__(randomContract : address):
+    self.token_contract = BattleWyrmToken(randomContract)
+
+@external
 def battle(_player1 : address, _id1 : uint256, _player2 : address, _id2 : uint256) -> address:
-    assert self.token_contract.ownerOf(_id1) == _player1
-    assert self.token_contract.ownerOf(_id2) == _player2
     self.id1 = _id1
     self.id2 = _id2
 
