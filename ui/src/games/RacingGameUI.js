@@ -28,7 +28,7 @@ const HorseRacingGameComponent = ({ contractAddress }) => {
       isBoosted: false,
       position: 0,
     },
-    { address: 'Jack', speed: 8, level: 6, isBoosted: false, position: 0 },
+    { address: 'Bob', speed: 8, level: 6, isBoosted: false, position: 0 },
   ];
 
   const raceContract =
@@ -112,6 +112,7 @@ const HorseRacingGameComponent = ({ contractAddress }) => {
 
     const interval = setInterval(() => {
       setPositions((prevPositions) => {
+        let raceFinished = false; // Flag to track if any horse finished the race
         const newPositions = prevPositions.map((racer) => {
           const racerStats = racers.find((r) => r.address === racer.address);
           const randomFactor = Math.random() * 0.5 + 0.75; // Random factor between 0.75 and 1.25
@@ -124,16 +125,17 @@ const HorseRacingGameComponent = ({ contractAddress }) => {
 
           if (newPosition >= raceDistance && !winner) {
             setWinner(racer.address); // Set winner if race is finished
+            raceFinished = true; // Set flag to true if any horse finishes the race
           }
 
           return {
             ...racer,
-            position: newPosition >= raceDistance ? raceDistance : newPosition,
+            position: newPosition,
           };
         });
 
-        if (newPositions.some((racer) => racer.position >= raceDistance)) {
-          clearInterval(interval);
+        if (raceFinished) {
+          clearInterval(interval); // Stop the race if any horse finishes
         }
 
         return newPositions;
@@ -152,14 +154,14 @@ const HorseRacingGameComponent = ({ contractAddress }) => {
   }, [raceStarted]);
 
   const getHorseStyle = (position) => {
-    const percentage = (position / raceDistance) * 100;
-    return { left: `${percentage}%` };
+    const percentage = (position / raceDistance) * 90; // Adjusted to 90% to leave room for finish line
+    return { left: `${percentage}%` }; // Removed transform for the horse emoji
   };
 
   return (
     <div
       className='horse-racing-game-component'
-      style={{ width: '600px', border: '1px solid white', padding: '10px' }}
+      style={{ width: '700px', border: '1px solid white', padding: '10px' }}
     >
       <h3>Horse Racing Game</h3>
       {loading ? (
@@ -188,6 +190,9 @@ const HorseRacingGameComponent = ({ contractAddress }) => {
             <p>Race Distance: {raceDistance}</p>
             {winner && <h4>Winner: {winner}</h4>} {/* Display the winner */}
             <div className='race-track'>
+              <div className='finish-line' style={{ left: '90%' }}>
+                Finish Line
+              </div>
               {positions.map((racer, index) => (
                 <div
                   key={racer.address}
@@ -197,7 +202,13 @@ const HorseRacingGameComponent = ({ contractAddress }) => {
                     top: `${index * 40}px`,
                   }}
                 >
-                  🐎 <span className='horse-name'>{racer.address}</span>
+                  <span className='horse-emoji' role='img' aria-label='horse'>
+                    🐎
+                  </span>
+                  <span className='horse-name'>{racer.address}</span>
+                  <span className='horse-distance'>
+                    {Math.round(racer.position)}m
+                  </span>
                 </div>
               ))}
             </div>
@@ -207,24 +218,49 @@ const HorseRacingGameComponent = ({ contractAddress }) => {
       <style jsx>{`
         .race-track {
           position: relative;
-          width: 100%;
+          width: calc(100% + 100px); /* Extend width for horse details */
           height: ${racers.length *
           40}px; /* Adjust height based on number of racers */
           border: 1px solid black;
           background: #4caf50; /* Green background for the track */
           margin-top: 20px;
-          overflow: visible; /* Ensure horses are visible after finishing */
+          overflow: hidden; /* Ensure horses are visible after finishing */
         }
+
         .horse {
           position: absolute;
           transition: left 1s;
           display: flex;
           align-items: center;
         }
-        .horse-name {
-          margin-left: 10px;
+
+        .horse-emoji {
+          margin-right: 10px; /* Adjust spacing */
+          transform: scaleX(-1); /* Mirror only the horse emoji */
+        }
+
+        .horse-name,
+        .horse-distance {
           font-weight: bold;
           color: white;
+        }
+
+        .horse-name {
+          margin-right: 10px; /* Adjust spacing */
+        }
+
+        .horse-distance {
+          margin-right: 20px; /* Adjust spacing */
+        }
+
+        .finish-line {
+          position: absolute;
+          width: 10px;
+          height: 100%;
+          background: red;
+          text-align: center;
+          color: white;
+          transform: translateX(-50%);
         }
       `}</style>
     </div>
