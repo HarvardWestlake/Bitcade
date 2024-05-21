@@ -72,7 +72,7 @@ def playRound(hp1 : uint256, attack1 : uint256, defense1 : uint256, crit1 : uint
 
     return damage1, damage2
 
-@internal
+@external
 def getStats(_id : uint256) -> (uint256, uint256, uint256, uint256):
     stats : uint64 = self.token_contract.tokenURI(_id)
 
