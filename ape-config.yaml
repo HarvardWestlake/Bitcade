@@ -1,6 +1,0 @@
-name: blocade
-plugins:
-  - name: vyper
-  - name: etherscan
-
-contracts_folder: contracts
