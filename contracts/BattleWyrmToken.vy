@@ -35,7 +35,7 @@ def _rand() -> uint256:
 @internal
 def _createStats():
     _id : uint256 = 1
-    for i in range(1, 1000):
+    for i in range(1, 100):
         rand1: uint256 = self._rand()
         rand2: uint256 = convert(keccak256(uint2str(rand1)), uint256)
         rand3: uint256 = convert(keccak256(uint2str(rand2)), uint256)
