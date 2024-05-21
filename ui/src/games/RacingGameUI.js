@@ -1,92 +1,115 @@
 import React, { useState, useEffect } from 'react';
-import { ethers } from 'ethers';
 import { useWallet } from '../components/WalletContext'; // Import the useWallet hook from your context if needed
 
-const ExampleGameComponent = ({ contractAddress }) => {
+const HorseRacingGameComponent = ({ contractAddress }) => {
   const { walletAddress, contracts } = useWallet();
-  const [gameResult, setGameResult] = useState('');
-  const [randomNumber, setRandomNumber] = useState(null);
-  const [accountBalance, setAccountBalance] = useState(0);
+  const [raceStarted, setRaceStarted] = useState(false);
+  const [racers, setRacers] = useState([]);
+  const [raceDistance, setRaceDistance] = useState(1000); // Example race distance
+  const [positions, setPositions] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Instance of the contract
-  const gameContract =
-    contracts && contracts.ExampleGame
-      ? new ethers.Contract(
-          contractAddress,
-          contracts.ExampleGame,
-          walletAddress
-        )
-      : null;
+  const mockRacers = [
+    { address: '0xRacer1', speed: 10, level: 5, isBoosted: false, position: 0 },
+    { address: '0xRacer2', speed: 12, level: 4, isBoosted: false, position: 0 },
+    { address: '0xRacer3', speed: 8, level: 6, isBoosted: false, position: 0 },
+  ];
 
-  const playGame = async () => {
-    if (!gameContract) return;
+  const startRace = async () => {
     setLoading(true);
-    try {
-      const playTx = await gameContract.play();
-      const receipt = await playTx.wait();
-      const playResult = receipt.events?.filter((x) => x.event === 'Play')[0]
-        .args.result;
-      setGameResult(playResult);
-    } catch (error) {
-      console.error('Error playing game:', error);
-      alert('Failed to play game');
-    }
+    setRaceStarted(true);
+    setRacers(mockRacers);
+    setPositions(
+      mockRacers.map((racer) => ({ address: racer.address, position: 0 }))
+    );
     setLoading(false);
   };
 
-  const fetchRandomNumber = async () => {
-    if (!gameContract) return;
+  const boostSpeed = async (racerAddress) => {
     setLoading(true);
-    try {
-      const randNumber = await gameContract.rand();
-      setRandomNumber(randNumber.toString());
-    } catch (error) {
-      console.error('Error fetching random number:', error);
-    }
+    const updatedRacers = racers.map((racer) =>
+      racer.address === racerAddress ? { ...racer, isBoosted: true } : racer
+    );
+    setRacers(updatedRacers);
     setLoading(false);
   };
 
-  const fetchAccountBalance = async () => {
-    if (!gameContract || !walletAddress) return;
-    setLoading(true);
-    try {
-      const balance = await gameContract.accountBalance(walletAddress);
-      //setAccountBalance(ethers.utils.formatEther(balance));
-    } catch (error) {
-      console.error('Error fetching account balance:', error);
-    }
-    setLoading(false);
+  const simulateRace = () => {
+    if (!raceStarted) return;
+
+    const interval = setInterval(() => {
+      setPositions((prevPositions) => {
+        const newPositions = prevPositions.map((racer) => {
+          const racerStats = racers.find((r) => r.address === racer.address);
+          const movement =
+            racerStats.speed *
+            racerStats.level *
+            (racerStats.isBoosted ? 1.1 : 1);
+          const newPosition = racer.position + movement;
+
+          return {
+            ...racer,
+            position: newPosition >= raceDistance ? raceDistance : newPosition,
+          };
+        });
+
+        if (newPositions.some((racer) => racer.position >= raceDistance)) {
+          clearInterval(interval);
+        }
+
+        return newPositions;
+      });
+    }, 1000);
   };
 
-  // UseEffect to fetch balance on load
   useEffect(() => {
-    if (walletAddress && gameContract) {
-      fetchAccountBalance();
-      fetchRandomNumber();
+    if (raceStarted) {
+      simulateRace();
     }
-  }, [walletAddress, gameContract]);
+  }, [raceStarted]);
 
   return (
     <div
-      className='example-game-component'
+      className='horse-racing-game-component'
       style={{ width: '300px', border: '1px solid white', padding: '10px' }}
     >
-      <h3>Example Game</h3>
+      <h3>Horse Racing Game</h3>
       {loading ? (
         <p>Loading...</p>
       ) : (
         <>
-          <button onClick={playGame} disabled={!gameContract}>
-            Play Game
-          </button>
-          <p>Game Result: {gameResult}</p>
-          <p>Random Number: {randomNumber}</p>
-          <p>Account Balance: {accountBalance} ETH</p>
+          {!raceStarted ? (
+            <button onClick={startRace} disabled={loading}>
+              Start Race
+            </button>
+          ) : (
+            <>
+              {racers.map((racer) => (
+                <button
+                  key={racer.address}
+                  onClick={() => boostSpeed(racer.address)}
+                  disabled={loading}
+                >
+                  Boost Speed for {racer.address}
+                </button>
+              ))}
+            </>
+          )}
+          <div>
+            <h4>Race Status</h4>
+            <p>Race Distance: {raceDistance}</p>
+            <ul>
+              {positions.map((racer) => (
+                <li key={racer.address}>
+                  Racer {racer.address}: {racer.position}
+                </li>
+              ))}
+            </ul>
+          </div>
         </>
       )}
     </div>
   );
 };
 
-export default ExampleGameComponent;
+export default HorseRacingGameComponent;
