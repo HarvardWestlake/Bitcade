@@ -9,4 +9,4 @@
 .python-version
 __pycache__
 
-./BattleWyrms/BattleWyrmJSON
+/BattleWyrms/BattleWyrmJSON/
