@@ -11,6 +11,7 @@ struct StackItem:
     low: int128
     high: int128
 
+#sorts accounts by total stats
 @external
 def quicksort_accounts(wyrm_auto_battler: address, accounts: address[10], ids: uint256[10]) -> address[10]:
     n: int128 = 10  # The length of the accounts array
