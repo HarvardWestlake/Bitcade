@@ -10,3 +10,6 @@
 __pycache__
 
 /BattleWyrms/BattleWyrmJSON/
+bin/
+python3.11/
+ape/
