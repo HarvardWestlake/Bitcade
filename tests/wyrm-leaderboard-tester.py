@@ -1,31 +1,20 @@
 from ape import accounts, project
 
-def test_sort_worms(accounts):
-    # Deploy the contract
-    owner = accounts[0]  # Assuming the first account is the owner
+def test_get_total_stats(accounts):
+    # Deploy the WyrmSorting contract
+    owner = accounts[0]
     wyrm_sorting_contract = project.WyrmSorting.deploy(sender=owner)
     
-    # Mock WyrmAutoBattler contract
-    class MockWyrmAutoBattler:
-        def getStats(self, _id):
-            # Return mock stats: attack, defense, speed, health
-            return (100 + _id, 200 + _id, 300 + _id, 400 + _id)
+    # Deploy the MockWyrmAutoBattler contract
+    mock_wyrm_auto_battler = project.MockWyrmAutoBattler.deploy(sender=owner)
     
-    # Assign mock WyrmAutoBattler to the contract
-    wyrm_sorting_contract.WyrmAutoBattler = MockWyrmAutoBattler()
-    
-    # Test getTotal function indirectly by calling a public function that uses it
-    def test_get_total(id):
-        # Call the internal getTotal function through the public sortWorms
-        total = wyrm_sorting_contract.getTotal(id)
-        expected_total = (100 + id) + (200 + id) + (300 + id) + (400 + id)
-        assert total == expected_total, f"Total {total} does not match expected {expected_total}"
-    
-    # Test for a few ids
+    # Test getTotal function for a few ids
     for wyrm_id in range(1, 4):
-        test_get_total(wyrm_id)
+        total = wyrm_sorting_contract.getTotal(mock_wyrm_auto_battler.address, wyrm_id, sender=owner)
+        expected_total = (100 + wyrm_id) + (200 + wyrm_id) + (300 + wyrm_id) + (400 + wyrm_id)
+        assert total == expected_total, f"Total {total} does not match expected {expected_total}"
     
     print("Test passed, getTotal method works correctly.")
 
 # Call the test function
-test_sort_worms(accounts)
+test_get_total_stats(accounts)
