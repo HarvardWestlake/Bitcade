@@ -23,14 +23,14 @@ def battle(_player1 : address, _id1 : uint256, _player2 : address, _id2 : uint25
     defense1 : uint256 = 0
     crit1 : uint256 = 0
     
-    hp1, attack1, defense1, crit1 = self.getStats(_id1)
+    hp1, attack1, defense1, crit1 = self._getStats(_id1)
 
     hp2 : uint256 = 0
     attack2 : uint256 = 0
     defense2 : uint256 = 0
     crit2 : uint256 = 0
     
-    hp2, attack2, defense2, crit2 = self.getStats(_id2)
+    hp2, attack2, defense2, crit2 = self._getStats(_id2)
 
     for i in range(1, 100):
         round_damage1 : uint256 = 0
@@ -76,8 +76,8 @@ def playRound(hp1 : uint256, attack1 : uint256, defense1 : uint256, crit1 : uint
 
     return damage1, damage2
 
-@external
-def getStats(_id : uint256) -> (uint256, uint256, uint256, uint256):
+@internal
+def _getStats(_id : uint256) -> (uint256, uint256, uint256, uint256):
     stats : uint64 = self.token_contract.tokenURI(_id)
 
     hp : uint256 = convert(stats/10000000, uint256)
@@ -86,6 +86,25 @@ def getStats(_id : uint256) -> (uint256, uint256, uint256, uint256):
     crit : uint256 = convert((stats & 100), uint256)
 
     return hp, attack, defense, crit
+
+@external
+def getStats(_id : uint256) -> (uint256, uint256, uint256, uint256):
+    return self._getStats(_id)
+
+@external
+def getTotalStats(_id: uint256) -> uint256:
+    # Call the _getStats method
+    hp: uint256 = 0
+    attack: uint256 = 0
+    defense: uint256 = 0
+    crit: uint256 = 0
+    
+    hp, attack, defense, crit = self._getStats(_id)
+    
+    # Calculate the total stats
+    total_stats: uint256 = hp + attack + defense + crit
+    
+    return total_stats
 
 @internal
 def _rand() -> uint256:
