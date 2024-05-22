@@ -2,6 +2,8 @@ name: blocade
 plugins:
   - name: vyper
   - name: etherscan
+  - name: accounts
+  - name: project
 
 contracts_folder: contracts
 
