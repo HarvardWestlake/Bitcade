@@ -1,0 +1,9 @@
+There is a slider (1-100) where players drag the slider to determine how risky they want to play.
+If they drag the slider to 90, it means that if the random number generator generates a number 
+over 90, they win big (~9.6x). However, it is likely that the number generated will be below 90,
+in which case they will lose their bet. Likewise, if the player picks a number like 10, they 
+are likely to generate a number greater than 10, in which case they will have a small win 
+(~1.07x). Conversely, the player can try to bet “under” a number, in which the multipliers and
+win percentages will be flipped. For example, they can bet under 90, which would pay ~1.07x if
+they win. You would call a function on the smart contract, which would generate a random number
+1-100. If the player wins, then the winnings are sent to their wallet
