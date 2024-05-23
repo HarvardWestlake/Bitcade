@@ -1,4 +1,4 @@
-from ape import accounts, project, TestAccounts
+from ape import accounts, project
 
 def test_register_ui():
     # Deploy the contract
@@ -17,7 +17,7 @@ def test_register_ui():
     try:
         arcade_contract.register_ui(accounts[1], sender=owner)
         assert False, "Should have raised an exception for registering an already registered user."
-    except AssertionError as e:
+    except Exception as e:
         assert str(e) == "This wallet is already registered as a UI distributor."
 
     print("Test passed, all users correctly registered, and duplicate registration was prevented.")
