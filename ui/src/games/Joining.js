@@ -6,6 +6,7 @@ const Joining = ({ contractAddress }) => {
     const { walletAddress, contracts } = useWallet();
     const [gameResult, setGameResult] = useState('');
     const [loading, setLoading] = useState(false);
+    const [accountBalance, setAccountBalance] = useState(0);
     // Replace ExampleGame with the name of your vyper file
     const gameContract = contracts && contracts.ExampleGame
     ? new ethers.Contract(contractAddress, contracts.ExampleGame, walletAddress)
@@ -22,6 +23,17 @@ const Joining = ({ contractAddress }) => {
         } catch (error) {
             console.error('Error joining game:', error);
             alert('Whoops');
+        }
+        setLoading(false);
+    };
+
+    const fetchAccountBalance = async () => {
+        if (!gameContract || !walletAddress) return;
+        setLoading(true);
+        try {
+            const balance = await gameContract.accountBalance(walletAddress);
+        } catch (error) {
+            console.error('Error fetching account balance:', error);
         }
         setLoading(false);
     };
