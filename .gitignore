@@ -8,3 +8,8 @@
 .pytest_cache
 .python-version
 __pycache__
+
+/BattleWyrms/BattleWyrmJSON/
+bin/
+python3.11/
+ape/
