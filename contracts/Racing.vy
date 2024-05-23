@@ -29,7 +29,7 @@ def calculateRacerSpeed(racer_address: address) -> uint256:
     # Return the calculated racer's speed
     return self.racers[racer_adress].racer_speed
 
-@external:
+@external
 def createRacer(_id: uint256, _speed: uint256, distance: uint256, _position: uint256)
     exampleStruct: Stats = Stats({nft_id: id, racer_speed: _speed, distance_traveled: distance, position: _position})
     self.racers[wallet] = exampleStruct
