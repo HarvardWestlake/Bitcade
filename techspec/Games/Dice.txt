@@ -1,0 +1,15 @@
+Variables
+	int128: sliderInt - player input for number to roll above/below
+	int128: randomNumber - calls Sammy & Williams algorithm
+	Uint256: betAmount
+	Boolean: hasWon
+	Boolean: rollAbove (True if aiming to roll above, false if aiming to roll below)
+Methods
+	def calculatePayout()
+	
+Calculates the multiplier of payout depending on where the slider is
+Formula =  98/percent of payout
+Ex. if you have a 60% chance of winning, 98/60 = 1.63x payout
+	def hasWon()
+Returns true if sliderInt < randomNumber
+Returns false if sliderInt >= randomNumber
