@@ -19,7 +19,7 @@ void calculateMovement(Racers, Stats)
     Multiplies a random number by the racers level, speed.
     Distance multiplied by 1.1 if they are boosted
     Updates the position value in the stats array for each racer
-    Calls displayMovement()
+    Calls displayMovement()//event log this instead
 void displayMovement(Racer Address, Distance Moved)
     Sends the distance moved by the racer to the website to show the racer racing to all users
 void checkFinish()
