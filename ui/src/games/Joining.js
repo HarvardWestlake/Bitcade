@@ -6,6 +6,7 @@ const Joining = ({ contractAddress }) => {
     const { walletAddress, contracts } = useWallet();
     const [gameResult, setGameResult] = useState('');
     const [loading, setLoading] = useState(false);
+    // Replace ExampleGame with the name of your vyper file
     const gameContract = contracts && contracts.ExampleGame
     ? new ethers.Contract(contractAddress, contracts.ExampleGame, walletAddress)
     : null;
@@ -20,10 +21,12 @@ const Joining = ({ contractAddress }) => {
             setGameResult(playResult);
         } catch (error) {
             console.error('Error joining game:', error);
-            alert('Failed to join game');
+            alert('Whoops');
         }
         setLoading(false);
     };
+
+    //replace with your own UI elements as necessary
     return (
         <div className="example-game-component" style={{ width: "300px", border: "1px solid white", padding: "10px" }}>
             <h3>AAAAAA</h3>
