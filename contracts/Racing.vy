@@ -17,19 +17,19 @@ def calculateRacerSpeed(racer_address: address) -> uint256:
     racer_stats: Stats = self.racers[racer_address]
 
     # Get a random number
-    random_number = 2
+    random_number: uint256 = 2
 
     # Calculate racer's speed based on random number, distance traveled, and position
-    speed: racer_speed = racer_stats.racer_speed
+    speed: uint256 = racer_stats.racer_speed
     speed *= random_number
 
     # Update racer's speed in the stats struct
     self.racers[racer_address].racer_speed = speed
 
     # Return the calculated racer's speed
-    return self.racers[racer_adress].racer_speed
+    return self.racers[racer_address].racer_speed
 
 @external
-def createRacer(_id: uint256, _speed: uint256, distance: uint256, _position: uint256)
-    exampleStruct: Stats = Stats({nft_id: id, racer_speed: _speed, distance_traveled: distance, position: _position})
-    self.racers[wallet] = exampleStruct
+def createRacer(_id: uint256, _speed: uint256, distance: uint256, _position: uint256):
+    exampleStruct: Stats = Stats({nft_id: _id, racer_speed: _speed, distance_traveled: distance, position: _position})
+    self.racers[self.nft_contract] = exampleStruct
