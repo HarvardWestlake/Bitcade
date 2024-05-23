@@ -1,4 +1,1 @@
-https://ipfs.io/ipfs/Qmb7ndSL7iyf7ReyyD1husK49RfBifBo6dHeNJVLqDWWFf?filename=wheelerBronze.png
-
-https://ipfs.io/ipfs/QmWCPc79fNHzm4KE788UmQywTZGShZUU1REwau1qpqYzEt?filename=wheelerSilver.png
-
+ipfs.io/ipfs/Qmboteb8nEohW5HXprrXeVvYiSFLArh3dYMgX2o7sHi2ai
