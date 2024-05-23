@@ -21,19 +21,35 @@ totalSupply: public(uint256)
 balanceOf: public(HashMap[address, uint256])
 allowance: public(HashMap[address, HashMap[address, uint256]])
 
+initiator: public(address)
 swapper: public(address)
-initialDistriber: public(address)
+distributorAmount: public(uint256)
+distributed: public(bool)
 
 # Initialize the Token
 @external
-def __init__(_name: String[64], _symbol: String[32], _decimals: uint256, _initialDistribution: uint256, _initialDistriber: address):
+def __init__(_name: String[64], _symbol: String[32], _decimals: uint256, _distributionAmount: uint256):
     self.name = _name
     self.symbol = _symbol
     self.decimals = _decimals
-    self.totalSupply = _initialDistribution  # Initialize total supply
-    self.initialDistriber = _initialDistriber
-    self.balanceOf[_initialDistriber] = _initialDistribution
+    self.totalSupply = 0  # Initialize total supply
+    self.distributorAmount = _distributionAmount
+    self.initiator = msg.sender
     self.swapper = msg.sender
+
+@external
+def sendToDistributor(_to: address):
+    assert msg.sender == self.initiator, "Only swapper can distribute"
+    assert not self.distributed, "Already distributed"
+    self.totalSupply += self.distributorAmount
+    self.balanceOf[_to] += self.distributorAmount
+    self.distributed = True
+    log Transfer(empty(address), msg.sender, self.distributorAmount)
+
+@external
+def setInitiator(_to: address):
+    assert msg.sender == self.initiator, "Only owner can change owner"
+    self.initiator = _to
 
 # Mint new tokens
 @external

@@ -11,6 +11,7 @@ import boa
 @pytest.fixture
 def deployer():
     deployer = boa.env.generate_address()
+    boa.env.set_balance(deployer, 1000*10**18)
     return deployer
 
 
@@ -26,7 +27,18 @@ def kian():
 @pytest.fixture
 def wolvercoin(deployer):
     with boa.env.prank(deployer):
-        return boa.load("./contracts/Wolvercoin.vy", "Wolvercoin", "WCoin", 18)
+        token = boa.load("./contracts/Wolvercoin.vy", "Wolvercoin", "WCoin", 18, 10**18 * 1000)
+        return token
+    
+    
+# Distributor
+
+@pytest.fixture
+def distributor(deployer, wolvercoin):
+    with boa.env.prank(deployer):
+        distributor = boa.load("./contracts/Distributor.vy", wolvercoin)
+        wolvercoin.sendToDistributor(distributor)
+        return distributor
 
 
 # Swapper

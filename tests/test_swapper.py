@@ -26,7 +26,8 @@ def test_buy_tokens(wolvercoin, swapper, kian):
 
 def test_withdraw_eth(deployer, swapper, kian):
     # Buy tokens
-    amount = 1000
+    amount = 1000 * 10**18
+    
     with boa.env.prank(kian):
         swapper.buy(value=amount)
 
@@ -40,7 +41,7 @@ def test_withdraw_eth(deployer, swapper, kian):
 
     # Check balance
     assert boa.env.get_balance(swapper.address) == 0
-    assert boa.env.get_balance(deployer) == amount
+    assert boa.env.get_balance(deployer) == 2 * amount
 
     print("Test passed, the deployer has withdrawn tokens.")
 
