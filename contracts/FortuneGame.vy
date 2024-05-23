@@ -2,12 +2,11 @@ from vyper.interfaces import ERC20
 
 TOKEN_VALUES_RANGE: constant(uint256) = 50000
 NUM_BRIEFCASES: constant(uint256) = 15
-GAME_ENTRY_FEE: constant(uint256) = 100
 
-chosen_briefcases: HashMap[address, HashMap[uint256, uint256]]
+chosen_briefcases: public (HashMap[address, HashMap[uint256, uint256]])
 has_chosen: HashMap[address, bool]
 random_seed: bytes32
-token_balance: HashMap[address, uint256]
+token_balance: public(HashMap[address, uint256])
 token_values: public(HashMap[uint256, uint256])
 briefcaseNumbers: public(uint256[3])
 current_val: public(uint256)
@@ -29,18 +28,38 @@ event GameStarted:
     playerAddress: address
     entry_fee: uint256
 
-@external
-def init_game(playerAddress: address):
-    # Initialize token values
-    self.generateRandomTokenValues()
+game_started_event_emitted: public(bool)
 
+
+@external
+def init_game(playerAddress: address):    
+    # Initialize has_chosen mapping for the player
+    self.has_chosen[playerAddress] = False
+    
+    # Initialize token_balance for the player
+    
+    # Initialize token_values mapping
+    
+    # Initialize briefcaseNumbers array
+    self.briefcaseNumbers = [0, 0, 0]
+    
+    # Initialize current_val
+    self.current_val = 0
+    
+    # Initialize game_started_event_emitted
+    self.game_started_event_emitted = False
+    
+    # Generate random token values
+    self.generateRandomTokenValues()
 @payable
 @external
 def start_game():
-    assert msg.value >= GAME_ENTRY_FEE, "Insufficient entry fee"
+    assert msg.value >= 100, "Insufficient entry fee"
+    self.generateRandomTokenValues()
+    self.token_balance[msg.sender] += msg.value - 100
+    log GameStarted(msg.sender, 100)
+    self.game_started_event_emitted = True
 
-    self.token_balance[msg.sender] += msg.value - GAME_ENTRY_FEE
-    log GameStarted(msg.sender, GAME_ENTRY_FEE)
 
 @internal
 def random_number(maximum_value: uint256) -> uint256:
@@ -62,19 +81,18 @@ def calculateAverageTokens() -> uint256:
 @external
 def open_briefcase(briefcase_number: uint256):
     briefcase_value: uint256 = self.chosen_briefcases[msg.sender][briefcase_number]
-    self.chosen_briefcases[msg.sender][briefcase_number] = 0
     log BriefCaseOpened(msg.sender, briefcase_number, briefcase_value)
     
     average_tokens: uint256 = self.calculateAverageTokens()
     log OfferMade(msg.sender, average_tokens)
     
     remaining_briefcase: uint256 = self._find_remaining_briefcase(msg.sender)
-    winnings: uint256 = self.chosen_briefcases[msg.sender][remaining_briefcase]
+    winnings: uint256 = self.token_values[remaining_briefcase]
     log GameFinished(msg.sender, winnings)
 
     self.token_balance[msg.sender] += winnings
-    self.chosen_briefcases[msg.sender][remaining_briefcase] = 0
     self.has_chosen[msg.sender] = True
+
 
 @internal
 def generateRandomTokenValues():
