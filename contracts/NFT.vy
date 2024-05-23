@@ -494,6 +494,16 @@ def getBronzeNFT(tokenCount: uint256) -> bool:
     return self.bronzeNFTs[tokenCount]
 
 @external
+@view
+def getSilverNFT(tokenCount: uint256) -> bool:
+    return self.silverNFTs[tokenCount]
+
+@external
+@view
+def getGoldNFT(tokenCount: uint256) -> bool:
+    return self.goldNFTs[tokenCount]
+
+@external
 def burn(_tokenId: uint256):
     """
     @dev Burns a specific ERC721 token.
