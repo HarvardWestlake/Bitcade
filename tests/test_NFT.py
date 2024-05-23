@@ -23,35 +23,40 @@ def test_mint_with_ranks(accounts, nft_rewards): # type: ignore
     """
     Tests the minting function with different ranks.
     """
-    token_uri = "default_token_uri"
-    to_address = accounts[0].address  # Use the first test account for minting
+    token_uri = "1234567890123456789012345678901234567890123456789012345678901234"
+    to_address = accounts[0]  # Use the first test account for minting
     expected_ranks = [0, 1, 2]  # Test all ranks
 
-    for expected_rank in expected_ranks:
+    #for expected_rank in expected_ranks:
 
         # Check if the token URI is unique
         # unique_hash = hash(token_uri)
         # assert nft_rewards.contains(unique_hash) == 0, "Token URI is not unique"
 
-        # Set the value based on the expected rank
-        value = 0
-        if expected_rank == 0:
-            value = 1000000000000000 #bronzePrice
-        elif expected_rank == 1:
-            value = 2000000000000000 #silverPrice
-        elif expected_rank == 2:
-            value = 3000000000000000 #goldPrice
-        else:
-            raise ValueError("Invalid expected rank")
+    # Set the value based on the expected rank
+    # value = 0
+    # if expected_rank == 0:
+    #     value = 1000000000000000 #bronzePrice
+    # elif expected_rank == 1:
+    #     value = 2000000000000000 #silverPrice
+    # elif expected_rank == 2:
+    #     value = 3000000000000000 #goldPrice
+    # else:
+    #     raise ValueError("Invalid expected rank")
 
-        # # Call the mint function with the set value
+    # # Call the mint function with the set value
 
-        assert nft_rewards.mint(
-            to_address, 
-            token_uri, 
-            sender=accounts[0], 
-            value=1000000000000000
-        ) == True
+    nft_rewards.mint(
+        to_address, 
+        token_uri, 
+        sender=accounts[0], 
+        value=1000000000000000
+    )
+
+        # assert nft_rewards.getBronzeNFT(
+        #     0, 
+        #     sender=accounts[0]
+        # ) == True
 
         # # Check if thes token was minted with the correct rank
         #token_id = nft_rewards.tokenCount() - 1

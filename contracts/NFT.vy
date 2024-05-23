@@ -488,6 +488,10 @@ def mint(_to: address, _tokenURI: String[64]) -> bool:
     self.tokenCount += 1
     return True
 
+@external
+@view
+def getBronzeNFT(tokenCount: uint256) -> bool:
+    return self.bronzeNFTs[tokenCount]
 
 @external
 def burn(_tokenId: uint256):
