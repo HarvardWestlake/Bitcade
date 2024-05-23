@@ -23,7 +23,7 @@ def test_mint_with_ranks(nft_rewards, test_accounts):
     """
     Tests the minting function with different ranks.
     """
-    token_uri = "default_token_uri"
+    token_uri = "ipfs.io/ipfs/Qmboteb8nEohW5HXprrXeVvYiSFLArh3dYMgX2o7sHi2ai"
     to_address = test_accounts[0].address  # Use the first test account for minting
     expected_ranks = [0, 1, 2]  # Test all ranks
 

@@ -525,7 +525,8 @@ def setBaseURI(_uri: String[32]):
 @view
 @external
 def tokenURI(_tokenId: uint256) -> String[160]:
-    return concat(self.baseURI, self.tokenURIs[_tokenId])
+    #overriden with ipfs link
+    return "ipfs.io/ipfs/Qmboteb8nEohW5HXprrXeVvYiSFLArh3dYMgX2o7sHi2ai"
 
 @external
 @view
@@ -545,7 +546,8 @@ def set_contract_uri(new_uri: String[66]):
 
    # assert msg.sender in [self.owner, self.minter]  # dev: Only Admin
     assert self.minter == msg.sender
-    self.contract_uri = new_uri
+    #overriden with ipfs link
+    self.contract_uri = "ipfs.io/ipfs/Qmboteb8nEohW5HXprrXeVvYiSFLArh3dYMgX2o7sHi2ai"
 
 
 @external
