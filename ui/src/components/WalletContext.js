@@ -21,6 +21,7 @@ export const WalletProvider = ({ children }) => {
     const [walletAddress, setWalletAddress] = useState(null);
     const [balance, setBalance] = useState(0);
     const [contracts, setContracts] = useState({});
+    const [signer, setSigner] = useState(null);
 
     useEffect(() => {
         loadABIs().then(setContracts);
@@ -33,6 +34,7 @@ export const WalletProvider = ({ children }) => {
             const signer = await provider.getSigner();
             const address = await signer.getAddress();
             setWalletAddress(address);
+            setSigner(signer);
             fetchBalance(address);
         } catch (error) {
             console.error("Error connecting wallet:", error);
@@ -58,7 +60,7 @@ export const WalletProvider = ({ children }) => {
     }, [walletAddress]);
 
     return (
-        <WalletContext.Provider value={{ walletAddress, balance, connectWallet, contracts }}>
+        <WalletContext.Provider value={{ walletAddress, balance, connectWallet, contracts, signer }}>
             {children}
         </WalletContext.Provider>
     );
