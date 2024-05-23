@@ -1,0 +1,386 @@
+[
+	{
+		"type": "event",
+		"name": "GameCreated",
+		"inputs": [
+			{
+				"name": "gameID",
+				"type": "uint256",
+				"indexed": false
+			},
+			{
+				"name": "player1",
+				"type": "address",
+				"indexed": false
+			},
+			{
+				"name": "player2",
+				"type": "address",
+				"indexed": false
+			},
+			{
+				"name": "betAmount",
+				"type": "uint256",
+				"indexed": false
+			}
+		],
+		"anonymous": false
+	},
+	{
+		"type": "event",
+		"name": "GameJoined",
+		"inputs": [
+			{
+				"name": "gameID",
+				"type": "uint256",
+				"indexed": false
+			},
+			{
+				"name": "player",
+				"type": "address",
+				"indexed": false
+			}
+		],
+		"anonymous": false
+	},
+	{
+		"type": "event",
+		"name": "ReadyToReveal",
+		"inputs": [
+			{
+				"name": "gameID",
+				"type": "uint256",
+				"indexed": false
+			}
+		],
+		"anonymous": false
+	},
+	{
+		"type": "event",
+		"name": "RevealChoice",
+		"inputs": [
+			{
+				"name": "gameID",
+				"type": "uint256",
+				"indexed": false
+			},
+			{
+				"name": "player",
+				"type": "address",
+				"indexed": false
+			},
+			{
+				"name": "choice",
+				"type": "uint256",
+				"indexed": false
+			}
+		],
+		"anonymous": false
+	},
+	{
+		"type": "event",
+		"name": "GameOver",
+		"inputs": [
+			{
+				"name": "gameID",
+				"type": "uint256",
+				"indexed": false
+			},
+			{
+				"name": "winner",
+				"type": "address",
+				"indexed": false
+			}
+		],
+		"anonymous": false
+	},
+	{
+		"type": "function",
+		"name": "initBalance",
+		"stateMutability": "nonpayable",
+		"inputs": [
+			{
+				"name": "_balance",
+				"type": "uint256"
+			}
+		],
+		"outputs": []
+	},
+	{
+		"type": "function",
+		"name": "getAccountBalance",
+		"stateMutability": "view",
+		"inputs": [],
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		]
+	},
+	{
+		"type": "constructor",
+		"stateMutability": "nonpayable",
+		"inputs": []
+	},
+	{
+		"type": "function",
+		"name": "getGame",
+		"stateMutability": "view",
+		"inputs": [
+			{
+				"name": "gameID",
+				"type": "uint256"
+			}
+		],
+		"outputs": [
+			{
+				"name": "",
+				"type": "tuple",
+				"components": [
+					{
+						"name": "player1",
+						"type": "tuple",
+						"components": [
+							{
+								"name": "addr",
+								"type": "address"
+							},
+							{
+								"name": "choice",
+								"type": "uint256"
+							},
+							{
+								"name": "revealed",
+								"type": "bool"
+							},
+							{
+								"name": "hashedChoice",
+								"type": "bytes32"
+							}
+						]
+					},
+					{
+						"name": "player2",
+						"type": "tuple",
+						"components": [
+							{
+								"name": "addr",
+								"type": "address"
+							},
+							{
+								"name": "choice",
+								"type": "uint256"
+							},
+							{
+								"name": "revealed",
+								"type": "bool"
+							},
+							{
+								"name": "hashedChoice",
+								"type": "bytes32"
+							}
+						]
+					},
+					{
+						"name": "betAmount",
+						"type": "uint256"
+					},
+					{
+						"name": "winner",
+						"type": "address"
+					},
+					{
+						"name": "gameOver",
+						"type": "bool"
+					},
+					{
+						"name": "gameDraw",
+						"type": "bool"
+					}
+				]
+			}
+		]
+	},
+	{
+		"type": "function",
+		"name": "createGame",
+		"stateMutability": "nonpayable",
+		"inputs": [
+			{
+				"name": "_betAmount",
+				"type": "uint256"
+			},
+			{
+				"name": "_opponentAddr",
+				"type": "address"
+			}
+		],
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		]
+	},
+	{
+		"type": "function",
+		"name": "joinGame",
+		"stateMutability": "nonpayable",
+		"inputs": [
+			{
+				"name": "gameID",
+				"type": "uint256"
+			},
+			{
+				"name": "_choice",
+				"type": "uint256"
+			},
+			{
+				"name": "_rand",
+				"type": "uint256"
+			}
+		],
+		"outputs": []
+	},
+	{
+		"type": "function",
+		"name": "revealChoice",
+		"stateMutability": "nonpayable",
+		"inputs": [
+			{
+				"name": "gameID",
+				"type": "uint256"
+			},
+			{
+				"name": "_choice",
+				"type": "uint256"
+			},
+			{
+				"name": "_rand",
+				"type": "uint256"
+			}
+		],
+		"outputs": []
+	},
+	{
+		"type": "function",
+		"name": "abortGame",
+		"stateMutability": "nonpayable",
+		"inputs": [
+			{
+				"name": "gameID",
+				"type": "uint256"
+			}
+		],
+		"outputs": []
+	},
+	{
+		"type": "function",
+		"name": "accountBalance",
+		"stateMutability": "view",
+		"inputs": [
+			{
+				"name": "arg0",
+				"type": "address"
+			}
+		],
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		]
+	},
+	{
+		"type": "function",
+		"name": "games",
+		"stateMutability": "view",
+		"inputs": [
+			{
+				"name": "arg0",
+				"type": "uint256"
+			}
+		],
+		"outputs": [
+			{
+				"name": "",
+				"type": "tuple",
+				"components": [
+					{
+						"name": "player1",
+						"type": "tuple",
+						"components": [
+							{
+								"name": "addr",
+								"type": "address"
+							},
+							{
+								"name": "choice",
+								"type": "uint256"
+							},
+							{
+								"name": "revealed",
+								"type": "bool"
+							},
+							{
+								"name": "hashedChoice",
+								"type": "bytes32"
+							}
+						]
+					},
+					{
+						"name": "player2",
+						"type": "tuple",
+						"components": [
+							{
+								"name": "addr",
+								"type": "address"
+							},
+							{
+								"name": "choice",
+								"type": "uint256"
+							},
+							{
+								"name": "revealed",
+								"type": "bool"
+							},
+							{
+								"name": "hashedChoice",
+								"type": "bytes32"
+							}
+						]
+					},
+					{
+						"name": "betAmount",
+						"type": "uint256"
+					},
+					{
+						"name": "winner",
+						"type": "address"
+					},
+					{
+						"name": "gameOver",
+						"type": "bool"
+					},
+					{
+						"name": "gameDraw",
+						"type": "bool"
+					}
+				]
+			}
+		]
+	},
+	{
+		"type": "function",
+		"name": "gameCounter",
+		"stateMutability": "view",
+		"inputs": [],
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		]
+	}
+]
