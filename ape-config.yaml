@@ -2,5 +2,12 @@ name: blocade
 plugins:
   - name: vyper
   - name: etherscan
+  - name: accounts
+  - name: project
 
 contracts_folder: contracts
+
+tasks:
+  test:
+    description: "Run tests"
+    command: "ape test"
