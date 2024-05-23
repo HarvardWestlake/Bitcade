@@ -3,7 +3,7 @@ from ape import accounts, project
 def test_mint_tokens(accounts):
     # Deploy the contract
     owner = accounts[0]  # Assuming the first account is the owner
-    token_contract = project.Wolvercoin.deploy("Wolvercoin", "WVC", 18, sender=owner)
+    token_contract = project.Wolvercoin.deploy("Wolvercoin", "WVC", 18, 1000, sender=owner)
 
     # Mint tokens to the first 10 users
     for i in range(1, 8):

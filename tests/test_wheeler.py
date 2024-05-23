@@ -19,7 +19,7 @@ from ape import accounts, project
 def test_wheel_initial_state(accounts):
     test_account = accounts[0]
     user = accounts[1]
-    wolvercoin_contract = project.Wolvercoin.deploy("Wolvercoin", "WVC", 18, sender=test_account)
+    wolvercoin_contract = project.Wolvercoin.deploy("Wolvercoin", "WVC", 18, 1000, sender=test_account)
     wheeler_contract = project.Wheeler.deploy(wolvercoin_contract.address, sender=test_account)
     wolvercoin_contract.mint(wheeler_contract.address,10000, sender=test_account)
     wolvercoin_contract.approve(wheeler_contract.address, 11000, sender=user)
@@ -30,7 +30,7 @@ def test_wheel_initial_state(accounts):
 def test_spin_wheel(accounts):
     test_account = accounts[0]
     user = accounts[1]
-    wolvercoin_contract = project.Wolvercoin.deploy("Wolvercoin", "WVC", 18, sender=test_account)
+    wolvercoin_contract = project.Wolvercoin.deploy("Wolvercoin", "WVC", 18, 1000, sender=test_account)
     wheeler_contract = project.Wheeler.deploy(wolvercoin_contract.address, sender=test_account)
     wolvercoin_contract.mint(wheeler_contract.address,10000, sender=test_account)
     wolvercoin_contract.approve(wheeler_contract.address, 11000, sender=test_account)
@@ -42,7 +42,7 @@ def test_spin_wheel(accounts):
 def test_token_commit_and_win(accounts):
     test_account = accounts[0]
     user = accounts[1]
-    wolvercoin_contract = project.Wolvercoin.deploy("Wolvercoin", "WVC", 18, sender=test_account)
+    wolvercoin_contract = project.Wolvercoin.deploy("Wolvercoin", "WVC", 18, 1000, sender=test_account)
     wheeler_contract = project.Wheeler.deploy(wolvercoin_contract.address, sender=test_account)
     
     # Mint tokens to user and test_account
