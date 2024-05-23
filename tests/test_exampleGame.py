@@ -27,3 +27,18 @@ def test_play(accounts):
 
     txn = example_contract.play(sender=owner)
     assert txn.status == 1
+
+def test_get_description(accounts):
+    # Deploy the contract
+    owner = accounts[0]  # Assuming the first account is the owner
+    example_contract = project.ExampleGame.deploy(sender=owner)
+
+    # Fetch the description
+    description = example_contract.getDescription(sender=owner)
+
+    # Expected description string
+    expected_description = "This is a simple game where you can play and get a random result. The result can be either 'Win' or 'Lose'. Try your luck!"
+
+    assert description == expected_description
+
+    print("Test passed, the description matches the expected value")

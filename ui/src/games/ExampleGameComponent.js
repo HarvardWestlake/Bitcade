@@ -6,8 +6,10 @@ const ExampleGameComponent = ({ contractAddress }) => {
     const { walletAddress, contracts } = useWallet();
     const [gameResult, setGameResult] = useState('');
     const [randomNumber, setRandomNumber] = useState(null);
+    const [description, setDescription] = useState('');
     const [accountBalance, setAccountBalance] = useState(0);
     const [loading, setLoading] = useState(false);
+    const [showDescription, setShowDescription] = useState(false);
 
     // Instance of the contract
     const gameContract = contracts && contracts.ExampleGame
@@ -52,14 +54,35 @@ const ExampleGameComponent = ({ contractAddress }) => {
         }
         setLoading(false);
     };
-
+ 
+    const fetchDescription = async () => {
+        if (!gameContract) return;
+        setLoading(true);
+        try {
+            const description = await gameContract.getDescription();
+            setDescription(description); // Update description state with the value from getDescription()
+            setShowDescription(true); // Set showDescription to true after successfully fetching description
+        } catch (error) {
+            console.error('Error fetching description:', error);
+        }
+        setLoading(false);
+    };    
+    
     // UseEffect to fetch balance on load
     useEffect(() => {
         if (walletAddress && gameContract) {
             fetchAccountBalance();
             fetchRandomNumber();
+            fetchDescription();
         }
     }, [walletAddress, gameContract]);
+
+    const toggleDescription = () => {
+        setShowDescription(!showDescription);
+        if (!showDescription) {
+            fetchDescription(); 
+        }
+    };    
 
     return (
         <div className="example-game-component" style={{ width: "300px", border: "1px solid white", padding: "10px" }}>
@@ -72,6 +95,14 @@ const ExampleGameComponent = ({ contractAddress }) => {
                     <p>Game Result: {gameResult}</p>
                     <p>Random Number: {randomNumber}</p>
                     <p>Account Balance: {accountBalance} ETH</p>
+                    <button onClick={() => setShowDescription(!showDescription)}>
+                        {showDescription ? 'Hide Description' : 'Get Description'}
+                    </button>
+                    {showDescription && (
+                        <div className="game-description" style={{ marginTop: "10px", border: "1px solid #ddd", padding: "10px" }}>
+                            <p>{description}</p>
+                        </div>
+                    )}
                 </>
             )}
         </div>
