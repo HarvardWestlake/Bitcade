@@ -1,6 +1,10 @@
 name: blocade
+
 plugins:
   - name: vyper
   - name: etherscan
+  - name: accounts
+  - name: project
 
-contracts_folder: contracts
+contract_sources:
+  - contracts  # assuming your contracts are in a 'contracts' folder
