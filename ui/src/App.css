@@ -289,7 +289,7 @@ input {
   padding: 20px;
 }
 
-.game-grid {
+.game-grids {
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
   display: grid;
@@ -298,7 +298,7 @@ input {
   width: 100%;
 }
 
-.game-grid > * {
+.game-grids > * {
   background-color: #333;
   padding: 20px;
   border-radius: 10px;
