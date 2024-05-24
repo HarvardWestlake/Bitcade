@@ -304,3 +304,7 @@ input {
   border-radius: 10px;
   text-align: center;
 }
+.footer {
+  background-color: pink;
+  text-align: center;
+}

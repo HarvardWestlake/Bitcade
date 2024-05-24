@@ -23,6 +23,11 @@ function App() {
           <div className="side-panel" style={{ flex: "15%" }}></div>
         </div>
       </div>
+      <footer class="footer">
+        <a href="creators.html">
+          Blocade is a HW Topics Project. See our developers
+        </a>
+      </footer>
     </WalletProvider>
   );
 }
