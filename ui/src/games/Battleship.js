@@ -16,7 +16,9 @@ const BattleShip = () => {
       style={{ border: "1px solid white", padding: "10px" }}
     >
       <h3>Battleship</h3>
-      <>{"game goes here"}</>
+      <div style={{ border: "1px solid white", padding: "10px" }}>
+        <>{"game goes here"}</>
+      </div>
     </div>
   );
 };
