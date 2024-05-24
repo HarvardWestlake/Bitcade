@@ -1,4 +1,3 @@
-import React from "react";
 import "./CreatorsPage.css"; // Optional: Create a CSS file for styling
 
 const creators = [
