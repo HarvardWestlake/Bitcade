@@ -281,7 +281,7 @@ input {
   background-color: #181818;
 }
 
-.main-panel {
+main-panel {
   background-color: #ff0000;
   display: flex;
   justify-content: center;
@@ -289,7 +289,11 @@ input {
   padding: 20px;
 }
 
+<<<<<<< Updated upstream
 .game-grids {
+=======
+game-grid {
+>>>>>>> Stashed changes
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
   display: grid;
@@ -298,13 +302,61 @@ input {
   width: 100%;
 }
 
+<<<<<<< Updated upstream
 .game-grids > * {
+=======
+game-grid > * {
+>>>>>>> Stashed changes
   background-color: #333;
   padding: 20px;
   border-radius: 10px;
   text-align: center;
 }
+<<<<<<< Updated upstream
 .footer {
   background-color: pink;
   text-align: center;
 }
+=======
+
+.carousel {
+  position: relative;
+}
+
+.carousel__item {
+  height: 200px;
+  background: gray;
+  padding: 1em;
+  font-family: 'ArcadeClassic', sans-serif;
+  font-size: 2em;
+  color: white;
+  display: none;
+}
+
+.carousel__item--selected {
+  display: block;
+}
+
+.carousel__nav{
+  width: 100%;
+  padding: 20px 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+}
+
+.carousel__button {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  background: rgb(80, 78, 78);
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.carousel__button--selected {
+  background:rgb(150, 147, 147)
+}
+>>>>>>> Stashed changes
