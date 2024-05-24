@@ -2,57 +2,82 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
-  background-color: #282c34; /* Lightning theme black background */
-  color: #FFD700; /* Lightning theme yellow text */
-  height: 40px; /* Ensure header doesn't change in height */
+  padding: 20px 20px;
+  background-color: red;
+  color: #ffd700;
+  height: 40px;
 }
 
 .header-left,
-.header-middle,
+.balance-logo,
 .header-right {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
   justify-content: center;
-  flex-grow: 1; /* Give each section the ability to grow */
+  flex-grow: 1;
 }
 
-.header-middle {
-  flex-grow: 2; /* Allow the middle section to take up more space if needed */
+.header-left {
+  background-color: green;
+  padding: 10px;
 }
 
-/* Example fixed widths for left and right sections to bring them closer to the center */
+#wallet-button {
+  display: flex;
+  background-color: blue;
+  width: 100%;
+  float: right;
+  justify-content: center;
+}
+
+.balance {
+  font-family: 'ArcadeClassic', sans-serif;                                 
+  padding-right: 10px;
+  padding-left: 90px;
+  padding-top: 10px;
+  color: white;
+  background-color: orangered;
+  width: 140px;
+}
+
+.header-right {
+  flex: 1;
+  padding: 20px;
+  width: 100%;
+  background-color: pink;
+  padding-left: 30px;
+}
+
 .header-left,
 .header-right {
-  flex-basis: 300px; /* Adjust this value as needed */
-  flex-grow: 0; /* Prevent these sections from growing */
+  flex-basis: 300px;
+  flex-grow: 0;
 }
 
-/* CSS for the connected address to reduce its width */
 .wallet-address {
-  font-size: 0.85em; /* Small enough to fit without enlarging the header */
-  white-space: nowrap; /* Keep the address in one line */
-  overflow: hidden; /* Hide overflow */
-  text-overflow: ellipsis; /* Add an ellipsis to any overflow */
+  font-size: 0.85em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* You can use media queries to adjust for different screen sizes */
 @media (max-width: 768px) {
   .header-left,
   .header-right {
-    flex-basis: 100px; /* Smaller fixed width on smaller screens */
+    flex-basis: 100px;
   }
-  
+
   .wallet-address {
-    font-size: 0.75em; /* Smaller font size on smaller screens */
+    font-size: 0.75em;
   }
 }
 
 .App {
   display: flex;
   justify-content: space-between;
-  background: #121212; /* Dark background for the lightning theme */
-  color: #FFD700; /* Yellow text for the lightning theme */
+  background: #121212;
+  color: #ffd700;
   padding: 20px;
   height: 100vh;
   flex-direction: column;
@@ -60,15 +85,17 @@
 
 .content {
   display: flex;
-  flex: 1; /* Takes up all space below the header */
+  flex: 1;
 }
 
 .side-panel {
-  background-color: #181818; /* A lighter shade of black for the side panels */
-  /* Add any additional styling you want for these side panels */
+  background-color: #181818;
 }
 
 .main-panel {
-  background-color: #121212; /* A darker shade of black for the main panel */
-  /* Add any additional styling you want for the main content area */
+  background-color: #121212;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
