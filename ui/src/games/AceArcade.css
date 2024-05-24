@@ -1,0 +1,47 @@
+.container {
+  text-align: center;
+}
+
+.hand {
+  display: inline-block;
+  border: 1px solid rgb(0, 0, 0);
+  padding: 10px;
+  margin: 10px;
+}
+
+#actions {
+  margin-top: 100px;
+  display: inline;
+  width: 100%;
+}
+#deal {
+  width: 33%;
+  height: 100%;
+  display: inline;
+  padding: 10px;
+}
+#hit {
+  width: 33%;
+  height: 100%;
+  display: inline;
+  padding: 10px;
+}
+#stand {
+  width: 33%;
+  height: 100%;
+  display: inline;
+  padding: 10px;
+}
+#bdeal {
+  border: 3px solid rgb(17, 4, 197);
+}
+#bhit {
+  border: 3px solid rgb(197, 4, 4);
+}
+#bstand {
+  border: 3px solid rgb(1, 181, 1);
+}
+#result {
+  margin-top: 20px;
+  font-weight: bold;
+}
