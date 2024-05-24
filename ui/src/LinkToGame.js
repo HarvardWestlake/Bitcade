@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 
-import { Link } from "react-router-dom";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useParams,
+} from "react-router-dom";
 
-import GamePage from "./GamePage.js";
-import { ethers } from "ethers";
-import { useWallet } from "./components/WalletContext"; // Import the useWallet hook from your context if needed
+import { useNavigate } from "react-router-dom";
 
 const LinkToGame = ({ gameName }) => {
+  const navigate = useNavigate();
+
   const goToGame = async () => {
-    try {
-    } catch (error) {
-      console.error("Error playing game:", error);
-      alert("Failed to play game" + error);
-    }
+    navigate("/GamePage");
   };
 
   return (
@@ -23,14 +23,12 @@ const LinkToGame = ({ gameName }) => {
     >
       <h3>Game Link</h3>
       <>
-        <Link to={"./games/${gameName}"}>
-          <button onClick={goToGame}>
-            {gameName}
-            {/* direct to game page */}
-          </button>
-          <p>filler</p>
-          <p>fillerfiller</p>
-        </Link>
+        <button onClick={goToGame}>
+          {gameName}
+          {/* direct to game page */}
+        </button>
+        <p>filler</p>
+        <p>fillerfiller</p>
       </>
     </div>
   );

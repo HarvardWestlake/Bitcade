@@ -1,21 +1,26 @@
+import React from "react";
 import { WalletProvider } from "./components/WalletContext"; // Import the provider
-import ExampleGameComponent from "./games/ExampleGameComponent"; // Import the game component
+import Header from "./Header";
+import BattleShip from "./games/Battleship";
 
-function App() {
+function GamePage() {
   return (
     <WalletProvider>
-      {" "}
-      {/* Wrap the entire application with WalletProvider */}
       <div className="App">
+        {/* Wrap the entire application with WalletProvider */}
         <Header />
-        <div className="content">
-          <div className="main-panel" style={{ flex: "70%" }}>
-            {/* Main content goes here */ "contentcontent"}
-          </div>
+        <div
+          style={{
+            flex: 1,
+            border: "1px solid white",
+            padding: "10px",
+          }}
+        >
+          <BattleShip bs></BattleShip>
         </div>
       </div>
     </WalletProvider>
   );
 }
 
-export default App;
+export default GamePage;
