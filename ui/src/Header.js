@@ -12,7 +12,15 @@ const Header = () => {
           rel="stylesheet"
         />
       </head>
-      <div className="header-left"> BLOCADE</div>
+      <div className="header-left">
+        <div id="blocade-title">BLOCADE</div>
+        <form action="" class="search-bar">
+          <input type="search" name="search" pattern=".*\S.*" required />
+          <button class="search-btn" type="submit">
+            <span>Search</span>
+          </button>
+        </form>
+      </div>
       <div className="header-logo">
         <img src="logo512.png" width="100" alt="Blocade Logo" />
       </div>

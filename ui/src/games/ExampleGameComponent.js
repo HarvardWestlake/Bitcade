@@ -63,6 +63,7 @@ const ExampleGameComponent = ({ contractAddress }) => {
 
     return (
         <div className="example-game-component" style={{ width: "300px", border: "1px solid white", padding: "10px" }}>
+
             <h3>Example Game</h3>
             {loading ? (
                 <p>Loading...</p>
