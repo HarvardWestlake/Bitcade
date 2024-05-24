@@ -2,14 +2,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 20px;
-  background-color: red;
-  color: #ffd700;
-  height: 40px;
+  padding: 30px 20px;
+
+  color: #53e4e6;
+  height: 50px;
+}
+
+.header-logo{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 40px;
 }
 
 .header-left,
-.balance-logo,
 .header-right {
   display: flex;
   align-items: flex-start;
@@ -19,34 +25,58 @@
 }
 
 .header-left {
-  background-color: green;
+  font-family: 'ArcadeClassic', sans-serif;
+  font-size: 90px;
   padding: 10px;
 }
 
 #wallet-button {
   display: flex;
-  background-color: blue;
   width: 100%;
   float: right;
   justify-content: center;
 }
 
+.btn {
+  font-family: 'ArcadeClassic', sans-serif;
+  font-size: 15px;
+  padding: 10px 23px;
+  background-color: rgb(47, 114, 250);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-transform: uppercase;
+  transition: background-color 0.5s;
+}
+
+.btn:hover {
+  background-color: rgb(61, 199, 201);
+  font-family: 'ArcadeClassic', sans-serif;
+}
+
 .balance {
-  font-family: 'ArcadeClassic', sans-serif;                                 
-  padding-right: 10px;
+  display: flex;
+  font-family: 'ArcadeClassic', sans-serif;
+  font-size: 19px;                                 
+  padding-right: 90px;
   padding-left: 90px;
   padding-top: 10px;
   color: white;
-  background-color: orangered;
-  width: 140px;
+  justify-content: center;
+  width: 160px;
 }
 
 .header-right {
   flex: 1;
   padding: 20px;
   width: 100%;
-  background-color: pink;
   padding-left: 30px;
+}
+
+#title-blocade {
+  display: flex;
+  font-family: 'ArcadeClassic', sans-serif;
+  font-size: 10px;
 }
 
 .header-left,

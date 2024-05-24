@@ -1,12 +1,12 @@
-import React from 'react';
-import { useWallet } from './WalletContext'; // Import the useWallet hook from your context
+import React from "react";
+import { useWallet } from "./WalletContext"; // Import the useWallet hook from your context
 
 const WalletConnect = () => {
   const { walletAddress, balance, connectWallet } = useWallet(); // Use the context values
 
   // Function to format the wallet address
   const formatAddress = (address) => {
-    return address ? `0x${address.slice(2, 6)}...${address.slice(-4)}` : '';
+    return address ? `0x${address.slice(2, 6)}...${address.slice(-4)}` : "";
   };
 
   return (
@@ -17,7 +17,9 @@ const WalletConnect = () => {
           <p>Balance: {balance} ETH</p> {/* Assuming balance is in ETH */}
         </div>
       ) : (
-        <button className="btn" onClick={connectWallet}>Connect Wallet</button>
+        <button className="btn" onClick={connectWallet}>
+          Connect Wallet
+        </button>
       )}
     </div>
   );

@@ -7,10 +7,15 @@ const Header = () => {
   return (
     <header className="header">
       <head>
-      <link href="https://fonts.cdnfonts.com/css/arcade-classic" rel="stylesheet"/>
+        <link
+          href="https://fonts.cdnfonts.com/css/arcade-classic"
+          rel="stylesheet"
+        />
       </head>
-      <div className="header-left">Blocade</div>
-      <div className="header-logo">Logo</div>
+      <div className="header-left"> BLOCADE</div>
+      <div className="header-logo">
+        <img src="logo512.png" width="100" alt="Blocade Logo" />
+      </div>
       <div className="header-right">
         <div id="wallet-button">
           <WalletConnect setBalance={setBalance} />
