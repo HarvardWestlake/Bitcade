@@ -1,19 +1,42 @@
+/* General styles for the CreatorsPage */
 .creators-page {
   padding: 20px;
-  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
 }
 
 .creators-page h1 {
-  font-size: 2em;
+  font-size: 2.5rem;
+  text-align: center;
   margin-bottom: 20px;
 }
 
-.creators-page ul {
-  list-style-type: none;
-  padding: 0;
+.creators-page p {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.creators-page li {
-  margin: 10px 0;
-  font-size: 1.2em;
+.creators-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.creator-item {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.creator-item:hover {
+  background-color: #e0e0e0;
 }
