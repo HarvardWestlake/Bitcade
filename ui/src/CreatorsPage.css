@@ -1,0 +1,19 @@
+.creators-page {
+  padding: 20px;
+  text-align: center;
+}
+
+.creators-page h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.creators-page ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.creators-page li {
+  margin: 10px 0;
+  font-size: 1.2em;
+}
