@@ -2,57 +2,271 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
-  background-color: #282c34; /* Lightning theme black background */
-  color: #FFD700; /* Lightning theme yellow text */
-  height: 40px; /* Ensure header doesn't change in height */
+  padding: 30px 20px;
+  color: #53e4e6;
+  height: 50px;
+}
+
+.header-logo {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 40px;
 }
 
 .header-left,
-.header-middle,
 .header-right {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
   justify-content: center;
-  flex-grow: 1; /* Give each section the ability to grow */
+  flex-grow: 1;
 }
 
-.header-middle {
-  flex-grow: 2; /* Allow the middle section to take up more space if needed */
+/*-----------------------------------*\
+  #SEARCH BOX
+\*-----------------------------------*/
+
+:root {
+  font-size: calc(16px + (24 - 16) * (100vw - 320px) / (1920 - 320));
+}
+button,
+input {
+  font: 1em ArcadeClassic, sans-serif;
+  line-height: 1.5em;
+}
+input {
+  color: #171717;
+}
+.search-bar {
+  display: flex;
+  transform: translateY(10px);
+}
+.search-bar input,
+.search-btn,
+.search-btn:before,
+.search-btn:after {
+  transition: all 0.25s ease-out;
+}
+.search-bar input
+{
+  width: 2em;
+  height: 2em;
 }
 
-/* Example fixed widths for left and right sections to bring them closer to the center */
+.search-btn {
+  width: 3em;
+  height: 2em;
+}
+.search-bar input:invalid:not(:focus),
+.search-btn {
+  cursor: pointer;
+}
+.search-bar,
+.search-bar input:focus,
+.search-bar input:valid {
+  width: 100%;
+}
+.search-bar input:focus,
+.search-bar input:not(:focus) + .search-btn:focus {
+  outline: transparent;
+}
+.search-bar {
+  margin: auto;
+  justify-content: center;
+  max-width: 30em;
+}
+.search-bar input {
+  background: transparent;
+  border-radius: 1em;
+  box-shadow: 0 0 0 0.4em #171717 inset;
+  padding: 0.5em;
+  transform: translate(0.5em, 0.5em) scale(0.55);
+  transform-origin: 100% 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.search-bar input::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+.search-bar input:focus,
+.search-bar input:valid {
+  background: #fff;
+  border-radius: 0.375em 0 0 0.375em;
+  box-shadow: 0 0 0 0.1em #d9d9d9 inset;
+  transform: scale(1);
+}
+.search-btn {
+  background: #171717;
+  border-radius: 0 0.75em 0.75em 0 / 0 1.5em 1.5em 0;
+  padding: 0.75em;
+  position: relative;
+  transform: translate(0.5em, 0.5em) rotate(45deg) scale(0.25, 0.125);
+  transform-origin: 0 50%;
+}
+.search-btn:before,
+.search-btn:after {
+  content: "";
+  display: block;
+  opacity: 0;
+  position: absolute;
+}
+.search-btn:before {
+  border-radius: 50%;
+  box-shadow: 0 0 0 0.2em #f1f1f1 inset;
+  top: 0.75em;
+  left: 0.75em;
+  width: 1.2em;
+  height: 1.2em;
+  transform: translateY(-10px);
+}
+.search-btn:after {
+  background: #f1f1f1;
+  border-radius: 0 0.25em 0.25em 0;
+  top: 51%;
+  left: 51%;
+  width: 0.75em;
+  height: 0.25em;
+  transform: translate(0.2em, 0) rotate(45deg);
+  transform-origin: 0 50%;
+}
+.search-btn span {
+  display: inline-block;
+  overflow: hidden;
+  width: 2px;
+  height: 2px;
+}
+
+/* Active state */
+.search-bar input:focus + .search-btn,
+.search-bar input:valid + .search-btn {
+  background: #2762f3;
+  border-radius: 0 0.375em 0.375em 0;
+  transform: scale(1);
+}
+.search-bar input:focus + .search-btn:before,
+.search-bar input:focus + .search-btn:after,
+.search-bar input:valid + .search-btn:before,
+.search-bar input:valid + .search-btn:after {
+  opacity: 1;
+}
+.search-bar input:focus + .search-btn:hover,
+.search-bar input:valid + .search-btn:hover,
+.search-bar input:valid:not(:focus) + .search-btn:focus {
+  background: #0c48db;
+}
+.search-bar input:focus + .search-btn:active,
+.search-bar input:valid + .search-btn:active {
+  transform: translateY(1px);
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  .search-bar input {
+    box-shadow: 0 0 0 0.4em #f1f1f1 inset;
+  }
+  .search-bar input:focus,
+  .search-bar input:valid {
+    background: #3d3d3d;
+    box-shadow: 0 0 0 0.1em #3d3d3d inset;
+  }
+  .search-btn {
+    background: #f1f1f1;
+  }
+}
+
+/*-----------------------------------*\
+  #SEARCH BOX
+\*-----------------------------------*/
+
+#blocade-title {
+  display: flex;
+  font-size: 60px;
+  height: 10px;
+  transform: translateY(-30px);
+}
+
+.header-left {
+  font-family: "ArcadeClassic", sans-serif;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#wallet-button {
+  display: flex;
+  width: 100%;
+  float: right;
+  justify-content: center;
+}
+
+.btn {
+  font-family: "ArcadeClassic", sans-serif;
+  font-size: 15px;
+  padding: 10px 23px;
+  background-color: rgb(47, 114, 250);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-transform: uppercase;
+  transition: background-color 0.5s;
+}
+
+.btn:hover {
+  background-color: rgb(61, 199, 201);
+  font-family: "ArcadeClassic", sans-serif;
+}
+
+.balance {
+  display: flex;
+  font-family: "ArcadeClassic", sans-serif;
+  font-size: 19px;
+  padding-right: 90px;
+  padding-left: 90px;
+  padding-top: 10px;
+  color: white;
+  justify-content: center;
+  width: 160px;
+}
+
+.header-right {
+  flex: 1;
+  padding: 20px;
+  width: 100%;
+  padding-left: 30px;
+}
+
 .header-left,
 .header-right {
-  flex-basis: 300px; /* Adjust this value as needed */
-  flex-grow: 0; /* Prevent these sections from growing */
+  flex-basis: 300px;
+  flex-grow: 0;
 }
 
-/* CSS for the connected address to reduce its width */
 .wallet-address {
-  font-size: 0.85em; /* Small enough to fit without enlarging the header */
-  white-space: nowrap; /* Keep the address in one line */
-  overflow: hidden; /* Hide overflow */
-  text-overflow: ellipsis; /* Add an ellipsis to any overflow */
+  font-size: 0.85em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* You can use media queries to adjust for different screen sizes */
 @media (max-width: 768px) {
   .header-left,
   .header-right {
-    flex-basis: 100px; /* Smaller fixed width on smaller screens */
+    flex-basis: 100px;
   }
-  
+
   .wallet-address {
-    font-size: 0.75em; /* Smaller font size on smaller screens */
+    font-size: 0.75em;
   }
 }
 
 .App {
+  font-family: 'ArcadeClassic', sans-serif;
   display: flex;
   justify-content: space-between;
-  background: #121212; /* Dark background for the lightning theme */
-  color: #FFD700; /* Yellow text for the lightning theme */
+  background: #121212;
+  color: rgb(0, 251, 255);
   padding: 20px;
   height: 100vh;
   flex-direction: column;
@@ -60,15 +274,37 @@
 
 .content {
   display: flex;
-  flex: 1; /* Takes up all space below the header */
+  flex: 1;
 }
 
 .side-panel {
-  background-color: #181818; /* A lighter shade of black for the side panels */
-  /* Add any additional styling you want for these side panels */
+  background-color: #181818;
 }
 
 .main-panel {
-  background-color: #121212; /* A darker shade of black for the main panel */
-  /* Add any additional styling you want for the main content area */
+  background-color: #ff0000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.game-grids {
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  gap: 20px;
+  width: 100%;
+}
+
+.game-grids > * {
+  background-color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+.footer {
+  background-color: pink;
+  text-align: center;
 }
