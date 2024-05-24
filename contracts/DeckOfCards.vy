@@ -1,5 +1,4 @@
-# DeckOfCards.vy
-
+# Card struct
 struct Card:
     suit: uint256
     value: uint256
@@ -28,16 +27,35 @@ def get_card(index: uint256) -> (uint256, uint256):
 
 @external
 @view
-def get_suit(index: uint256) -> (uint256):
+def get_suit(index: uint256) -> uint256:
     """
-    Returns the suit and value of the card at the specified index.
+    Returns the suit of the card at the specified index.
     """
-    return (self.deck[index].suit)
+    return self.deck[index].suit
     
 @external
 @view
-def get_value(index: uint256) -> (uint256):
+def get_value(index: uint256) -> uint256:
     """
-    Returns the suit and value of the card at the specified index.
+    Returns the value of the card at the specified index.
     """
-    return (self.deck[index].value)
+    return self.deck[index].value
+
+@internal
+@view
+def get_random_number(upper_limit: uint256) -> uint256:
+    """
+    Returns a pseudo-random number between 0 and upper_limit-1.
+    """
+    return block.timestamp % upper_limit
+
+@external
+def shuffle_deck():
+    """
+    Shuffles the deck using the Fisher-Yates shuffle algorithm.
+    """
+    for i in range(52):
+        j: uint256 = self.get_random_number(52 - i) + i
+        temp: Card = self.deck[i]
+        self.deck[i] = self.deck[j]
+        self.deck[j] = temp
