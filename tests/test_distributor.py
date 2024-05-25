@@ -1,5 +1,6 @@
 
-import boa
+import ape 
+import pytest
 
 def test_distributor_deployed(distributor, wolvercoin):
     assert hasattr(distributor, "addToDistribution")
@@ -14,12 +15,10 @@ def test_distributor_deployed(distributor, wolvercoin):
     
 def test_change_deployer(distributor, deployer, kian):
     # Change deployer
-    with boa.env.prank(kian):
-        with boa.reverts():
-            distributor.setDeployer(kian)
+    with ape.reverts():
+        distributor.setDeployer(kian, sender=kian)
             
-    with boa.env.prank(deployer):
-        distributor.setDeployer(kian)
+    distributor.setDeployer(kian, sender=deployer)
 
     # Check balance
     assert distributor.deployer() == kian
@@ -28,12 +27,10 @@ def test_change_deployer(distributor, deployer, kian):
     
 def test_change_initiator(wolvercoin, deployer, kian):
     # Change owner
-    with boa.env.prank(kian):
-        with boa.reverts():
-            wolvercoin.setInitiator(kian)
+    with ape.reverts():
+        wolvercoin.setInitiator(kian, sender=kian)
             
-    with boa.env.prank(deployer):
-        wolvercoin.setInitiator(kian)
+    wolvercoin.setInitiator(kian, sender=deployer)
 
     # Check balance
     assert wolvercoin.initiator() == kian
@@ -42,12 +39,10 @@ def test_change_initiator(wolvercoin, deployer, kian):
     
 def test_add_to_distribution(distributor, deployer, kian):
     # Add to distribution
-    with boa.env.prank(kian):
-        with boa.reverts():
-            distributor.addToDistribution(kian)
+    with ape.reverts():
+        distributor.addToDistribution(kian, sender=kian)
             
-    with boa.env.prank(deployer):
-        distributor.addToDistribution(kian)
+    distributor.addToDistribution(kian, sender=deployer)
 
     # Check balance
     assert distributor.distributions(kian) == True
@@ -56,16 +51,13 @@ def test_add_to_distribution(distributor, deployer, kian):
     
 def test_remove_from_distribution(distributor, deployer, kian):
     # Add to distribution
-    with boa.env.prank(deployer):
-        distributor.addToDistribution(kian)
+    distributor.addToDistribution(kian, sender=deployer)
 
     # Remove from distribution
-    with boa.env.prank(kian):
-        with boa.reverts():
-            distributor.removeFromDistribution(kian)
+    with ape.reverts():
+        distributor.removeFromDistribution(kian, sender=kian)
             
-    with boa.env.prank(deployer):
-        distributor.removeFromDistribution(kian)
+    distributor.removeFromDistribution(kian, sender=deployer)
 
     # Check balance
     assert distributor.distributions(kian) == False
@@ -74,16 +66,13 @@ def test_remove_from_distribution(distributor, deployer, kian):
     
 def test_start_distribution(distributor, deployer, kian):
     # Add to distribution
-    with boa.env.prank(deployer):
-        distributor.addToDistribution(kian)
+    distributor.addToDistribution(kian, sender=deployer)
 
     # Start distribution
-    with boa.env.prank(kian):
-        with boa.reverts():
-            distributor.startDistribution()
+    with ape.reverts():
+        distributor.startDistribution(sender=kian)
             
-    with boa.env.prank(deployer):
-        distributor.startDistribution()
+    distributor.startDistribution(sender=deployer)
         
     # Check balance
     assert distributor.distributionStarted() == True
@@ -92,13 +81,11 @@ def test_start_distribution(distributor, deployer, kian):
     
 def test_claim_distribution(wolvercoin, distributor, deployer, kian):
     # Add to distribution
-    with boa.env.prank(deployer):
-        distributor.addToDistribution(kian)
-        distributor.startDistribution()
+    distributor.addToDistribution(kian, sender=deployer)
+    distributor.startDistribution(sender=deployer)
 
     # Claim distribution
-    with boa.env.prank(kian):
-        distributor.claimDistribution()
+    distributor.claimDistribution(sender=kian)
 
     # Check balance
     assert distributor.distributions(kian) == False
@@ -106,8 +93,7 @@ def test_claim_distribution(wolvercoin, distributor, deployer, kian):
     
     # Claim distribution Revert
     
-    with boa.env.prank(kian):
-        with boa.reverts():
-            distributor.claimDistribution()
+    with ape.reverts():
+        distributor.claimDistribution(sender=kian)
 
     print("Test passed, kian has claimed their distribution.")
