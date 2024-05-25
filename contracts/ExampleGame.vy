@@ -46,7 +46,14 @@ def rand() -> uint256:
     # Code to interface with Rand contract will go here
     # For now, we return a dummy value
     return 42
-
+    
+@external
+@view
+def getDescription() -> String[256]:
+    """
+    This method returns a description of the game.
+    """
+    return "This is a simple game where you can play and get a random result. The result can be either 'Win' or 'Lose'. Try your luck!"
 
 
 # claudi ai prompt
