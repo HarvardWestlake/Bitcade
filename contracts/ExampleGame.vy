@@ -27,6 +27,9 @@ def play() -> String[4]:
     random_value_uint: uint256 = convert(random_value, uint256)
     threshold_uint: uint256 = convert(0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff, uint256)
 
+    # For an actual game, the contract call could look like this
+    #Game_contract(address).play()
+
     # Log the play event
     log_result: String[6] = "played"  # Change this line
     log Play(msg.sender, log_result)
