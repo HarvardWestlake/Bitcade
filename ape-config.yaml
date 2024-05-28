@@ -2,5 +2,6 @@ name: blocade
 plugins:
   - name: vyper
   - name: etherscan
+  - name: solidity
 
 contracts_folder: contracts

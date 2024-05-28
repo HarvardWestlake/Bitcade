@@ -5,7 +5,7 @@ This guide outlines the step-by-step process for programming, compiling, and tes
 ## Prerequisites
 
 Ensure that you have a Python environment set up with Vyper and the Ape framework installed. You can install these using pip if they are not already installed.
-
+As of 5/27/2024 main branch also needs the solidity plugin.  To install type `ape plugins install solidity` alongside other plugins
 ## Step 1: Program the Contract
 
 Start by writing your Vyper contract. Save your contract with a `.vy` extension, such as `ExampleGame.vy`, in a dedicated contracts folder.
