@@ -1,3 +1,5 @@
+# @version ^0.3.10
+#
 # Events for logging actions
 event PaymentReceived:
     sender: indexed(address)
