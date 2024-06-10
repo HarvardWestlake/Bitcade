@@ -1,4 +1,4 @@
-import "./CreatorsPage.css"; // Optional: Create a CSS file for styling
+import "./CreatorsPage.css";
 
 const creators = [
   "Ahren",
@@ -50,9 +50,9 @@ const CreatorsPage = () => {
     <div className="creators-page">
       <h1>Creators</h1>
       <p>This page is dedicated to the developers who created this project:</p>
-      <ul>
+      <ul className="creators-list">
         {creators.map((creator, index) => (
-          <li key={index}>{creator}</li>
+          <li key={index} className="creator-item">{creator}</li>
         ))}
       </ul>
     </div>
